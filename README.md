@@ -30,6 +30,10 @@ npm run build
 npm start
 ```
 
+## Domain
+
+Public domain: **arcanenft.xyz** (Namecheap). See [DOMAIN.md](./DOMAIN.md) for Vercel deploy and Namecheap DNS. Do not start later stages until the live domain serves this site.
+
 ## Configuration
 
 Editable public facts live in `src/config/site.ts` (name, supply, price, social URLs, copy).

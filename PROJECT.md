@@ -102,6 +102,12 @@ Primary navigation labels: HOME, COLLECTION, LORE, WHITELIST, MINT.
 - Live OpenSea checkout
 - Invented lore or final marketing claims
 
+## Domain (before later stages)
+
+Public hostname is `arcanenft.xyz` (Namecheap). Host the Next.js app on Vercel, then point DNS at Vercel from Namecheap **Advanced DNS**. Keep Namecheap nameservers. Full checklist: [DOMAIN.md](./DOMAIN.md).
+
+Do not start collection/lore/whitelist/mint work until `https://arcanenft.xyz` serves Stage 1 with HTTPS.
+
 ## Future stages (not started)
 
 1. **Collection** — gallery, piece pages, traits
