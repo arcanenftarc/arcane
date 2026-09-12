@@ -174,8 +174,8 @@ export const siteConfig = {
     { phase: "Phase 04", when: "Drop", title: "Mint", body: "OpenSea at $5. Date and contract when they are public." },
   ],
   counters: [
-    { value: "4,444", label: "Total items" },
-    { value: "$5", label: "Mint price" },
+    { value: "TBA", label: "Supply" },
+    { value: "TBA", label: "Mint price" },
     { value: "OpenSea", label: "Platform" },
     { value: "TBA", label: "Mint date" },
   ],
