@@ -136,7 +136,8 @@
   display: grid;
   gap: 1.1rem;
   align-content: start;
-  justify-items: start;
+  justify-items: center;
+  text-align: center;
 }
 
 .aboutCopyInner :global(a) {
@@ -256,12 +257,6 @@
 
   .factGrid li:last-child .factRule {
     display: none;
-  }
-}
-
-@media (min-width: 1040px) {
-  .hero {
-    padding: calc(var(--header-h) + 2.5rem) 0 5.5rem;
   }
 }
 

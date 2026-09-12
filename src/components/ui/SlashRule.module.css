@@ -11,6 +11,10 @@
   position: relative;
 }
 
+.center span {
+  margin-inline: auto;
+}
+
 .rule span::before {
   content: "";
   position: absolute;

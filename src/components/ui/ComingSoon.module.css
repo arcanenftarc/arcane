@@ -2,15 +2,10 @@
   position: relative;
   min-height: 100svh;
   padding: 3.5rem 0 5rem;
+  text-align: center;
   background:
     radial-gradient(ellipse at 20% 0%, color-mix(in srgb, var(--arcane-navy) 70%, transparent), transparent 46%),
     var(--deep-space);
-}
-
-@media (min-width: 1040px) {
-  .page {
-    padding: calc(var(--header-h) + 3.5rem) 0 5rem;
-  }
 }
 
 .status {
@@ -31,13 +26,14 @@
 
 .body {
   max-width: 38rem;
-  margin-top: 1rem;
+  margin: 1rem auto 0;
   color: var(--text-muted);
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.75rem;
   margin-top: 1.8rem;
 }

@@ -195,9 +195,3 @@ export const pageNav = [
   { href: "/#about", label: "About" },
   { href: "/#whitelist", label: "Whitelist" },
 ] as const;
-
-export const sideNav = [
-  { href: "/#home", label: "Home" },
-  { href: "/#about", label: "About" },
-  { href: "/#whitelist", label: "Whitelist" },
-] as const;

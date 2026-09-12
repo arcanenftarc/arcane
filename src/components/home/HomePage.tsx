@@ -61,8 +61,8 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
           </div>
           <div className={styles.aboutCopy}>
             <div className={styles.aboutCopyInner}>
-              <DisplayTitle text={siteConfig.copy.aboutTitle} align="left" />
-              <SlashRule />
+              <DisplayTitle text={siteConfig.copy.aboutTitle} />
+              <SlashRule align="center" />
               <div className={styles.copyStack}>
                 {siteConfig.aboutParagraphs.map((paragraph) => (
                   <p key={paragraph.slice(0, 24)}>{paragraph}</p>
