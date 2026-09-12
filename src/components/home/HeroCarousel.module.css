@@ -6,7 +6,7 @@
 .stage {
   position: relative;
   overflow: hidden;
-  padding: 1.2rem 0 0.35rem;
+  padding: 0.4rem 0 0;
 }
 
 .sizer {
@@ -18,7 +18,7 @@
 
 .card {
   position: absolute;
-  top: 1.2rem;
+  top: 0.4rem;
   width: 42%;
   margin: 0;
   opacity: 0;
@@ -138,7 +138,9 @@
   justify-content: center;
   align-items: center;
   gap: 2.4rem;
-  margin: 0.15rem 0 1.4rem;
+  position: relative;
+  z-index: 4;
+  margin: -0.85rem 0 1.1rem;
 }
 
 .nav button {
