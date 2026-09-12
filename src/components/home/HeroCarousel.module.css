@@ -1,5 +1,5 @@
 .wrap {
-  --slide: min(36%, 24rem);
+  --slide: min(34vw, 24rem);
   --gap: 1.35rem;
   width: 100%;
   margin: 0 auto;
@@ -13,7 +13,7 @@
   display: flex;
   width: max-content;
   will-change: transform;
-  animation: marquee 20s linear infinite;
+  animation: marquee 26s linear infinite;
 }
 
 .row {
@@ -24,7 +24,7 @@
 }
 
 .card {
-  flex: 0 0 var(--slide);
+  flex: 0 0 auto;
   width: var(--slide);
   margin: 0;
 }
@@ -37,7 +37,9 @@
 }
 
 .frame img {
+  display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 1;
   object-fit: cover;
   pointer-events: none;
@@ -45,21 +47,21 @@
 
 @keyframes marquee {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 @media (max-width: 768px) {
   .wrap {
-    --slide: 78%;
+    --slide: 72vw;
     --gap: 1rem;
   }
 
   .track {
-    animation-duration: 16s;
+    animation-duration: 18s;
   }
 }
 
