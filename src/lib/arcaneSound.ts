@@ -1,9 +1,4 @@
-const MUSIC_CANDIDATES = [
-  "/assets/audio/music.mp3",
-  "/assets/audio/music.ogg",
-  "/assets/audio/music.wav",
-  "/assets/audio/music.m4a",
-];
+const MUSIC_URL = "/assets/audio/music.mp3";
 
 const STORAGE_KEY = "arcane-muted";
 
@@ -110,43 +105,28 @@ export function unlockSound() {
   ensureContext();
   if (!musicTried) {
     musicTried = true;
-    void attachMusic();
+    attachMusic();
   } else if (music && !muted && music.paused) {
     void music.play().catch(() => {});
   }
 }
 
-async function attachMusic() {
-  for (const url of MUSIC_CANDIDATES) {
-    const found = await probe(url);
-    if (!found) {
-      continue;
+function attachMusic() {
+  music = new Audio(MUSIC_URL);
+  music.loop = true;
+  music.preload = "auto";
+  music.volume = 0.22;
+  music.muted = muted;
+  music.addEventListener("ended", () => {
+    if (!music || muted) {
+      return;
     }
-    music = new Audio(url);
-    music.loop = true;
-    music.preload = "auto";
-    music.volume = 0.22;
-    music.muted = muted;
-    if (!muted) {
-      void music.play().catch(() => {});
-    }
-    return;
-  }
-}
-
-function probe(url: string) {
-  return new Promise<boolean>((resolve) => {
-    const node = new Audio();
-    const done = (ok: boolean) => {
-      node.removeAttribute("src");
-      node.load();
-      resolve(ok);
-    };
-    node.addEventListener("canplay", () => done(true), { once: true });
-    node.addEventListener("error", () => done(false), { once: true });
-    node.preload = "metadata";
-    node.src = url;
+    music.currentTime = 0;
+    void music.play().catch(() => {});
   });
+  if (!muted) {
+    void music.play().catch(() => {});
+  }
 }
 
 export function playClick() {
