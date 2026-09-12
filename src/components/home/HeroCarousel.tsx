@@ -21,7 +21,7 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
   const [instant, setInstant] = useState(false);
   const startX = useRef<number | null>(null);
   const lastDrag = useRef(0);
-  const skipClick = useRef(false);
+  const pressedOffset = useRef<number | null>(null);
 
   if (count === 0) {
     return null;
@@ -53,9 +53,9 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
     }
     startX.current = event.clientX;
     lastDrag.current = 0;
-    skipClick.current = false;
+    const raw = (event.target as HTMLElement).closest("[data-offset]")?.getAttribute("data-offset");
+    pressedOffset.current = raw == null ? null : Number(raw);
     setDragging(true);
-    event.currentTarget.setPointerCapture(event.pointerId);
   };
 
   const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
@@ -64,9 +64,6 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
     }
     const next = event.clientX - startX.current;
     lastDrag.current = next;
-    if (Math.abs(next) > 8) {
-      skipClick.current = true;
-    }
     setDrag(next);
   };
 
@@ -75,6 +72,7 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
       return;
     }
     const distance = lastDrag.current;
+    const offset = pressedOffset.current;
     startX.current = null;
     lastDrag.current = 0;
     setDragging(false);
@@ -85,7 +83,12 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
     }
     if (distance >= SWIPE_PX) {
       go(-1);
+      return;
     }
+    if (Math.abs(distance) > 10 || offset == null) {
+      return;
+    }
+    go(offset < 0 ? -1 : 1);
   };
 
   const slots = [-2, -1, 0, 1, 2];
@@ -126,17 +129,7 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
                 <button
                   type="button"
                   className={styles.hit}
-                  onClick={() => {
-                    if (animating || skipClick.current) {
-                      skipClick.current = false;
-                      return;
-                    }
-                    if (offset < 0) {
-                      go(-1);
-                      return;
-                    }
-                    go(1);
-                  }}
+                  data-offset={offset}
                   aria-label={isCenter ? `Next: ${slide.alt}` : `Show ${slide.alt}`}
                   tabIndex={isCenter || isNeighbor ? 0 : -1}
                 >
