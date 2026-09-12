@@ -64,30 +64,29 @@
 }
 
 .mint {
-  justify-self: end;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 3.1rem;
-  padding: 0 1.5rem;
-  background: var(--arcane-cyan);
-  color: var(--deep-space);
-  font-size: 0.78rem;
+  font-size: 1.05rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  box-shadow: 0 0 22px color-mix(in srgb, var(--arcane-cyan) 28%, transparent);
+  color: #e4c98a;
+  background: none;
+  box-shadow: none;
+  transition: color 180ms ease;
 }
 
 .mint:hover {
-  background: var(--magic-ice);
+  color: #f3e1b8;
+}
+
+.account {
+  justify-self: end;
 }
 
 @media (max-width: 767px) {
   .inner {
     grid-template-columns: 1fr auto;
     grid-template-areas:
-      "brand mint"
+      "brand account"
       "nav nav";
   }
 
@@ -98,13 +97,11 @@
   .nav {
     grid-area: nav;
     justify-self: center;
-    gap: 1.4rem;
+    gap: 1.15rem;
     padding-top: 0.35rem;
   }
 
-  .mint {
-    grid-area: mint;
-    min-height: 2.6rem;
-    padding: 0 1.15rem;
+  .account {
+    grid-area: account;
   }
 }

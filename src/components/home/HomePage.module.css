@@ -25,8 +25,8 @@
 
 .desc p {
   margin: 0;
-  font-size: clamp(1.15rem, 2vw, 1.5rem);
-  line-height: 1.45;
+  font-size: clamp(0.92rem, 1.15vw, 1.05rem);
+  line-height: 1.55;
   color: var(--celestial);
 }
 

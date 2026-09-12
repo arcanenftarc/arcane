@@ -11,7 +11,7 @@ type Slide = {
 
 const SWIPE_PX = 56;
 const AUTO_MS = 4200;
-const SLIDE_MS = 540;
+const SLIDE_MS = 560;
 
 export function HeroCarousel({ slides }: { slides: Slide[] }) {
   const count = slides.length;
@@ -31,7 +31,6 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
       return;
     }
     animatingRef.current = true;
-    setAnimating(true);
     setShift(dir);
     window.setTimeout(() => {
       setInstant(true);
@@ -41,7 +40,6 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
       window.requestAnimationFrame(() => {
         window.requestAnimationFrame(() => {
           setInstant(false);
-          setAnimating(false);
           animatingRef.current = false;
         });
       });
@@ -118,12 +116,7 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
   };
 
   const slots = [-2, -1, 0, 1, 2];
-  const centerSlot = 2 - shift;
-  const trackClass = [
-    styles.track,
-    instant ? styles.instant : "",
-    dragging ? styles.dragging : "",
-  ]
+  const trackClass = [styles.track, instant ? styles.instant : "", dragging ? styles.dragging : ""]
     .filter(Boolean)
     .join(" ");
 
@@ -144,20 +137,14 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
         >
           {slots.map((offset) => {
             const slide = slides[((index + offset) % count + count) % count];
-            const slot = offset + 2;
-            const isCenter = slot === centerSlot;
-            const isNeighbor = Math.abs(slot - centerSlot) === 1;
             return (
-              <figure
-                key={`${offset}`}
-                className={`${styles.card} ${isCenter ? styles.center : ""} ${isNeighbor ? styles.side : ""}`}
-              >
+              <figure key={`${offset}`} className={styles.card}>
                 <button
                   type="button"
                   className={styles.hit}
                   data-offset={offset}
-                  aria-label={isCenter ? `Next: ${slide.alt}` : `Show ${slide.alt}`}
-                  tabIndex={isCenter || isNeighbor ? 0 : -1}
+                  aria-label={offset === 0 ? `Next: ${slide.alt}` : `Show ${slide.alt}`}
+                  tabIndex={Math.abs(offset) <= 1 ? 0 : -1}
                 >
                   <span className={styles.frame}>
                     <Image src={slide.src} alt="" width={900} height={900} priority={Math.abs(offset) <= 1} draggable={false} />

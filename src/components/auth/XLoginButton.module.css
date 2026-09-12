@@ -57,6 +57,60 @@
   border-color: var(--arcane-cyan);
 }
 
+.compactStatus {
+  margin: 0;
+  color: var(--soft-periwinkle);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.compact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--moon-white);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: none;
+}
+
+.compact svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  fill: currentColor;
+}
+
+.compact:hover {
+  color: var(--arcane-cyan);
+}
+
+.compactConnected {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--moon-white);
+  font-size: 0.82rem;
+}
+
+.compactLogout {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--celestial);
+  font: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.compactLogout:hover {
+  color: var(--arcane-cyan);
+}
+
 .status {
   color: var(--soft-periwinkle);
   font-size: 0.9rem;

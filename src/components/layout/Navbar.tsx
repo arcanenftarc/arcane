@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { XLoginButton } from "@/components/auth/XLoginButton";
 import { pageNav, siteConfig } from "@/config/site";
 import styles from "./Navbar.module.css";
 
@@ -30,11 +31,14 @@ export function Navbar() {
               {item.label}
             </Link>
           ))}
+          <a className={styles.mint} href={siteConfig.openSeaUrl} rel="noreferrer" target="_blank">
+            Mint
+          </a>
         </nav>
 
-        <a className={styles.mint} href={siteConfig.openSeaUrl} rel="noreferrer" target="_blank">
-          <span>Mint</span>
-        </a>
+        <div className={styles.account}>
+          <XLoginButton compact />
+        </div>
       </div>
     </header>
   );

@@ -1,6 +1,6 @@
 .wrap {
-  --slide: min(42%, 28rem);
-  --gap: 1.6rem;
+  --slide: min(36%, 24rem);
+  --gap: 1.35rem;
   width: 100%;
   margin: 0 auto;
 }
@@ -18,23 +18,11 @@
 
 .track {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   gap: var(--gap);
   will-change: transform;
-  transition: transform 540ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.card {
-  flex: 0 0 var(--slide);
-  width: var(--slide);
-  margin: 0;
-  opacity: 0.55;
-  transform: scale(0.68);
-  transform-origin: center center;
-  transition:
-    transform 540ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 540ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .track.instant,
@@ -42,20 +30,10 @@
   transition: none;
 }
 
-.track.instant .card,
-.track.dragging .card {
-  transition: none;
-}
-
-.side {
-  opacity: 0.92;
-  transform: scale(0.68);
-}
-
-.center {
-  opacity: 1;
-  transform: scale(1);
-  z-index: 2;
+.card {
+  flex: 0 0 var(--slide);
+  width: var(--slide);
+  margin: 0;
 }
 
 .hit {
@@ -86,21 +64,10 @@
     --slide: 78%;
     --gap: 1rem;
   }
-
-  .side {
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .card:not(.center):not(.side) {
-    opacity: 0;
-    pointer-events: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .track,
-  .card {
+  .track {
     transition: none;
   }
 }
