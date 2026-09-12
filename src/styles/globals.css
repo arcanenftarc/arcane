@@ -105,6 +105,8 @@ p {
 }
 
 .site-main {
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
   animation: page-in 280ms ease;
 }

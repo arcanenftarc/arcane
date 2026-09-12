@@ -13,20 +13,35 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.button:active {
+  transform: translateY(0);
 }
 
 .primary {
   background: var(--arcane-cyan);
   color: var(--deep-space);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--arcane-cyan) 0%, transparent);
 }
 
 .primary:hover {
   background: var(--magic-ice);
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--arcane-cyan) 32%, transparent);
 }
 
 .secondary {
-  background: transparent;
+  background: color-mix(in srgb, var(--deep-space) 35%, transparent);
   color: var(--moon-white);
   border-color: color-mix(in srgb, var(--arcane-cyan) 55%, transparent);
 }
@@ -34,6 +49,7 @@
 .secondary:hover {
   border-color: var(--arcane-cyan);
   color: var(--magic-ice);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--arcane-cyan) 40%, transparent);
 }
 
 .ghost {
@@ -45,4 +61,11 @@
 .ghost:hover {
   color: var(--moon-white);
   border-color: var(--soft-periwinkle);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button:hover,
+  .button:active {
+    transform: none;
+  }
 }

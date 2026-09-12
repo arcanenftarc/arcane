@@ -24,6 +24,17 @@ export const siteConfig = {
     whitelist: "/whitelist",
     mint: "/mint",
   },
+  assets: {
+    background: "/assets/background/hero.png",
+    banner: "/assets/banner/og-banner.png",
+    logo: "/assets/logo/icon.png",
+    collections: [
+      "/assets/collections/teaser-01.png",
+      "/assets/collections/teaser-02.png",
+      "/assets/collections/teaser-03.png",
+      "/assets/collections/teaser-04.png",
+    ],
+  },
   copy: {
     heroKicker: "Limited collection",
     heroTitle: "ARCANE",

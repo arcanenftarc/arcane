@@ -1,5 +1,6 @@
 .footer {
   position: relative;
+  z-index: 1;
   padding: 3.5rem 0 2.4rem;
   border-top: 1px solid var(--line);
   background: #0d1730;
@@ -14,6 +15,7 @@
   font-family: var(--font-display);
   letter-spacing: 0.32em;
   text-transform: uppercase;
+  transition: color 180ms ease;
 }
 
 .note {
@@ -32,11 +34,13 @@
 .links a {
   color: var(--celestial);
   font-size: 0.85rem;
+  transition: color 180ms ease, padding-left 180ms ease;
 }
 
 .nav a:hover,
 .links a:hover {
   color: var(--arcane-cyan);
+  padding-left: 0.2rem;
 }
 
 .meta {

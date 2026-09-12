@@ -1,14 +1,8 @@
-.hero {
-  position: relative;
-  min-height: 100svh;
-  display: grid;
-  align-items: end;
-  overflow: hidden;
-}
-
-.media {
-  position: absolute;
+.fixedScene {
+  position: fixed;
   inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .image {
@@ -22,7 +16,15 @@
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--deep-space) 78%, transparent) 0%, transparent 28%),
     linear-gradient(90deg, color-mix(in srgb, var(--deep-space) 55%, transparent) 0%, transparent 42%),
-    linear-gradient(180deg, transparent 48%, color-mix(in srgb, var(--deep-space) 88%, transparent) 100%);
+    linear-gradient(180deg, transparent 48%, color-mix(in srgb, var(--deep-space) 55%, transparent) 82%, var(--deep-space) 100%);
+}
+
+.hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100svh;
+  display: grid;
+  align-items: end;
 }
 
 .content {
@@ -74,7 +76,13 @@
 
 .section {
   position: relative;
+  z-index: 1;
   padding: 4.5rem 0;
+  background: var(--deep-space);
+}
+
+.sectionIntro {
+  background: linear-gradient(180deg, transparent 0%, var(--deep-space) 58%);
 }
 
 .sectionAlt {
@@ -97,14 +105,27 @@
 
 .frame {
   margin: 0;
+  overflow: hidden;
   border: 1px solid var(--line);
   background: #0c1730;
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+}
+
+.frame:hover {
+  border-color: color-mix(in srgb, var(--arcane-cyan) 55%, transparent);
+  box-shadow: 0 12px 40px color-mix(in srgb, #000 35%, transparent);
+  transform: translateY(-3px);
 }
 
 .frame img {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
+  transition: transform 420ms ease;
+}
+
+.frame:hover img {
+  transform: scale(1.04);
 }
 
 .frame figcaption {
@@ -113,6 +134,11 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--soft-periwinkle);
+  transition: color 220ms ease;
+}
+
+.frame:hover figcaption {
+  color: var(--arcane-cyan);
 }
 
 .split {
@@ -145,5 +171,17 @@
   .split {
     grid-template-columns: 1.1fr 0.9fr;
     align-items: end;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame,
+  .frame img {
+    transition: none;
+  }
+
+  .frame:hover,
+  .frame:hover img {
+    transform: none;
   }
 }

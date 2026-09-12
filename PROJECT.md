@@ -15,7 +15,7 @@ This repository currently contains **Stage 1 only**: a production-shaped fronten
 - **Fonts:** Cormorant Garamond (display/wordmark), Outfit (interface)
 - **Config:** `src/config/site.ts` is the single source for public project facts and replaceable copy
 - **Env:** `.env.example` lists `NEXT_PUBLIC_SITE_URL` and commented placeholders for later backend/auth secrets
-- **Assets:** `public/images/` for hero and teaser stills; `src/app/icon.png` and `src/app/opengraph-image.png` for favicon and Open Graph
+- **Assets:** `public/assets/` — `banner/`, `logo/`, `background/`, `collections/`. Favicon and Open Graph also live in `src/app/`.
 
 The frontend is structured so authentication, APIs, and mint flows can be added later as server routes, server actions, or a separate backend — without rebuilding navigation, tokens, or page shells.
 

@@ -8,27 +8,27 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import styles from "./HomePage.module.css";
 
 const teasers = [
-  { src: "/images/teaser-01.png", alt: "Cyan energy portal fragment from the Arcane visual world.", caption: "Portal" },
-  { src: "/images/teaser-02.png", alt: "A dark relic lit by ice-blue glow.", caption: "Relic" },
-  { src: "/images/teaser-03.png", alt: "A distant stone ring gate in night sky.", caption: "Gate" },
-  { src: "/images/teaser-04.png", alt: "Abstract cyan energy filaments forming a sigil.", caption: "Sigil" },
+  { src: siteConfig.assets.collections[0], alt: "Cyan energy portal fragment from the Arcane visual world.", caption: "Portal" },
+  { src: siteConfig.assets.collections[1], alt: "A dark relic lit by ice-blue glow.", caption: "Relic" },
+  { src: siteConfig.assets.collections[2], alt: "A distant stone ring gate in night sky.", caption: "Gate" },
+  { src: siteConfig.assets.collections[3], alt: "Abstract cyan energy filaments forming a sigil.", caption: "Sigil" },
 ];
 
 export function HomePage() {
   return (
     <>
+      <div className={styles.fixedScene}>
+        <Image
+          src={siteConfig.assets.background}
+          alt="A circular cyan portal of light in a deep navy atmosphere."
+          fill
+          priority
+          sizes="100vw"
+          className={styles.image}
+        />
+        <div className={styles.overlay} />
+      </div>
       <section className={styles.hero} aria-label="Arcane hero">
-        <div className={styles.media}>
-          <Image
-            src="/images/hero.png"
-            alt="A circular cyan portal of light in a deep navy atmosphere."
-            fill
-            priority
-            sizes="100vw"
-            className={styles.image}
-          />
-          <div className={styles.overlay} />
-        </div>
         <Container className={styles.content}>
           <p className={styles.kicker}>{siteConfig.copy.heroKicker}</p>
           <h1 className={styles.title}>{siteConfig.copy.heroTitle}</h1>
@@ -47,7 +47,7 @@ export function HomePage() {
         </Container>
       </section>
 
-      <section className={styles.section} aria-labelledby="intro-title">
+      <section className={`${styles.section} ${styles.sectionIntro}`} aria-labelledby="intro-title">
         <Container>
           <SectionHeading
             id="intro-title"
