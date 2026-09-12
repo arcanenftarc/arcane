@@ -3,7 +3,7 @@ import { siteConfig } from "@/config/site";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { DisplayTitle } from "@/components/ui/DisplayTitle";
-import { SlashRule } from "@/components/ui/SlashRule";
+import { Sigil } from "@/components/ui/Sigil";
 import { XLoginButton } from "@/components/auth/XLoginButton";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
 import styles from "./HomePage.module.css";
@@ -22,12 +22,13 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
         <Container>
           <div className={styles.heroTitle}>
             <DisplayTitle text={siteConfig.copy.heroTitle} as="h1" size="lg" />
+            <Sigil />
           </div>
-          <HeroCarousel slides={teasers} />
-          <div className={styles.desc}>
-            <div className={styles.heroActions}>
-              <Button href="/#whitelist">{siteConfig.copy.whitelistCta}</Button>
-            </div>
+        </Container>
+        <HeroCarousel slides={teasers} />
+        <Container>
+          <div className={styles.heroActions} data-reveal>
+            <Button href="/#whitelist">{siteConfig.copy.whitelistCta}</Button>
           </div>
         </Container>
       </section>
@@ -36,10 +37,9 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
         <Container>
           <ul className={styles.factGrid}>
             {siteConfig.counters.map((item) => (
-              <li key={item.label}>
+              <li key={item.label} data-reveal data-aura>
                 <p className={styles.factValue}>{item.value}</p>
                 <p className={styles.factLabel}>{item.label}</p>
-                <span className={styles.factRule} aria-hidden="true" />
               </li>
             ))}
           </ul>
@@ -48,14 +48,18 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
 
       <section className={styles.contact} id="whitelist">
         <Container>
-          <DisplayTitle text={siteConfig.copy.communityTitle} size="lg" />
+          <header className={styles.sectionHead} data-reveal>
+            <p className={styles.kicker}>{siteConfig.copy.communityEyebrow}</p>
+            <DisplayTitle text={siteConfig.copy.communityTitle} />
+            <Sigil />
+          </header>
           <div className={styles.whitelistLayout}>
-            <div>
+            <div data-reveal>
               <p>{siteConfig.copy.communityBody}</p>
               <p>{siteConfig.copy.communityBody2}</p>
               <ol className={styles.whitelistSteps}>
                 {siteConfig.whitelistSteps.map((step) => (
-                  <li key={step.n}>
+                  <li key={step.n} data-aura>
                     <p className={styles.stepN}>{step.n}</p>
                     <p className={styles.stepTitle}>{step.title}</p>
                     <p>{step.body}</p>
@@ -63,7 +67,7 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
                 ))}
               </ol>
             </div>
-            <div className={styles.whitelistLogin}>
+            <div className={styles.whitelistLogin} data-reveal data-aura>
               <p className={styles.contactLabel}>Sign in</p>
               <p className={styles.whitelistLead}>Connect X to apply. This is not a wallet connect.</p>
               <XLoginButton />
@@ -82,14 +86,15 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
               <Image src={siteConfig.assets.background} alt="" fill sizes="60vw" className={styles.aboutBgImg} />
               <div className={styles.aboutBgDim} />
             </div>
-            <div className={styles.aboutFrame}>
+            <div className={styles.aboutFrame} data-reveal data-aura>
               <Image src={siteConfig.assets.collections[0]} alt="Portal fragment." width={900} height={900} />
             </div>
           </div>
           <div className={styles.aboutCopy}>
-            <div className={styles.aboutCopyInner}>
+            <div className={styles.aboutCopyInner} data-reveal>
+              <p className={styles.kicker}>{siteConfig.copy.aboutEyebrow}</p>
               <DisplayTitle text={siteConfig.copy.aboutTitle} />
-              <SlashRule align="center" />
+              <Sigil className={styles.aboutSigil} />
               <div className={styles.copyStack}>
                 {siteConfig.aboutParagraphs.map((paragraph) => (
                   <p key={paragraph.slice(0, 24)}>{paragraph}</p>

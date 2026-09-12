@@ -29,7 +29,11 @@ export function XLoginButton({ compact = false }: { compact?: boolean }) {
   }, []);
 
   if (!ready) {
-    return <p className={compact ? styles.compactStatus : styles.status}>{compact ? "…" : "Checking X…"}</p>;
+    return compact ? (
+      <span className={styles.compactStatus} aria-hidden="true" />
+    ) : (
+      <p className={styles.status}>Checking X…</p>
+    );
   }
 
   if (user) {

@@ -1,0 +1,35 @@
+.sigil {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+}
+
+.center {
+  justify-content: center;
+}
+
+.left {
+  justify-content: flex-start;
+}
+
+.line {
+  display: block;
+  width: 2.15rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--gilt) 80%, var(--arcane-cyan)),
+    transparent
+  );
+}
+
+.gem {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  rotate: 45deg;
+  background: var(--arcane-cyan);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--arcane-cyan) 70%, transparent);
+}

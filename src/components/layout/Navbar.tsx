@@ -22,7 +22,7 @@ export function Navbar() {
       <div className={styles.inner}>
         <Link className={styles.wordmark} href="/#home" aria-label={`${siteConfig.name} home`}>
           <Image src={siteConfig.assets.logo} alt="" width={36} height={36} />
-          {siteConfig.name}
+          <span>{siteConfig.name}</span>
         </Link>
 
         <nav className={styles.nav} aria-label="Primary">
