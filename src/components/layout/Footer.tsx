@@ -16,6 +16,9 @@ export function Footer() {
                 <TextLink href={item.href}>{item.label}</TextLink>
               </li>
             ))}
+            <li>
+              <TextLink href={siteConfig.openSeaUrl}>Mint</TextLink>
+            </li>
           </ul>
         </div>
       </Container>

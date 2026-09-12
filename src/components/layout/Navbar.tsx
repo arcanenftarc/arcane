@@ -60,9 +60,9 @@ export function Navbar() {
             ))}
           </nav>
 
-          <Link className={styles.mint} href={siteConfig.routes.mint}>
+          <a className={styles.mint} href={siteConfig.openSeaUrl} rel="noreferrer" target="_blank">
             <span>Mint</span>
-          </Link>
+          </a>
         </div>
       </header>
 
@@ -71,9 +71,9 @@ export function Navbar() {
           <a className={styles.mobSocial} href={siteConfig.social.x} rel="noreferrer" target="_blank">
             X
           </a>
-          <Link className={styles.mint} href={siteConfig.routes.mint}>
+          <a className={styles.mint} href={siteConfig.openSeaUrl} rel="noreferrer" target="_blank">
             <span>Mint</span>
-          </Link>
+          </a>
         </div>
         <div className={styles.mobMid}>
           <Link className={styles.wordmark} href="/#home" aria-label={`${siteConfig.name} home`}>
@@ -98,6 +98,12 @@ export function Navbar() {
                 {item.label}
               </Link>
             ))}
+            <a href={siteConfig.openSeaUrl} rel="noreferrer" target="_blank" onClick={() => setOpen(false)}>
+              Mint
+            </a>
+            <a href={siteConfig.openSeaUrl} rel="noreferrer" target="_blank" onClick={() => setOpen(false)}>
+              Mint
+            </a>
           </nav>
         </div>
       </div>
@@ -115,7 +121,7 @@ export function Navbar() {
         <ul className={styles.markets}>
           <li>
             <a href={siteConfig.openSeaUrl} rel="noreferrer" target="_blank">
-              OpenSea
+              OpenSea mint
             </a>
           </li>
           <li>

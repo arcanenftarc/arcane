@@ -195,13 +195,12 @@ export const pageNav = [
   { href: "/#home", label: "Home" },
   { href: "/#about", label: "About" },
   { href: "/#collection", label: "Collection" },
-  { href: "/#news", label: "Updates" },
   { href: "/#whitelist", label: "Whitelist" },
 ] as const;
 
 export const sideNav = [
-  { href: siteConfig.routes.mint, label: "Mint page" },
-  { href: siteConfig.routes.collection, label: "Collection" },
-  { href: siteConfig.routes.lore, label: "Lore" },
-  { href: siteConfig.routes.whitelist, label: "Whitelist" },
+  { href: "/#home", label: "Home" },
+  { href: "/#about", label: "About" },
+  { href: "/#collection", label: "Collection" },
+  { href: "/#whitelist", label: "Whitelist" },
 ] as const;

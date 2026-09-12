@@ -9,7 +9,7 @@
 }
 
 .hero {
-  overflow: hidden;
+  overflow: visible;
   padding: 2.5rem 0 5.5rem;
 }
 

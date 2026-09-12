@@ -5,12 +5,11 @@
 
 .stage {
   position: relative;
-  overflow: hidden;
-  padding: 0.4rem 0 0;
+  overflow: visible;
 }
 
 .sizer {
-  width: 42%;
+  width: min(42%, 28rem);
   margin: 0 auto;
   aspect-ratio: 1;
   visibility: hidden;
@@ -18,22 +17,16 @@
 
 .card {
   position: absolute;
-  top: 0.4rem;
-  width: 42%;
+  top: 50%;
+  left: 50%;
+  width: min(42%, 28rem);
   margin: 0;
   opacity: 0;
   pointer-events: none;
+  will-change: transform, opacity;
   transition:
-    left 560ms cubic-bezier(0.22, 0.61, 0.36, 1),
-    transform 560ms cubic-bezier(0.22, 0.61, 0.36, 1),
-    opacity 420ms ease;
-}
-
-.wrap[data-swiping] .card {
-  transition:
-    left 560ms cubic-bezier(0.16, 0.84, 0.24, 1),
-    transform 560ms cubic-bezier(0.16, 0.84, 0.24, 1),
-    opacity 360ms ease;
+    transform 800ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 800ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .hit {
@@ -50,6 +43,7 @@
   padding: 0.45rem;
   border: 1px solid color-mix(in srgb, var(--moon-white) 42%, transparent);
   background: color-mix(in srgb, var(--moon-white) 5%, transparent);
+  transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .frame img {
@@ -58,79 +52,49 @@
   object-fit: cover;
 }
 
-.prev2 {
-  left: 0;
-  transform: translateX(-62%) scale(0.62);
+.hiddenPrev {
+  transform: translate(-190%, -50%) scale(0.5);
   opacity: 0;
+  z-index: 0;
+}
+
+.hiddenNext {
+  transform: translate(90%, -50%) scale(0.5);
+  opacity: 0;
+  z-index: 0;
 }
 
 .prev {
-  left: 0;
   z-index: 2;
-  opacity: 1;
+  opacity: 0.92;
   pointer-events: auto;
-  transform: translateX(-8%);
+  transform: translate(-128%, -50%) scale(0.68);
 }
 
 .next {
-  left: 58%;
   z-index: 2;
-  opacity: 1;
+  opacity: 0.92;
   pointer-events: auto;
-  transform: translateX(8%);
-}
-
-.next2 {
-  left: 100%;
-  transform: translateX(-38%) scale(0.62);
-  opacity: 0;
+  transform: translate(28%, -50%) scale(0.68);
 }
 
 .active {
-  left: 29%;
   z-index: 3;
   opacity: 1;
   pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
 }
 
-.prev .frame,
-.prev2 .frame {
-  transform: perspective(1100px) scaleY(0.92) rotateY(-24deg);
+.prev .frame {
+  transform: perspective(1200px) rotateY(18deg);
 }
 
-.next .frame,
-.next2 .frame {
-  transform: perspective(1100px) scaleY(0.92) rotateY(24deg);
+.next .frame {
+  transform: perspective(1200px) rotateY(-18deg);
 }
 
 .active .frame {
-  transform: perspective(1100px) rotateY(0deg);
-}
-
-.wrap[data-swiping="next"] .active .frame {
-  animation: swipe-in-next 560ms cubic-bezier(0.16, 0.84, 0.24, 1);
-}
-
-.wrap[data-swiping="prev"] .active .frame {
-  animation: swipe-in-prev 560ms cubic-bezier(0.16, 0.84, 0.24, 1);
-}
-
-@keyframes swipe-in-next {
-  from {
-    transform: perspective(1100px) rotateY(28deg) scale(0.9) translateX(12%);
-  }
-  to {
-    transform: perspective(1100px) rotateY(0deg) scale(1) translateX(0);
-  }
-}
-
-@keyframes swipe-in-prev {
-  from {
-    transform: perspective(1100px) rotateY(-28deg) scale(0.9) translateX(-12%);
-  }
-  to {
-    transform: perspective(1100px) rotateY(0deg) scale(1) translateX(0);
-  }
+  transform: perspective(1200px) rotateY(0deg);
 }
 
 .nav {
@@ -140,7 +104,7 @@
   gap: 2.4rem;
   position: relative;
   z-index: 4;
-  margin: -0.85rem 0 1.1rem;
+  margin: 15% 0 1.25rem;
 }
 
 .nav button {
@@ -166,37 +130,37 @@
 @media (max-width: 768px) {
   .sizer,
   .card {
-    width: 86%;
+    width: 78%;
   }
 
-  .sizer {
-    margin-inline: auto;
-  }
-
-  .prev2,
-  .next2,
   .prev,
-  .next {
-    opacity: 0;
+  .next,
+  .hiddenPrev,
+  .hiddenNext {
     pointer-events: none;
+    opacity: 0;
   }
 
   .prev {
-    left: -100%;
+    transform: translate(-160%, -50%) scale(0.6);
   }
 
   .next {
-    left: 100%;
+    transform: translate(60%, -50%) scale(0.6);
   }
 
   .active {
-    left: 7%;
+    transform: translate(-50%, -50%) scale(1);
   }
 
   .prev .frame,
   .next .frame,
   .active .frame {
     transform: none;
+  }
+
+  .nav {
+    margin-top: 12%;
   }
 }
 
@@ -204,18 +168,5 @@
   .card,
   .frame {
     transition: none;
-  }
-
-  .wrap[data-swiping="next"] .active .frame,
-  .wrap[data-swiping="prev"] .active .frame {
-    animation: none;
-  }
-
-  .prev .frame,
-  .next .frame,
-  .prev2 .frame,
-  .next2 .frame,
-  .active .frame {
-    transform: none;
   }
 }
