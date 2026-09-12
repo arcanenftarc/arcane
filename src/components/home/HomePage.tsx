@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -11,19 +10,13 @@ import { HeroCarousel } from "@/components/home/HeroCarousel";
 import styles from "./HomePage.module.css";
 
 const teasers = [
-  { src: siteConfig.assets.collections[0], alt: "Portal fragment from the Arcane visual world.", caption: "Portal" },
-  { src: siteConfig.assets.collections[1], alt: "A dark relic lit by ice-blue glow.", caption: "Relic" },
-  { src: siteConfig.assets.collections[2], alt: "A distant stone ring gate in night sky.", caption: "Gate" },
-  { src: siteConfig.assets.collections[3], alt: "Abstract cyan energy filaments forming a sigil.", caption: "Sigil" },
+  { src: siteConfig.assets.collections[0], alt: "Portal fragment from the Arcane visual world." },
+  { src: siteConfig.assets.collections[1], alt: "A dark relic lit by ice-blue glow." },
+  { src: siteConfig.assets.collections[2], alt: "A distant stone ring gate in night sky." },
+  { src: siteConfig.assets.collections[3], alt: "Abstract cyan energy filaments forming a sigil." },
 ];
 
 export function HomePage({ xStatus }: { xStatus?: string }) {
-  const collectionRow = [...teasers, ...teasers];
-  const collectionTop = collectionRow.slice(0, 4);
-  const collectionBottom = collectionRow.slice(4, 8);
-  const featured = siteConfig.updates[0];
-  const sideUpdates = siteConfig.updates.slice(1);
-
   return (
     <>
       <section className={styles.hero} id="home" aria-label="Arcane home">
@@ -36,9 +29,6 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
             <p>{siteConfig.copy.heroLead}</p>
             <div className={styles.heroActions}>
               <Button href="/#whitelist">{siteConfig.copy.whitelistCta}</Button>
-              <Button href="/#mint-title" variant="secondary">
-                How to mint
-              </Button>
             </div>
           </div>
         </Container>
@@ -84,134 +74,6 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
             </div>
           </div>
         </div>
-
-        <Container className={styles.mintBlock}>
-          <div className={styles.mintCopy}>
-            <DisplayTitle id="mint-title" text={siteConfig.copy.mintTitle} align="left" />
-            <SlashRule />
-            <div className={styles.copyStack}>
-              {siteConfig.mintParagraphs.map((paragraph) => (
-                <p key={paragraph.slice(0, 24)}>{paragraph}</p>
-              ))}
-            </div>
-            <Button href={siteConfig.routes.mint}>How to mint</Button>
-          </div>
-          <div className={styles.mintRight}>
-            <ol className={styles.steps}>
-              {siteConfig.process.map((step) => (
-                <li key={step.n}>
-                  <div className={styles.step}>
-                    <p className={styles.stepN}>{step.n}</p>
-                    <p className={styles.stepTitle}>{step.title}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <div className={styles.video}>
-              <Image src={siteConfig.assets.background} alt="" width={1280} height={720} />
-              <p className={styles.play} aria-hidden="true">
-                ▶
-              </p>
-              <p className={styles.videoNote}>{siteConfig.copy.videoNote}</p>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <Divider />
-
-      <section className={styles.collection} id="collection">
-        <Container>
-          <DisplayTitle text={siteConfig.copy.collectionTitle} size="lg" />
-          <div className={styles.mosaic}>
-            <div className={styles.mosaicTop}>
-              {collectionTop.map((item, i) => (
-                <figure className={styles.piece} key={`top-${item.src}-${i}`}>
-                  <div className={styles.pieceIn}>
-                    <Image src={item.src} alt={item.alt} width={640} height={640} />
-                  </div>
-                </figure>
-              ))}
-            </div>
-            <div className={styles.mosaicBottom}>
-              {collectionBottom.map((item, i) => (
-                <figure className={styles.piece} key={`bot-${item.src}-${i}`}>
-                  <div className={styles.pieceIn}>
-                    <Image src={item.src} alt={item.alt} width={640} height={640} />
-                  </div>
-                </figure>
-              ))}
-            </div>
-          </div>
-          <div className={styles.desc}>
-            <p>{siteConfig.copy.collectionBody}</p>
-            <Button href={siteConfig.routes.collection}>See all collection</Button>
-          </div>
-        </Container>
-      </section>
-
-      <Divider />
-
-      <section className={styles.roadmap} id="roadmap">
-        <Container>
-          <DisplayTitle text={siteConfig.copy.roadmapTitle} size="lg" />
-          <div className={styles.roadTrack}>
-            {siteConfig.roadmap.map((item) => (
-              <article className={styles.phase} key={item.phase}>
-                <span className={styles.phaseDot} aria-hidden="true" />
-                <p className={styles.phaseTag}>{item.phase}</p>
-                <div className={styles.phaseBody}>
-                  <p className={styles.phaseWhen}>{item.when}</p>
-                  <h3>{item.title}</h3>
-                  <p>{item.body}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <Divider />
-
-      <section className={styles.news} id="news">
-        <Container>
-          <DisplayTitle text={siteConfig.copy.newsTitle} size="lg" />
-          <div className={styles.newsPart}>
-            <article className={styles.newsFeature}>
-              <p className={styles.newsN}>{featured.n}</p>
-              <p className={styles.newsMeta}>{featured.meta}</p>
-              <h3>
-                <Link href={featured.href}>{featured.title}</Link>
-              </h3>
-              <div className={styles.newsImage}>
-                <Image src={teasers[0].src} alt="" width={900} height={640} />
-              </div>
-              <Link className={styles.readMore} href={featured.href}>
-                Read more
-              </Link>
-            </article>
-            <div className={styles.newsSide}>
-              {sideUpdates.map((item) => (
-                <article className={styles.newsItem} key={item.n}>
-                  <p className={styles.newsN}>{item.n}</p>
-                  <p className={styles.newsMeta}>{item.meta}</p>
-                  <h3>
-                    <Link href={item.href}>{item.title}</Link>
-                  </h3>
-                  <Link className={styles.readMore} href={item.href}>
-                    Read more
-                  </Link>
-                </article>
-              ))}
-            </div>
-          </div>
-          <div className={styles.newsBottom}>
-            <Button href={siteConfig.routes.lore} full>
-              Read all updates
-            </Button>
-            <p>{siteConfig.copy.newsIntro}</p>
-          </div>
-        </Container>
       </section>
 
       <Divider />

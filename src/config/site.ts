@@ -185,7 +185,6 @@ export type SiteConfig = typeof siteConfig;
 
 export const navItems = [
   { href: siteConfig.routes.home, label: "Home" },
-  { href: siteConfig.routes.collection, label: "Collection" },
   { href: siteConfig.routes.lore, label: "Lore" },
   { href: siteConfig.routes.whitelist, label: "Whitelist" },
   { href: siteConfig.routes.mint, label: "Mint" },
@@ -194,13 +193,11 @@ export const navItems = [
 export const pageNav = [
   { href: "/#home", label: "Home" },
   { href: "/#about", label: "About" },
-  { href: "/#collection", label: "Collection" },
   { href: "/#whitelist", label: "Whitelist" },
 ] as const;
 
 export const sideNav = [
   { href: "/#home", label: "Home" },
   { href: "/#about", label: "About" },
-  { href: "/#collection", label: "Collection" },
   { href: "/#whitelist", label: "Whitelist" },
 ] as const;

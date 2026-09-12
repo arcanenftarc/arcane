@@ -1,8 +1,5 @@
 .hero,
 .about,
-.collection,
-.roadmap,
-.news,
 .contact,
 .facts {
   scroll-margin-top: calc(var(--header-h) + 0.75rem);
@@ -135,16 +132,14 @@
   padding: 0 1.25rem 1rem;
 }
 
-.aboutCopyInner,
-.mintCopy {
+.aboutCopyInner {
   display: grid;
   gap: 1.1rem;
   align-content: start;
   justify-items: start;
 }
 
-.aboutCopyInner :global(a),
-.mintCopy :global(a) {
+.aboutCopyInner :global(a) {
   width: fit-content;
 }
 
@@ -157,32 +152,6 @@
 .copyStack p {
   margin-bottom: 0;
   color: var(--text-muted);
-}
-
-.mintBlock {
-  display: grid;
-  gap: 2.5rem;
-}
-
-.mintRight {
-  display: grid;
-  gap: 1.5rem;
-}
-
-.steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 1.6rem;
-}
-
-.step {
-  height: 100%;
-  padding: 1.15rem;
-  border: 1px solid color-mix(in srgb, var(--moon-white) 15%, transparent);
-  background: color-mix(in srgb, var(--moon-white) 3%, transparent);
-  box-shadow: 0 5px 20px color-mix(in srgb, black 25%, transparent);
 }
 
 .stepN {
@@ -204,238 +173,12 @@
   text-transform: uppercase;
 }
 
-.video {
-  position: relative;
-  overflow: hidden;
-  min-height: 15rem;
-  border: 1px solid color-mix(in srgb, var(--moon-white) 15%, transparent);
-}
-
-.video img {
-  width: 100%;
-  height: 100%;
-  min-height: 15rem;
-  object-fit: cover;
-  filter: brightness(0.55);
-}
-
-.play {
-  position: absolute;
-  left: 50%;
-  top: 46%;
-  z-index: 1;
-  width: 4.6rem;
-  height: 4.6rem;
-  margin: -2.3rem 0 0 -2.3rem;
-  display: grid;
-  place-items: center;
-  border: 2px solid color-mix(in srgb, var(--moon-white) 45%, transparent);
-  border-radius: 50%;
-  color: var(--moon-white);
-  background: color-mix(in srgb, black 35%, transparent);
-}
-
-.videoNote {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 1rem;
-  text-align: center;
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--celestial);
-}
-
-.collection,
-.roadmap,
-.news,
 .contact {
   padding: 5.5rem 0 5.8rem;
 }
 
-.collection :global(h2),
-.roadmap :global(h2),
-.news :global(h2),
 .contact :global(h2) {
   margin-bottom: 4.5rem;
-}
-
-.mosaic {
-  display: grid;
-  gap: 0.4rem;
-  margin-bottom: 4rem;
-}
-
-.mosaicTop,
-.mosaicBottom {
-  display: grid;
-  gap: 1.25rem;
-}
-
-.piece {
-  margin: 0;
-}
-
-.pieceIn {
-  padding: 1.05rem;
-  border: 1px solid color-mix(in srgb, var(--moon-white) 42%, transparent);
-  background: color-mix(in srgb, var(--moon-white) 5%, transparent);
-}
-
-.piece img {
-  width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
-  transition: transform 400ms ease;
-}
-
-.piece:hover img {
-  transform: scale(1.04);
-}
-
-.roadTrack {
-  display: grid;
-  gap: 1.25rem;
-  position: relative;
-}
-
-.roadTrack::before {
-  content: "";
-  display: none;
-}
-
-.phase {
-  position: relative;
-  padding-top: 2.4rem;
-}
-
-.phaseDot {
-  position: absolute;
-  top: 0;
-  left: 1.4rem;
-  width: 0.9rem;
-  height: 0.9rem;
-  border-radius: 50%;
-  background: linear-gradient(90deg, var(--magic-ice), var(--arcane-cyan));
-}
-
-.phaseDot::after {
-  content: "";
-  position: absolute;
-  inset: 0.22rem;
-  border-radius: 50%;
-  background: var(--deep-space);
-}
-
-.phaseTag {
-  position: absolute;
-  top: 0;
-  left: 2.7rem;
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--arcane-cyan);
-}
-
-.phaseBody {
-  padding: 1.3rem 1.2rem 1.4rem;
-  border: 1px solid color-mix(in srgb, var(--moon-white) 15%, transparent);
-  background: color-mix(in srgb, var(--moon-white) 3%, transparent);
-  box-shadow: 0 5px 20px color-mix(in srgb, black 25%, transparent);
-}
-
-.phaseWhen {
-  font-size: 0.9rem;
-  color: var(--soft-periwinkle);
-}
-
-.phase h3 {
-  margin-top: 0.35rem;
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 500;
-}
-
-.phaseBody p:last-child {
-  margin-top: 0.45rem;
-  color: var(--text-muted);
-}
-
-.newsPart {
-  display: grid;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.newsFeature,
-.newsItem {
-  padding: 1.6rem;
-  border: 1px solid color-mix(in srgb, var(--moon-white) 15%, transparent);
-  box-shadow: 0 5px 20px color-mix(in srgb, black 25%, transparent);
-}
-
-.newsSide {
-  display: grid;
-  gap: 1.5rem;
-}
-
-.newsN {
-  width: 3.1rem;
-  height: 3.1rem;
-  display: grid;
-  place-items: center;
-  margin-bottom: 0.8rem;
-  border-radius: 50%;
-  letter-spacing: 0.12em;
-  box-shadow: 0 0 18px color-mix(in srgb, var(--arcane-cyan) 22%, transparent);
-}
-
-.newsMeta {
-  color: var(--soft-periwinkle);
-  font-size: 0.9rem;
-}
-
-.newsFeature h3,
-.newsItem h3 {
-  margin: 0.55rem 0 1rem;
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 500;
-}
-
-.newsImage {
-  overflow: hidden;
-  margin-bottom: 1.1rem;
-}
-
-.newsImage img {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-}
-
-.readMore {
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--arcane-cyan);
-}
-
-.readMore:hover,
-.newsFeature h3 a:hover,
-.newsItem h3 a:hover {
-  color: var(--magic-ice);
-}
-
-.newsBottom {
-  display: grid;
-  gap: 1.25rem;
-  align-items: center;
-}
-
-.newsBottom p {
-  color: var(--text-muted);
 }
 
 .whitelistLayout {
@@ -514,34 +257,6 @@
   .factGrid li:last-child .factRule {
     display: none;
   }
-
-  .steps {
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-  }
-
-  .mosaicTop,
-  .mosaicBottom {
-    grid-template-columns: 1.66fr 1fr 1.66fr 1fr;
-  }
-
-  .mosaicBottom {
-    grid-template-columns: 1fr 1.66fr 1fr 1.66fr;
-  }
-
-  .roadTrack {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .roadTrack::before {
-    display: block;
-    position: absolute;
-    top: 0.42rem;
-    left: 1.4rem;
-    right: 1.4rem;
-    height: 1px;
-    background: color-mix(in srgb, var(--moon-white) 18%, transparent);
-  }
 }
 
 @media (min-width: 1040px) {
@@ -570,22 +285,6 @@
     max-width: 31rem;
   }
 
-  .mintBlock {
-    grid-template-columns: 0.4fr 0.6fr;
-    gap: 4.5rem;
-    align-items: start;
-  }
-
-  .newsPart {
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-  }
-
-  .newsBottom {
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-  }
-
   .whitelistLayout {
     grid-template-columns: 1.15fr 0.85fr;
     gap: 4rem;
@@ -593,8 +292,3 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .piece img {
-    transition: none;
-  }
-}
