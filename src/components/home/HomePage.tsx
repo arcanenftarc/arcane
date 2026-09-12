@@ -17,18 +17,18 @@ const teasers = [
 export function HomePage() {
   return (
     <>
-      <div className={styles.fixedScene}>
-        <Image
-          src={siteConfig.assets.background}
-          alt="A circular cyan portal of light in a deep navy atmosphere."
-          fill
-          priority
-          sizes="100vw"
-          className={styles.image}
-        />
-        <div className={styles.overlay} />
-      </div>
       <section className={styles.hero} aria-label="Arcane hero">
+        <div className={styles.media}>
+          <Image
+            src={siteConfig.assets.background}
+            alt="A circular cyan portal of light in a deep navy atmosphere."
+            fill
+            priority
+            sizes="100vw"
+            className={styles.image}
+          />
+          <div className={styles.overlay} />
+        </div>
         <Container className={styles.content}>
           <p className={styles.kicker}>{siteConfig.copy.heroKicker}</p>
           <h1 className={styles.title}>{siteConfig.copy.heroTitle}</h1>

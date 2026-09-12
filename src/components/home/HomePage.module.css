@@ -1,11 +1,6 @@
-.fixedScene {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
+.media {
+  position: absolute;
+  inset: 0;
 }
 
 .image {
@@ -18,7 +13,8 @@
   inset: 0;
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--deep-space) 70%, transparent) 0%, transparent 28%),
-    radial-gradient(ellipse at 50% 46%, transparent 18%, color-mix(in srgb, var(--deep-space) 38%, transparent) 72%);
+    radial-gradient(ellipse at 50% 46%, transparent 18%, color-mix(in srgb, var(--deep-space) 32%, transparent) 70%),
+    linear-gradient(180deg, transparent 58%, var(--deep-space) 100%);
 }
 
 .hero {
@@ -27,6 +23,7 @@
   min-height: 100svh;
   display: grid;
   place-items: center;
+  overflow: hidden;
   max-width: 100%;
 }
 
@@ -108,15 +105,21 @@
   position: relative;
   z-index: 1;
   padding: 4.5rem 0;
-  background: transparent;
+  background: var(--deep-space);
   max-width: 100%;
   overflow: hidden;
 }
 
-.sectionIntro,
-.sectionAlt,
+.sectionIntro {
+  background: var(--deep-space);
+}
+
+.sectionAlt {
+  background: #152448;
+}
+
 .sectionMuted {
-  background: transparent;
+  background: #0f1b36;
 }
 
 .stats {
@@ -133,7 +136,7 @@
   margin: 0;
   overflow: hidden;
   border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--deep-space) 72%, transparent);
+  background: #0c1730;
   transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
 }
 
