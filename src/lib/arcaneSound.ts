@@ -49,19 +49,56 @@ function ensureContext() {
   return ctx;
 }
 
-function tone(context: AudioContext, dest: AudioNode, frequency: number, start: number, duration: number, volume: number) {
+function snap(context: AudioContext, dest: AudioNode, start: number) {
   const osc = context.createOscillator();
   const gain = context.createGain();
-  osc.type = "sine";
-  osc.frequency.setValueAtTime(frequency, start);
-  osc.frequency.exponentialRampToValueAtTime(frequency * 0.72, start + duration);
-  gain.gain.setValueAtTime(0.0001, start);
-  gain.gain.exponentialRampToValueAtTime(volume, start + 0.012);
-  gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+  osc.type = "triangle";
+  osc.frequency.setValueAtTime(3200, start);
+  gain.gain.setValueAtTime(0.16, start);
+  gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.045);
   osc.connect(gain);
   gain.connect(dest);
   osc.start(start);
-  osc.stop(start + duration + 0.02);
+  osc.stop(start + 0.05);
+}
+
+export function playClick() {
+  if (muted) {
+    return;
+  }
+  const context = ensureContext();
+  if (!context || !master) {
+    return;
+  }
+
+  const now = context.currentTime;
+  const bus = context.createGain();
+  bus.gain.value = 0.85;
+  bus.connect(master);
+
+  snap(context, bus, now);
+
+  const length = Math.max(32, Math.floor(context.sampleRate * 0.008));
+  const buffer = context.createBuffer(1, length, context.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < data.length; i += 1) {
+    data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 3);
+  }
+
+  const noise = context.createBufferSource();
+  noise.buffer = buffer;
+  const filter = context.createBiquadFilter();
+  filter.type = "bandpass";
+  filter.frequency.value = 4200;
+  filter.Q.value = 1.4;
+  const noiseGain = context.createGain();
+  noiseGain.gain.setValueAtTime(0.22, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.018);
+  noise.connect(filter);
+  filter.connect(noiseGain);
+  noiseGain.connect(bus);
+  noise.start(now);
+  noise.stop(now + 0.02);
 }
 
 export function initSound() {
@@ -127,44 +164,6 @@ function attachMusic() {
   if (!muted) {
     void music.play().catch(() => {});
   }
-}
-
-export function playClick() {
-  if (muted) {
-    return;
-  }
-  const context = ensureContext();
-  if (!context || !master) {
-    return;
-  }
-
-  const now = context.currentTime;
-  const bus = context.createGain();
-  bus.gain.value = 0.55;
-  bus.connect(master);
-
-  tone(context, bus, 1244, now, 0.16, 0.11);
-  tone(context, bus, 1866, now + 0.008, 0.12, 0.05);
-  tone(context, bus, 3136, now + 0.016, 0.09, 0.028);
-
-  const noise = context.createBufferSource();
-  const buffer = context.createBuffer(1, Math.floor(context.sampleRate * 0.04), context.sampleRate);
-  const data = buffer.getChannelData(0);
-  for (let i = 0; i < data.length; i += 1) {
-    data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
-  }
-  const filter = context.createBiquadFilter();
-  filter.type = "highpass";
-  filter.frequency.value = 2400;
-  const noiseGain = context.createGain();
-  noiseGain.gain.setValueAtTime(0.04, now);
-  noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
-  noise.buffer = buffer;
-  noise.connect(filter);
-  filter.connect(noiseGain);
-  noiseGain.connect(bus);
-  noise.start(now);
-  noise.stop(now + 0.05);
 }
 
 export function isSoundTarget(node: EventTarget | null) {
