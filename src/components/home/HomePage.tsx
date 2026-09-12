@@ -32,6 +32,7 @@ export function HomePage() {
         <Container className={styles.content}>
           <p className={styles.kicker}>{siteConfig.copy.heroKicker}</p>
           <h1 className={styles.title}>{siteConfig.copy.heroTitle}</h1>
+          <div className={styles.rule} aria-hidden="true" />
           <p className={styles.facts}>
             <span>{siteConfig.supplyDisplay} NFTs</span>
             <span>{siteConfig.mintPriceDisplay} mint</span>

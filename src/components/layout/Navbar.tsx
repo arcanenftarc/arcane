@@ -33,11 +33,12 @@ export function Navbar() {
         <nav className={styles.desktopNav} aria-label="Primary">
           {navItems.map((item) => {
             const active = pathname === item.href;
+            const mint = item.href === siteConfig.routes.mint;
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`${styles.link}${active ? ` ${styles.linkActive}` : ""}`}
+                className={`${styles.link}${active ? ` ${styles.linkActive}` : ""}${mint ? ` ${styles.mint}` : ""}`}
                 aria-current={active ? "page" : undefined}
               >
                 {item.label}
@@ -50,12 +51,6 @@ export function Navbar() {
           <div className={styles.aside}>
             <a className={styles.social} href={siteConfig.social.x} rel="noreferrer" target="_blank">
               X
-            </a>
-            <a className={styles.social} href={siteConfig.social.discord} rel="noreferrer" target="_blank">
-              Discord
-            </a>
-            <a className={styles.social} href={siteConfig.openSeaUrl} rel="noreferrer" target="_blank">
-              OpenSea
             </a>
           </div>
 
@@ -76,19 +71,16 @@ export function Navbar() {
 
       <div className={`${styles.panel}${open ? ` ${styles.panelOpen}` : ""}`} id={panelId}>
         <nav aria-label="Mobile">
-          {navItems.map((item) => (
-            <Link key={item.href} href={item.href}>
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const mint = item.href === siteConfig.routes.mint;
+            return (
+              <Link key={item.href} href={item.href} className={mint ? styles.mintMobile : undefined}>
+                {item.label}
+              </Link>
+            );
+          })}
           <a href={siteConfig.social.x} rel="noreferrer" target="_blank">
             X
-          </a>
-          <a href={siteConfig.social.discord} rel="noreferrer" target="_blank">
-            Discord
-          </a>
-          <a href={siteConfig.openSeaUrl} rel="noreferrer" target="_blank">
-            OpenSea
           </a>
         </nav>
       </div>
