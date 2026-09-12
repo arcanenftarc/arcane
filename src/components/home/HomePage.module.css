@@ -1,0 +1,149 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-items: end;
+  overflow: hidden;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+}
+
+.image {
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--deep-space) 78%, transparent) 0%, transparent 28%),
+    linear-gradient(90deg, color-mix(in srgb, var(--deep-space) 55%, transparent) 0%, transparent 42%),
+    linear-gradient(180deg, transparent 48%, color-mix(in srgb, var(--deep-space) 88%, transparent) 100%);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  padding: calc(var(--header-h) + 2.5rem) 0 4.5rem;
+}
+
+.kicker {
+  display: block;
+  margin-bottom: 0.85rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--arcane-cyan);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 9vw, 7.2rem);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 0.92;
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.75rem;
+  margin: 1.2rem 0 1.15rem;
+  font-size: 0.92rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--magic-ice);
+}
+
+.lead {
+  max-width: 32rem;
+  color: var(--celestial);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.6rem;
+}
+
+.section {
+  position: relative;
+  padding: 4.5rem 0;
+}
+
+.sectionAlt {
+  background: #152448;
+}
+
+.sectionMuted {
+  background: #0f1b36;
+}
+
+.stats {
+  display: grid;
+  gap: 1rem;
+}
+
+.gallery {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.frame {
+  margin: 0;
+  border: 1px solid var(--line);
+  background: #0c1730;
+}
+
+.frame img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.frame figcaption {
+  padding: 0.7rem 0.8rem 0.85rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--soft-periwinkle);
+}
+
+.split {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.4rem;
+}
+
+@media (min-width: 700px) {
+  .stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .split {
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: end;
+  }
+}

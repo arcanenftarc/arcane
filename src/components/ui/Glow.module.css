@@ -1,0 +1,13 @@
+.glow {
+  pointer-events: none;
+  position: absolute;
+  width: min(28rem, 70vw);
+  height: min(28rem, 70vw);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--arcane-cyan) 22%, transparent) 0%,
+    transparent 68%
+  );
+  z-index: 0;
+}

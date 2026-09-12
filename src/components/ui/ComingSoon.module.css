@@ -1,0 +1,37 @@
+.page {
+  position: relative;
+  min-height: 100svh;
+  padding: calc(var(--header-h) + 3.5rem) 0 5rem;
+  background:
+    radial-gradient(ellipse at 20% 0%, color-mix(in srgb, var(--arcane-navy) 70%, transparent), transparent 46%),
+    var(--deep-space);
+}
+
+.status {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--arcane-cyan);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+}
+
+.body {
+  max-width: 38rem;
+  margin-top: 1rem;
+  color: var(--text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.8rem;
+}
