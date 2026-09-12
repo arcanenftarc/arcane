@@ -9,7 +9,7 @@ import { HeroCarousel } from "@/components/home/HeroCarousel";
 import styles from "./HomePage.module.css";
 
 const teasers = [
-  { src: siteConfig.assets.collections[0], alt: "Portal fragment from the Arcane visual world." },
+  { src: siteConfig.assets.collections[0], alt: "Sneak peek from the Arcane collection." },
   { src: siteConfig.assets.collections[1], alt: "A dark relic lit by ice-blue glow." },
   { src: siteConfig.assets.collections[2], alt: "A distant stone ring gate in night sky." },
   { src: siteConfig.assets.collections[3], alt: "Abstract cyan energy filaments forming a sigil." },
@@ -87,7 +87,7 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
               <div className={styles.aboutBgDim} />
             </div>
             <div className={styles.aboutFrame} data-reveal data-aura>
-              <Image src={siteConfig.assets.collections[0]} alt="Portal fragment." width={900} height={900} />
+              <Image src={siteConfig.assets.aboutArt} alt="Arcane teaser art." width={900} height={900} />
             </div>
           </div>
           <div className={styles.aboutCopy}>
