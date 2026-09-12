@@ -1,0 +1,133 @@
+.list {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.card {
+  overflow: hidden;
+  padding: 1.15rem 1.2rem 1.2rem;
+  border: 1px solid var(--line-soft);
+  background: var(--panel);
+  transition:
+    border-color 340ms var(--ease-out),
+    box-shadow 340ms var(--ease-out);
+}
+
+.verified {
+  border-color: color-mix(in srgb, var(--arcane-cyan) 42%, transparent);
+}
+
+.n {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 600;
+  line-height: 1;
+  background: linear-gradient(150deg, var(--magic-ice), var(--arcane-cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.title {
+  margin-top: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--moon-white);
+}
+
+.body {
+  margin-top: 0.35rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.phrase {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 0.75rem;
+  margin-top: 0.7rem;
+  color: var(--magic-ice) !important;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.copy {
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--line-soft);
+  background: transparent;
+  color: var(--celestial);
+  font: inherit;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.95rem;
+}
+
+.open,
+.verify {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.35rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    border-color 280ms var(--ease-out),
+    color 280ms var(--ease-out),
+    background-color 280ms var(--ease-out);
+}
+
+.open {
+  border: 1px solid color-mix(in srgb, var(--arcane-cyan) 38%, transparent);
+  background: transparent;
+  color: var(--moon-white);
+}
+
+.verify {
+  border: 1px solid transparent;
+  background: linear-gradient(180deg, #d7f7ff 0%, var(--arcane-cyan) 48%, #12b4dd 100%);
+  color: #06131f;
+}
+
+.verify:disabled {
+  cursor: default;
+  background: color-mix(in srgb, var(--arcane-cyan) 18%, transparent);
+  border-color: color-mix(in srgb, var(--arcane-cyan) 40%, transparent);
+  color: var(--magic-ice);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    border-color: color-mix(in srgb, var(--arcane-cyan) 42%, transparent);
+    box-shadow: var(--shadow-md), var(--glow-cyan);
+  }
+
+  .open:hover {
+    color: var(--magic-ice);
+    border-color: var(--arcane-cyan);
+  }
+
+  .copy:hover {
+    color: var(--magic-ice);
+    border-color: color-mix(in srgb, var(--arcane-cyan) 50%, transparent);
+  }
+}

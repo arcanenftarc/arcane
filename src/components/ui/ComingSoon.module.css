@@ -31,29 +31,10 @@
   color: var(--text-muted);
 }
 
-.steps {
-  list-style: none;
-  max-width: 32rem;
+.quest {
+  max-width: 38rem;
   margin: 1.6rem auto 0;
-  padding: 0;
-  display: grid;
-  gap: 0.75rem;
   text-align: left;
-}
-
-.steps li {
-  padding: 1rem 1.1rem;
-  border: 1px solid var(--line-soft);
-  background: var(--panel);
-}
-
-.steps strong {
-  display: block;
-  margin-bottom: 0.25rem;
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--moon-white);
 }
 
 .actions {

@@ -6,6 +6,7 @@ import { DisplayTitle } from "@/components/ui/DisplayTitle";
 import { Sigil } from "@/components/ui/Sigil";
 import { XLoginButton } from "@/components/auth/XLoginButton";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
+import { WhitelistQuest } from "@/components/home/WhitelistQuest";
 import styles from "./HomePage.module.css";
 
 const teasers = [
@@ -57,19 +58,12 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
             <div data-reveal>
               <p>{siteConfig.copy.communityBody}</p>
               <p>{siteConfig.copy.communityBody2}</p>
-              <ol className={styles.whitelistSteps}>
-                {siteConfig.whitelistSteps.map((step) => (
-                  <li key={step.n} data-aura>
-                    <p className={styles.stepN}>{step.n}</p>
-                    <p className={styles.stepTitle}>{step.title}</p>
-                    <p>{step.body}</p>
-                  </li>
-                ))}
-              </ol>
+              <WhitelistQuest />
             </div>
             <div className={styles.whitelistLogin} data-reveal data-aura>
               <p className={styles.contactLabel}>Sign in</p>
-              <p className={styles.whitelistLead}>Connect X to apply. This is not a wallet connect.</p>
+              <p className={styles.whitelistLead}>Connect X after the quests. This is not a wallet connect.</p>
+              <p>A bot can confirm follow, comment, and retweet through the X API once login is live. Verify on each quest stores progress here until then.</p>
               <XLoginButton />
               {xStatus === "setup" ? <p className={styles.notice}>{siteConfig.copy.xSetup}</p> : null}
               {xStatus === "error" ? <p className={styles.notice}>{siteConfig.copy.xError}</p> : null}

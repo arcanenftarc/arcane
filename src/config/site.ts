@@ -15,7 +15,8 @@ export const siteConfig = {
   email: "arcanenftarc@gmail.com",
   openSeaUrl: "https://opensea.io/",
   social: {
-    x: "https://x.com/",
+    x: "https://x.com/ArcaneNFTArc",
+    xHandle: "ArcaneNFTArc",
     discord: "https://discord.com/",
   },
   routes: {
@@ -95,7 +96,7 @@ export const siteConfig = {
     communityEyebrow: "Access",
     communityTitle: "Whitelist",
     communityBody:
-      "Whitelist is how you apply before mint. Connect X on this page — not a wallet. After you are signed in, the tasks for this drop will show here.",
+      "Complete the three X quests, then Connect X. No wallet is required. A bot can confirm follow, comment, and retweet after login — Verify marks them on this device until that is live.",
     communityBody2:
       "Keep the same X account through the process. Mint opens on OpenSea when the date is announced.",
     whitelistCta: "Apply for whitelist",
@@ -159,9 +160,34 @@ export const siteConfig = {
     },
   ],
   whitelistSteps: [
-    { n: "01", title: "Connect X", body: "Use Continue with X on this page. That account is how you apply." },
-    { n: "02", title: "Do the tasks", body: "After login, whitelist tasks will appear here. No wallet is required." },
-    { n: "03", title: "Stay on the list", body: "Keep the same X account. Mint opens on OpenSea when the date is announced." },
+    {
+      id: "follow",
+      n: "01",
+      title: "Follow",
+      body: "Follow @ArcaneNFTArc on X. Opens a new tab.",
+      href: "https://x.com/ArcaneNFTArc",
+      action: "Follow on X",
+    },
+    {
+      id: "comment",
+      n: "02",
+      title: "Comment",
+      body: "Post this phrase on X. You can paste it as a comment on our latest post.",
+      phrase: "The gate is opening. @ArcaneNFTArc",
+      href: `https://x.com/intent/tweet?text=${encodeURIComponent("The gate is opening. @ArcaneNFTArc")}`,
+      action: "Comment on X",
+    },
+    {
+      id: "retweet",
+      n: "03",
+      title: "Retweet",
+      body: "Retweet or quote our page. Quote is allowed.",
+      phrase: "Held at the threshold. @ArcaneNFTArc",
+      href: `https://x.com/intent/tweet?text=${encodeURIComponent("Held at the threshold. @ArcaneNFTArc")}&url=${encodeURIComponent("https://arcanenft.xyz")}`,
+      secondaryHref: "https://x.com/ArcaneNFTArc",
+      secondaryAction: "Open profile",
+      action: "Quote / Post",
+    },
   ],
   process: [
     { n: "01", title: "Apply for whitelist", body: "When applications open, request access here. No wallet required." },
