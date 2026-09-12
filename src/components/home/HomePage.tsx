@@ -1,9 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { DisplayTitle } from "@/components/ui/DisplayTitle";
 import { Divider } from "@/components/ui/Divider";
+import { SlashRule } from "@/components/ui/SlashRule";
+import { ContactForm } from "@/components/home/ContactForm";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
 import styles from "./HomePage.module.css";
 
@@ -16,34 +19,32 @@ const teasers = [
 
 export function HomePage() {
   const collectionRow = [...teasers, ...teasers];
+  const collectionTop = collectionRow.slice(0, 4);
+  const collectionBottom = collectionRow.slice(4, 8);
+  const featured = siteConfig.updates[0];
+  const sideUpdates = siteConfig.updates.slice(1);
 
   return (
     <>
       <section className={styles.hero} id="home" aria-label="Arcane home">
-        <div className={styles.heroBg}>
-          <Image src={siteConfig.assets.background} alt="" fill sizes="100vw" className={styles.heroImage} priority />
-          <div className={styles.heroOverlay} />
-        </div>
-        <Container className={styles.heroInner}>
+        <Container>
           <DisplayTitle text={siteConfig.copy.heroTitle} as="h1" size="lg" />
           <HeroCarousel slides={teasers} />
-          <p className={styles.heroLead}>{siteConfig.copy.heroLead}</p>
-          <div className={styles.heroActions}>
+          <div className={styles.desc}>
+            <p>{siteConfig.copy.heroLead}</p>
             <Button href={siteConfig.routes.collection}>See collection</Button>
-            <Button href={siteConfig.routes.mint} variant="secondary">
-              How to mint
-            </Button>
           </div>
         </Container>
       </section>
 
-      <section className={styles.facts} aria-label="Drop facts">
+      <section className={styles.facts} id="fun_facts" aria-label="Drop facts">
         <Container>
           <ul className={styles.factGrid}>
             {siteConfig.counters.map((item) => (
               <li key={item.label}>
                 <p className={styles.factValue}>{item.value}</p>
                 <p className={styles.factLabel}>{item.label}</p>
+                <span className={styles.factRule} aria-hidden="true" />
               </li>
             ))}
           </ul>
@@ -53,35 +54,60 @@ export function HomePage() {
       <section className={styles.about} id="about">
         <div className={styles.aboutSplit}>
           <div className={styles.aboutMedia}>
-            <Image src={siteConfig.assets.collections[0]} alt="Portal fragment." width={900} height={900} />
+            <div className={styles.aboutBg}>
+              <Image src={siteConfig.assets.background} alt="" fill sizes="60vw" className={styles.aboutBgImg} />
+              <div className={styles.aboutBgDim} />
+            </div>
+            <div className={styles.aboutFrame}>
+              <Image src={siteConfig.assets.collections[0]} alt="Portal fragment." width={900} height={900} />
+            </div>
           </div>
           <div className={styles.aboutCopy}>
-            <DisplayTitle text={siteConfig.copy.aboutTitle} align="left" />
-            <div className={styles.localRule} aria-hidden="true" />
-            <p>{siteConfig.copy.aboutBody}</p>
-            <p>{siteConfig.copy.introBody}</p>
-            <Button href={siteConfig.routes.lore} variant="secondary">
-              Open lore
-            </Button>
+            <div className={styles.aboutCopyInner}>
+              <DisplayTitle text={siteConfig.copy.aboutTitle} align="left" />
+              <SlashRule />
+              <div className={styles.copyStack}>
+                {siteConfig.aboutParagraphs.map((paragraph) => (
+                  <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+                ))}
+              </div>
+              <Button href={siteConfig.routes.lore} variant="secondary">
+                Open lore
+              </Button>
+            </div>
           </div>
         </div>
 
         <Container className={styles.mintBlock}>
           <div className={styles.mintCopy}>
             <DisplayTitle id="mint-title" text={siteConfig.copy.mintTitle} align="left" />
-            <div className={styles.localRule} aria-hidden="true" />
-            <p>{siteConfig.copy.mintBody}</p>
-            <p>{siteConfig.copy.processNote}</p>
+            <SlashRule />
+            <div className={styles.copyStack}>
+              {siteConfig.mintParagraphs.map((paragraph) => (
+                <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+              ))}
+            </div>
             <Button href={siteConfig.routes.mint}>How to mint</Button>
           </div>
-          <ol className={styles.steps}>
-            {siteConfig.process.map((step) => (
-              <li key={step.n}>
-                <p className={styles.stepN}>{step.n}</p>
-                <p className={styles.stepTitle}>{step.title}</p>
-              </li>
-            ))}
-          </ol>
+          <div className={styles.mintRight}>
+            <ol className={styles.steps}>
+              {siteConfig.process.map((step) => (
+                <li key={step.n}>
+                  <div className={styles.step}>
+                    <p className={styles.stepN}>{step.n}</p>
+                    <p className={styles.stepTitle}>{step.title}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <div className={styles.video}>
+              <Image src={siteConfig.assets.background} alt="" width={1280} height={720} />
+              <p className={styles.play} aria-hidden="true">
+                ▶
+              </p>
+              <p className={styles.videoNote}>{siteConfig.copy.videoNote}</p>
+            </div>
+          </div>
         </Container>
       </section>
 
@@ -90,15 +116,28 @@ export function HomePage() {
       <section className={styles.collection} id="collection">
         <Container>
           <DisplayTitle text={siteConfig.copy.collectionTitle} size="lg" />
-          <div className={styles.collectionGrid}>
-            {collectionRow.map((item, i) => (
-              <figure className={styles.piece} key={`${item.src}-${i}`}>
-                <Image src={item.src} alt={item.alt} width={640} height={640} />
-              </figure>
-            ))}
+          <div className={styles.mosaic}>
+            <div className={styles.mosaicTop}>
+              {collectionTop.map((item, i) => (
+                <figure className={styles.piece} key={`top-${item.src}-${i}`}>
+                  <div className={styles.pieceIn}>
+                    <Image src={item.src} alt={item.alt} width={640} height={640} />
+                  </div>
+                </figure>
+              ))}
+            </div>
+            <div className={styles.mosaicBottom}>
+              {collectionBottom.map((item, i) => (
+                <figure className={styles.piece} key={`bot-${item.src}-${i}`}>
+                  <div className={styles.pieceIn}>
+                    <Image src={item.src} alt={item.alt} width={640} height={640} />
+                  </div>
+                </figure>
+              ))}
+            </div>
           </div>
-          <p className={styles.centerNote}>{siteConfig.copy.collectionBody}</p>
-          <div className={styles.centerActions}>
+          <div className={styles.desc}>
+            <p>{siteConfig.copy.collectionBody}</p>
             <Button href={siteConfig.routes.collection}>See all collection</Button>
           </div>
         </Container>
@@ -112,12 +151,58 @@ export function HomePage() {
           <div className={styles.roadTrack}>
             {siteConfig.roadmap.map((item) => (
               <article className={styles.phase} key={item.phase}>
+                <span className={styles.phaseDot} aria-hidden="true" />
                 <p className={styles.phaseTag}>{item.phase}</p>
-                <p className={styles.phaseWhen}>{item.when}</p>
-                <h3>{item.title}</h3>
-                <p>{item.body}</p>
+                <div className={styles.phaseBody}>
+                  <p className={styles.phaseWhen}>{item.when}</p>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </div>
               </article>
             ))}
+          </div>
+        </Container>
+      </section>
+
+      <Divider />
+
+      <section className={styles.news} id="news">
+        <Container>
+          <DisplayTitle text={siteConfig.copy.newsTitle} size="lg" />
+          <div className={styles.newsPart}>
+            <article className={styles.newsFeature}>
+              <p className={styles.newsN}>{featured.n}</p>
+              <p className={styles.newsMeta}>{featured.meta}</p>
+              <h3>
+                <Link href={featured.href}>{featured.title}</Link>
+              </h3>
+              <div className={styles.newsImage}>
+                <Image src={teasers[0].src} alt="" width={900} height={640} />
+              </div>
+              <Link className={styles.readMore} href={featured.href}>
+                Read more
+              </Link>
+            </article>
+            <div className={styles.newsSide}>
+              {sideUpdates.map((item) => (
+                <article className={styles.newsItem} key={item.n}>
+                  <p className={styles.newsN}>{item.n}</p>
+                  <p className={styles.newsMeta}>{item.meta}</p>
+                  <h3>
+                    <Link href={item.href}>{item.title}</Link>
+                  </h3>
+                  <Link className={styles.readMore} href={item.href}>
+                    Read more
+                  </Link>
+                </article>
+              ))}
+            </div>
+          </div>
+          <div className={styles.newsBottom}>
+            <Button href={siteConfig.routes.lore} full>
+              Read all updates
+            </Button>
+            <p>{siteConfig.copy.newsIntro}</p>
           </div>
         </Container>
       </section>
@@ -128,24 +213,30 @@ export function HomePage() {
         <Container>
           <DisplayTitle text={siteConfig.copy.communityTitle} size="lg" />
           <div className={styles.contactGrid}>
-            <p>{siteConfig.copy.communityBody}</p>
+            <div>
+              <p>{siteConfig.copy.communityBody}</p>
+              <p>{siteConfig.copy.communityBody2}</p>
+            </div>
             <div>
               <p className={styles.contactLabel}>X</p>
-              <a href={siteConfig.social.x} rel="noreferrer" target="_blank">
-                Open X
-              </a>
+              <p className={styles.contactValue}>
+                <a href={siteConfig.social.x} rel="noreferrer" target="_blank">
+                  Open X
+                </a>
+              </p>
+              <p className={styles.contactLabel}>Email</p>
+              <p className={styles.contactValue}>
+                <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+              </p>
+            </div>
+            <div>
               <p className={styles.contactLabel}>Drop</p>
-              <p>
+              <p className={styles.contactValue}>
                 {siteConfig.supplyDisplay} · {siteConfig.mintPriceDisplay} · {siteConfig.mintPlatform}
               </p>
             </div>
-            <div className={styles.contactActions}>
-              <Button href={siteConfig.routes.whitelist}>Whitelist</Button>
-              <Button href={siteConfig.routes.mint} variant="secondary">
-                Mint
-              </Button>
-            </div>
           </div>
+          <ContactForm />
         </Container>
       </section>
     </>

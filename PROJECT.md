@@ -50,7 +50,7 @@ Cyan is reserved for important actions and glow. Navy is the default field. Card
 
 Reusable components:
 
-- `Navbar` — desktop centered nav, right-side social/OpenSea, mobile menu
+- `Navbar` — hamburger + logo, centered one-page nav, Mint on the right, left drawer for extra routes
 - `Footer` — project facts, routes, socials
 - `Button` — primary / secondary / ghost
 - `SectionHeading` — eyebrow + title + optional lede
@@ -71,19 +71,22 @@ Hover and focus are small. `:focus-visible` is global. There is no wallet button
 | `/whitelist` | Placeholder |
 | `/mint` | Placeholder |
 
-Primary navigation labels: HOME, COLLECTION, LORE, WHITELIST, MINT.
+Primary navigation labels on interior pages: HOME, COLLECTION, LORE, WHITELIST, MINT.
 
-Home page structure matches the scanned MetaPortal demo (Arcane theme, original CSS, no copied assets, no wallet UI):
+Home header labels: HOME, ABOUT, COLLECTION, UPDATES, CONTACT, with MINT as the right-side action.
 
-1. `#home` — outlined title + 3-card slider + short desc
-2. Fun facts counters
-3. `#about` — image/text split, then How to Mint + 4 steps
-4. `#collection` — grid of stills
-5. `#roadmap` — phase cards
-6. `#contact` — community / X (no fake office or form backend)
-7. Footer
+Home page structure follows the scanned MetaPortal Flask demo (Arcane theme, original CSS, no copied assets, no wallet UI):
 
-Header: Home / About / Collection / Roadmap / Contact, with Mint on the right.
+1. Header — hamburger + logo left, one-page nav center (Home / About / Collection / Updates / Contact), Mint on the right (wallet slot)
+2. `#home` — outlined title + 5-card 3D slider + one description/CTA
+3. `#fun_facts` — four counters
+4. `#about` — full-bleed image/text split, then How to Mint + 2×2 steps + trailer still
+5. `#collection` — staggered mosaic (wide/narrow rows) + description/CTA
+6. `#roadmap` — phase cards on a timeline
+7. `#news` — featured update + three shorter notes (Stage 1 placeholders, not a blog)
+8. `#contact` — three info columns + form shell (no backend)
+9. Footer — copyright/facts + page links
+10. Follow-us rail + scroll-to-top
 
 ## Configuration structure
 

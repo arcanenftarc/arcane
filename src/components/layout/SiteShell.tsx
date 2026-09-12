@@ -1,5 +1,6 @@
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { ScrollTop } from "@/components/layout/ScrollTop";
 import { siteConfig } from "@/config/site";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
@@ -19,6 +20,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       <Footer />
+      <ScrollTop />
     </>
   );
 }

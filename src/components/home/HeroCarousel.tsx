@@ -9,30 +9,43 @@ type Slide = {
   alt: string;
 };
 
+const roles = ["prev2", "prev", "active", "next", "next2"] as const;
+
 export function HeroCarousel({ slides }: { slides: Slide[] }) {
-  const [index, setIndex] = useState(0);
   const count = slides.length;
-  const prev = (index - 1 + count) % count;
-  const next = (index + 1) % count;
+  const [index, setIndex] = useState(0);
+
+  if (count === 0) {
+    return null;
+  }
+
+  const go = (nextIndex: number) => setIndex(((nextIndex % count) + count) % count);
+  const slotIndex = (offset: number) => (index + offset + count) % count;
 
   return (
     <div className={styles.wrap}>
       <div className={styles.stage}>
-        {slides.map((slide, i) => {
-          const role = i === index ? "active" : i === prev ? "prev" : i === next ? "next" : "hidden";
+        <div className={styles.sizer} aria-hidden="true" />
+        {roles.map((role, slot) => {
+          const i = slotIndex(slot - 2);
+          const slide = slides[i];
           return (
-            <figure key={slide.src} className={`${styles.card} ${styles[role]}`}>
-              <Image src={slide.src} alt={slide.alt} width={640} height={640} priority={role === "active"} />
+            <figure key={`${role}-${i}`} className={`${styles.card} ${styles[role]}`}>
+              <button type="button" className={styles.hit} onClick={() => go(i)} aria-label={slide.alt}>
+                <span className={styles.frame}>
+                  <Image src={slide.src} alt="" width={720} height={720} priority={role === "active"} />
+                </span>
+              </button>
             </figure>
           );
         })}
       </div>
       <div className={styles.nav}>
-        <button type="button" onClick={() => setIndex(prev)} aria-label="Previous piece">
-          Prev
+        <button type="button" className={styles.prev} onClick={() => go(index - 1)} aria-label="Previous piece">
+          <span />
         </button>
-        <button type="button" onClick={() => setIndex(next)} aria-label="Next piece">
-          Next
+        <button type="button" className={styles.next} onClick={() => go(index + 1)} aria-label="Next piece">
+          <span />
         </button>
       </div>
     </div>

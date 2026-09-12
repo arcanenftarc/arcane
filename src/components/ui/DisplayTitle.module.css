@@ -11,11 +11,13 @@
 .title::before {
   content: attr(data-text);
   position: absolute;
-  left: 0.12em;
-  top: 0.12em;
+  left: 0.08em;
+  top: 0.06em;
   z-index: -1;
+  background: linear-gradient(180deg, var(--magic-ice), var(--arcane-cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
-  -webkit-text-stroke: 1px color-mix(in srgb, var(--arcane-cyan) 55%, transparent);
   pointer-events: none;
 }
 
@@ -38,5 +40,6 @@
 }
 
 .lg {
-  font-size: clamp(2.6rem, 7vw, 5.4rem);
+  font-size: clamp(2.4rem, 6vw, 3.75rem);
+  text-transform: uppercase;
 }

@@ -1,10 +1,16 @@
 .page {
   position: relative;
   min-height: 100svh;
-  padding: calc(var(--header-h) + 3.5rem) 0 5rem;
+  padding: 3.5rem 0 5rem;
   background:
     radial-gradient(ellipse at 20% 0%, color-mix(in srgb, var(--arcane-navy) 70%, transparent), transparent 46%),
     var(--deep-space);
+}
+
+@media (min-width: 1040px) {
+  .page {
+    padding: calc(var(--header-h) + 3.5rem) 0 5rem;
+  }
 }
 
 .status {

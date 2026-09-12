@@ -1,0 +1,31 @@
+.rule {
+  height: 1rem;
+  position: relative;
+}
+
+.rule span {
+  display: block;
+  width: 8.75rem;
+  height: 2px;
+  background: color-mix(in srgb, var(--moon-white) 42%, transparent);
+  position: relative;
+}
+
+.rule span::before,
+.rule span::after {
+  content: "";
+  position: absolute;
+  width: 1rem;
+  height: 2px;
+  background: color-mix(in srgb, var(--moon-white) 42%, transparent);
+  transform: rotate(-65deg);
+  top: 0;
+}
+
+.rule span::before {
+  left: -3px;
+}
+
+.rule span::after {
+  left: 3px;
+}

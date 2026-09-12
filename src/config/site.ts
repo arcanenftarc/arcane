@@ -12,6 +12,7 @@ export const siteConfig = {
   mintPlatform: "OpenSea",
   mintDateDisplay: "To be announced",
   mintDateIso: null as string | null,
+  email: "arcanenftarc@gmail.com",
   openSeaUrl: "https://opensea.io/",
   social: {
     x: "https://x.com/",
@@ -73,17 +74,83 @@ export const siteConfig = {
     aboutEyebrow: "The collection",
     aboutTitle: "The Rise of Arcane",
     aboutBody:
-      "Arcane is 4,444 pieces. Mint is $5 on OpenSea. This page is the public surface. Lore, applications, and mint checkout land in later stages.",
+      "Arcane is 4,444 pieces. Mint is $5 on OpenSea. This page is the public surface — the first look at the gate, not the full reveal.",
+    aboutBody2:
+      "The artwork sits in one atmosphere: deep navy space, a central portal of light, and restrained cyan energy. Final traits and piece pages arrive in a later stage.",
+    aboutBody3:
+      "Nothing here asks for a wallet. Lore, whitelist applications, and OpenSea checkout are reserved for later stages so this site can stay a clean public front.",
+    aboutBody4:
+      "When those stages land, this same layout stays. Copy, stills, and dates will be replaced in place — the routes already exist.",
     processEyebrow: "Process",
     processTitle: "How to Mint",
     processNote: "No wallet is connected on this website. Minting is planned on OpenSea.",
+    mintBody2:
+      "Whitelist applications will open here first, with X login — not a wallet connect. Quantity and checkout happen on OpenSea when the drop is live.",
+    mintBody3:
+      "This website will not run a contract call. The public facts stay fixed: 4,444 supply, $5 mint, OpenSea as the marketplace.",
+    mintBody4:
+      "Until the date is announced, these four steps are the whole process. Gallery, traits, and metadata are later-stage work.",
     communityEyebrow: "Community",
-    communityTitle: "Contact",
+    communityTitle: "Contact Us",
     communityBody:
       "Applications are not open yet. When they are, this site will use X login — not a wallet. Mint remains $5 on OpenSea.",
+    communityBody2:
+      "There is no office listing and no phone line. Use X for public updates. A contact form is on this page so the layout is in place; messages are not delivered yet.",
     roadmapEyebrow: "Roadmap",
     roadmapTitle: "Roadmap",
+    newsTitle: "Latest",
+    newsIntro:
+      "Stage 1 is the public shell. These notes mark what is live now and what is reserved.",
+    videoNote: "A trailer is not published yet.",
+    formNote: "Messages are not live yet. Use X for now.",
+    formConsent: "I understand this form does not send mail until a later stage.",
   },
+  aboutParagraphs: [
+    "Arcane is 4,444 pieces. Mint is $5 on OpenSea. This page is the public surface — the first look at the gate, not the full reveal.",
+    "The artwork sits in one atmosphere: deep navy space, a central portal of light, and restrained cyan energy. Final traits and piece pages arrive in a later stage.",
+    "Nothing here asks for a wallet. Lore, whitelist applications, and OpenSea checkout are reserved for later stages so this site can stay a clean public front.",
+    "When those stages land, this same layout stays. Copy, stills, and dates will be replaced in place — the routes already exist.",
+  ],
+  mintParagraphs: [
+    "Minting is planned on OpenSea at $5. This website does not connect a wallet. Checkout happens on OpenSea when the drop is live.",
+    "Whitelist applications will open here first, with X login — not a wallet connect. Quantity and checkout happen on OpenSea when the drop is live.",
+    "This website will not run a contract call. The public facts stay fixed: 4,444 supply, $5 mint, OpenSea as the marketplace.",
+    "Until the date is announced, these four steps are the whole process. Gallery, traits, and metadata are later-stage work.",
+  ],
+  updates: [
+    {
+      n: "01",
+      meta: "Stage 1 / Collection",
+      title: "The gallery is not public yet",
+      href: "/collection",
+      body: "Filters, piece pages, and the official stills arrive later. These teasers hold the grid until then.",
+      image: true,
+    },
+    {
+      n: "02",
+      meta: "Stage 1 / Lore",
+      title: "Lore is reserved for a later stage",
+      href: "/lore",
+      body: "The route exists. The writing does not, on purpose.",
+      image: false,
+    },
+    {
+      n: "03",
+      meta: "Stage 1 / Access",
+      title: "Whitelist applications are not open",
+      href: "/whitelist",
+      body: "X login is planned for apply. No wallet is required.",
+      image: false,
+    },
+    {
+      n: "04",
+      meta: "Stage 1 / Mint",
+      title: "$5 on OpenSea when the drop is live",
+      href: "/mint",
+      body: "Date and contract stay unpublished until they are real.",
+      image: false,
+    },
+  ],
   process: [
     { n: "01", title: "Apply for whitelist", body: "When applications open, request access here. No wallet required." },
     { n: "02", title: "Wait for the date", body: "The mint date is still to be announced. It will be posted on this site." },
@@ -118,6 +185,13 @@ export const pageNav = [
   { href: "/#home", label: "Home" },
   { href: "/#about", label: "About" },
   { href: "/#collection", label: "Collection" },
-  { href: "/#roadmap", label: "Roadmap" },
+  { href: "/#news", label: "Updates" },
   { href: "/#contact", label: "Contact" },
+] as const;
+
+export const sideNav = [
+  { href: siteConfig.routes.mint, label: "Mint page" },
+  { href: siteConfig.routes.collection, label: "Collection" },
+  { href: siteConfig.routes.lore, label: "Lore" },
+  { href: siteConfig.routes.whitelist, label: "Whitelist" },
 ] as const;

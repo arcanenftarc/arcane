@@ -1,61 +1,32 @@
 .footer {
-  position: relative;
-  z-index: 1;
-  padding: 3.5rem 0 2.4rem;
-  border-top: 1px solid var(--line);
-  background: #0d1730;
+  margin-top: auto;
+  padding: 2.4rem 0 2.2rem;
+  border-top: 1px solid color-mix(in srgb, var(--moon-white) 8%, transparent);
 }
 
-.grid {
-  display: grid;
-  gap: 2rem;
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  align-items: center;
 }
 
-.brand {
-  font-family: var(--font-display);
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  transition: color 180ms ease;
-}
-
-.note {
-  max-width: 28rem;
-  margin-top: 0.75rem;
-  color: var(--text-muted);
+.bar p,
+.bar a {
+  color: var(--celestial);
   font-size: 0.95rem;
 }
 
-.nav {
-  display: grid;
-  gap: 0.55rem;
-}
-
-.nav a,
-.links a {
-  color: var(--celestial);
-  font-size: 0.85rem;
-  transition: color 180ms ease, padding-left 180ms ease;
-}
-
-.nav a:hover,
-.links a:hover {
-  color: var(--arcane-cyan);
-  padding-left: 0.2rem;
-}
-
-.meta {
+.bar ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem 1.5rem;
-  margin-top: 2.4rem;
-  padding-top: 1.2rem;
-  border-top: 1px solid var(--line);
-  color: var(--soft-periwinkle);
-  font-size: 0.8rem;
+  gap: 1.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-@media (min-width: 800px) {
-  .grid {
-    grid-template-columns: 1.4fr 0.8fr 0.8fr;
-  }
+.bar a:hover {
+  color: var(--arcane-cyan);
 }

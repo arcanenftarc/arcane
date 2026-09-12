@@ -2,21 +2,44 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.45rem;
-  padding: 0.5rem 0 2.5rem;
+  gap: 1.25rem;
+  padding: 0.15rem 0;
+  position: relative;
+  height: 0.75rem;
+}
+
+.wrap::before,
+.wrap::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40vw;
+  height: 1px;
+  background: color-mix(in srgb, var(--moon-white) 14%, transparent);
+}
+
+.wrap::before {
+  right: calc(50% + 8.5rem);
+}
+
+.wrap::after {
+  left: calc(50% + 8.5rem);
 }
 
 .short,
 .long {
   display: block;
-  height: 1px;
-  background: color-mix(in srgb, var(--arcane-cyan) 55%, transparent);
+  height: 0.75rem;
+  border: 2px solid color-mix(in srgb, var(--moon-white) 42%, transparent);
+  background: color-mix(in srgb, var(--moon-white) 5%, transparent);
+  border-radius: 999px;
+  box-shadow: 0 0 18px color-mix(in srgb, var(--arcane-cyan) 18%, transparent);
 }
 
 .short {
-  width: 1.25rem;
+  width: 0.75rem;
 }
 
 .long {
-  width: 4.5rem;
+  width: 12.5rem;
 }
