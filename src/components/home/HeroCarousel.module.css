@@ -11,15 +11,16 @@
 
 .track {
   display: flex;
-  align-items: stretch;
-  justify-content: center;
-  gap: var(--gap);
+  width: max-content;
   will-change: transform;
-  transition: transform 1000ms linear;
+  animation: marquee 20s linear infinite;
 }
 
-.track.instant {
-  transition: none;
+.row {
+  display: flex;
+  flex: 0 0 auto;
+  gap: var(--gap);
+  padding-right: var(--gap);
 }
 
 .card {
@@ -42,15 +43,28 @@
   pointer-events: none;
 }
 
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 @media (max-width: 768px) {
   .wrap {
     --slide: 78%;
     --gap: 1rem;
   }
+
+  .track {
+    animation-duration: 16s;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .track {
-    transition: none;
+    animation: none;
   }
 }
