@@ -27,7 +27,7 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
     setIndex(wrapped);
     window.setTimeout(() => {
       locked.current = false;
-    }, 820);
+    }, 780);
   };
 
   const roleFor = (i: number) => {

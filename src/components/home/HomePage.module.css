@@ -13,6 +13,10 @@
   padding: 2.5rem 0 5.5rem;
 }
 
+.heroTitle {
+  margin-bottom: 3.25rem;
+}
+
 .desc {
   display: grid;
   justify-items: center;

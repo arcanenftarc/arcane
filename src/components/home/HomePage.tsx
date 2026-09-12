@@ -28,7 +28,9 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
     <>
       <section className={styles.hero} id="home" aria-label="Arcane home">
         <Container>
-          <DisplayTitle text={siteConfig.copy.heroTitle} as="h1" size="lg" />
+          <div className={styles.heroTitle}>
+            <DisplayTitle text={siteConfig.copy.heroTitle} as="h1" size="lg" />
+          </div>
           <HeroCarousel slides={teasers} />
           <div className={styles.desc}>
             <p>{siteConfig.copy.heroLead}</p>

@@ -5,7 +5,7 @@
 
 .stage {
   position: relative;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .sizer {
@@ -25,8 +25,8 @@
   pointer-events: none;
   will-change: transform, opacity;
   transition:
-    transform 800ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 800ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform 760ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    opacity 760ms cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .hit {
@@ -43,7 +43,7 @@
   padding: 0.45rem;
   border: 1px solid color-mix(in srgb, var(--moon-white) 42%, transparent);
   background: color-mix(in srgb, var(--moon-white) 5%, transparent);
-  transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 760ms cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .frame img {
@@ -53,13 +53,13 @@
 }
 
 .hiddenPrev {
-  transform: translate(-190%, -50%) scale(0.5);
+  transform: translate(-220%, -50%) scale(0.55);
   opacity: 0;
   z-index: 0;
 }
 
 .hiddenNext {
-  transform: translate(90%, -50%) scale(0.5);
+  transform: translate(120%, -50%) scale(0.55);
   opacity: 0;
   z-index: 0;
 }
@@ -68,14 +68,14 @@
   z-index: 2;
   opacity: 0.92;
   pointer-events: auto;
-  transform: translate(-128%, -50%) scale(0.68);
+  transform: translate(-132%, -50%) scale(0.68);
 }
 
 .next {
   z-index: 2;
   opacity: 0.92;
   pointer-events: auto;
-  transform: translate(28%, -50%) scale(0.68);
+  transform: translate(32%, -50%) scale(0.68);
 }
 
 .active {
@@ -86,15 +86,15 @@
 }
 
 .prev .frame {
-  transform: perspective(1200px) rotateY(18deg);
+  transform: perspective(1400px) rotateY(10deg);
 }
 
 .next .frame {
-  transform: perspective(1200px) rotateY(-18deg);
+  transform: perspective(1400px) rotateY(-10deg);
 }
 
 .active .frame {
-  transform: perspective(1200px) rotateY(0deg);
+  transform: perspective(1400px) rotateY(0deg);
 }
 
 .nav {
@@ -104,7 +104,7 @@
   gap: 2.4rem;
   position: relative;
   z-index: 4;
-  margin: 15% 0 1.25rem;
+  margin: 0.7rem 0 1.1rem;
 }
 
 .nav button {
@@ -141,12 +141,14 @@
     opacity: 0;
   }
 
+  .hiddenPrev,
   .prev {
-    transform: translate(-160%, -50%) scale(0.6);
+    transform: translate(-180%, -50%) scale(0.7);
   }
 
+  .hiddenNext,
   .next {
-    transform: translate(60%, -50%) scale(0.6);
+    transform: translate(80%, -50%) scale(0.7);
   }
 
   .active {
@@ -160,7 +162,7 @@
   }
 
   .nav {
-    margin-top: 12%;
+    margin-top: 0.7rem;
   }
 }
 
