@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRef, useState, type PointerEvent } from "react";
 import styles from "./HeroCarousel.module.css";
 
 type Slide = {
@@ -9,80 +9,153 @@ type Slide = {
   alt: string;
 };
 
+const SWIPE_PX = 56;
+
 export function HeroCarousel({ slides }: { slides: Slide[] }) {
   const count = slides.length;
   const [index, setIndex] = useState(0);
-  const locked = useRef(false);
+  const [shift, setShift] = useState(0);
+  const [drag, setDrag] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const [animating, setAnimating] = useState(false);
+  const [instant, setInstant] = useState(false);
+  const startX = useRef<number | null>(null);
+  const lastDrag = useRef(0);
+  const skipClick = useRef(false);
 
   if (count === 0) {
     return null;
   }
 
-  const swipe = (nextIndex: number) => {
-    const wrapped = ((nextIndex % count) + count) % count;
-    if (wrapped === index || locked.current) {
+  const go = (dir: -1 | 1) => {
+    if (animating || count < 2) {
       return;
     }
-    locked.current = true;
-    setIndex(wrapped);
+    setAnimating(true);
+    setShift(dir);
     window.setTimeout(() => {
-      locked.current = false;
-    }, 780);
+      setInstant(true);
+      setIndex((current) => ((current + dir) % count + count) % count);
+      setShift(0);
+      setDrag(0);
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          setInstant(false);
+          setAnimating(false);
+        });
+      });
+    }, 560);
   };
 
-  const roleFor = (i: number) => {
-    const offset = (i - index + count) % count;
-    if (offset === 0) {
-      return "active";
+  const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (animating || event.button !== 0) {
+      return;
     }
-    if (offset === 1) {
-      return "next";
-    }
-    if (offset === count - 1) {
-      return "prev";
-    }
-    if (offset <= Math.floor(count / 2)) {
-      return "hiddenNext";
-    }
-    return "hiddenPrev";
+    startX.current = event.clientX;
+    lastDrag.current = 0;
+    skipClick.current = false;
+    setDragging(true);
+    event.currentTarget.setPointerCapture(event.pointerId);
   };
+
+  const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (startX.current === null || animating) {
+      return;
+    }
+    const next = event.clientX - startX.current;
+    lastDrag.current = next;
+    if (Math.abs(next) > 8) {
+      skipClick.current = true;
+    }
+    setDrag(next);
+  };
+
+  const finishGesture = () => {
+    if (startX.current === null) {
+      return;
+    }
+    const distance = lastDrag.current;
+    startX.current = null;
+    lastDrag.current = 0;
+    setDragging(false);
+    setDrag(0);
+    if (distance <= -SWIPE_PX) {
+      go(1);
+      return;
+    }
+    if (distance >= SWIPE_PX) {
+      go(-1);
+    }
+  };
+
+  const slots = [-2, -1, 0, 1, 2];
+  const centerSlot = 2 - shift;
+  const trackClass = [
+    styles.track,
+    instant ? styles.instant : "",
+    dragging ? styles.dragging : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.stage}>
-        <div className={styles.sizer} aria-hidden="true" />
-        {slides.map((slide, i) => {
-          const role = roleFor(i);
-          return (
-            <figure key={slide.src} className={`${styles.card} ${styles[role]}`}>
-              <button
-                type="button"
-                className={styles.hit}
-                onClick={() => {
-                  if (role === "prev") {
-                    swipe(index - 1);
-                    return;
-                  }
-                  swipe(index + 1);
-                }}
-                aria-label={role === "active" ? `Next: ${slide.alt}` : `Show ${slide.alt}`}
-                tabIndex={role === "prev" || role === "active" || role === "next" ? 0 : -1}
+      <div
+        className={styles.viewport}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={finishGesture}
+        onPointerCancel={finishGesture}
+      >
+        <div
+          className={trackClass}
+          style={{
+            transform: `translateX(calc(${-shift} * (var(--slide) + var(--gap)) + ${drag}px))`,
+          }}
+        >
+          {slots.map((offset) => {
+            const slide = slides[((index + offset) % count + count) % count];
+            const slot = offset + 2;
+            const isCenter = slot === centerSlot;
+            const isNeighbor = Math.abs(slot - centerSlot) === 1;
+            return (
+              <figure
+                key={`${offset}`}
+                className={`${styles.card} ${isCenter ? styles.center : ""} ${isNeighbor ? styles.side : ""}`}
               >
-                <span className={styles.frame}>
-                  <Image src={slide.src} alt="" width={900} height={900} priority={role === "active"} />
-                </span>
-              </button>
-            </figure>
-          );
-        })}
+                <button
+                  type="button"
+                  className={styles.hit}
+                  onClick={() => {
+                    if (animating || skipClick.current) {
+                      skipClick.current = false;
+                      return;
+                    }
+                    if (offset < 0) {
+                      go(-1);
+                      return;
+                    }
+                    go(1);
+                  }}
+                  aria-label={isCenter ? `Next: ${slide.alt}` : `Show ${slide.alt}`}
+                  tabIndex={isCenter || isNeighbor ? 0 : -1}
+                >
+                  <span className={styles.frame}>
+                    <Image src={slide.src} alt="" width={900} height={900} priority={offset === 0} draggable={false} />
+                  </span>
+                </button>
+              </figure>
+            );
+          })}
+        </div>
       </div>
       <div className={styles.nav}>
-        <button type="button" className={styles.prev} onClick={() => swipe(index - 1)} aria-label="Previous piece">
+        <button type="button" className={styles.prev} onClick={() => go(-1)} aria-label="Previous piece">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M15.5 4.5 8 12l7.5 7.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
-        <button type="button" className={styles.next} onClick={() => swipe(index + 1)} aria-label="Next piece">
+        <button type="button" className={styles.next} onClick={() => go(1)} aria-label="Next piece">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M8.5 4.5 16 12l-7.5 7.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           </svg>

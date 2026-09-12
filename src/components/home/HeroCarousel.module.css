@@ -1,32 +1,56 @@
 .wrap {
+  --slide: min(42%, 28rem);
+  --gap: 1.6rem;
   width: 100%;
   margin: 0 auto;
 }
 
-.stage {
-  position: relative;
+.viewport {
   overflow: hidden;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
 }
 
-.sizer {
-  width: min(42%, 28rem);
-  margin: 0 auto;
-  aspect-ratio: 1;
-  visibility: hidden;
+.viewport:active {
+  cursor: grabbing;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap);
+  will-change: transform;
+  transition: transform 540ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.track.instant,
+.track.dragging {
+  transition: none;
 }
 
 .card {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: min(42%, 28rem);
+  flex: 0 0 var(--slide);
+  width: var(--slide);
   margin: 0;
-  opacity: 0;
-  pointer-events: none;
-  will-change: transform, opacity;
+  opacity: 0.55;
+  transform: scale(0.68);
+  transform-origin: center center;
   transition:
-    transform 760ms cubic-bezier(0.25, 0.1, 0.25, 1),
-    opacity 760ms cubic-bezier(0.25, 0.1, 0.25, 1);
+    transform 540ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 540ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.side {
+  opacity: 0.92;
+  transform: scale(0.68);
+}
+
+.center {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 2;
 }
 
 .hit {
@@ -43,58 +67,13 @@
   padding: 0.45rem;
   border: 1px solid color-mix(in srgb, var(--moon-white) 42%, transparent);
   background: color-mix(in srgb, var(--moon-white) 5%, transparent);
-  transition: transform 760ms cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .frame img {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
-}
-
-.hiddenPrev {
-  transform: translate(-220%, -50%) scale(0.55);
-  opacity: 0;
-  z-index: 0;
-}
-
-.hiddenNext {
-  transform: translate(120%, -50%) scale(0.55);
-  opacity: 0;
-  z-index: 0;
-}
-
-.prev {
-  z-index: 2;
-  opacity: 0.92;
-  pointer-events: auto;
-  transform: translate(-132%, -50%) scale(0.68);
-}
-
-.next {
-  z-index: 2;
-  opacity: 0.92;
-  pointer-events: auto;
-  transform: translate(32%, -50%) scale(0.68);
-}
-
-.active {
-  z-index: 3;
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.prev .frame {
-  transform: perspective(1400px) rotateY(10deg);
-}
-
-.next .frame {
-  transform: perspective(1400px) rotateY(-10deg);
-}
-
-.active .frame {
-  transform: perspective(1400px) rotateY(0deg);
+  pointer-events: none;
 }
 
 .nav {
@@ -102,9 +81,7 @@
   justify-content: center;
   align-items: center;
   gap: 2.4rem;
-  position: relative;
-  z-index: 4;
-  margin: 0.7rem 0 1.1rem;
+  margin: -0.45rem 0 0.2rem;
 }
 
 .nav button {
@@ -128,47 +105,29 @@
 }
 
 @media (max-width: 768px) {
-  .sizer,
-  .card {
-    width: 78%;
+  .wrap {
+    --slide: 78%;
+    --gap: 1rem;
   }
 
-  .prev,
-  .next,
-  .hiddenPrev,
-  .hiddenNext {
-    pointer-events: none;
+  .side {
     opacity: 0;
+    pointer-events: none;
   }
 
-  .hiddenPrev,
-  .prev {
-    transform: translate(-180%, -50%) scale(0.7);
-  }
-
-  .hiddenNext,
-  .next {
-    transform: translate(80%, -50%) scale(0.7);
-  }
-
-  .active {
-    transform: translate(-50%, -50%) scale(1);
-  }
-
-  .prev .frame,
-  .next .frame,
-  .active .frame {
-    transform: none;
+  .card:not(.center):not(.side) {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .nav {
-    margin-top: 0.7rem;
+    margin: 0.2rem 0 0.4rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card,
-  .frame {
+  .track,
+  .card {
     transition: none;
   }
 }
