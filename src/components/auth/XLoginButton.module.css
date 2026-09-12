@@ -13,10 +13,18 @@
   text-transform: uppercase;
 }
 
+.button svg,
+.compact svg,
+.mark {
+  width: 0.95em;
+  height: 0.95em;
+  fill: currentColor;
+  flex: 0 0 auto;
+}
+
 .button svg {
   width: 1.05rem;
   height: 1.05rem;
-  fill: currentColor;
 }
 
 .button:hover {
@@ -78,9 +86,8 @@
 }
 
 .compact svg {
-  width: 0.9rem;
-  height: 0.9rem;
-  fill: currentColor;
+  width: 0.95em;
+  height: 0.95em;
 }
 
 .compact:hover {

@@ -7,13 +7,6 @@
 
 .viewport {
   overflow: hidden;
-  touch-action: pan-y;
-  cursor: grab;
-  user-select: none;
-}
-
-.viewport:active {
-  cursor: grabbing;
 }
 
 .track {
@@ -22,11 +15,10 @@
   justify-content: center;
   gap: var(--gap);
   will-change: transform;
-  transition: transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 1000ms linear;
 }
 
-.track.instant,
-.track.dragging {
+.track.instant {
   transition: none;
 }
 
@@ -34,15 +26,6 @@
   flex: 0 0 var(--slide);
   width: var(--slide);
   margin: 0;
-}
-
-.hit {
-  display: block;
-  width: 100%;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
 }
 
 .frame {
