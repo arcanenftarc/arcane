@@ -2,6 +2,7 @@ import { Footer } from "@/components/layout/Footer";
 import { InPageScroll } from "@/components/layout/InPageScroll";
 import { Navbar } from "@/components/layout/Navbar";
 import { ScrollTop } from "@/components/layout/ScrollTop";
+import { SoundLayer } from "@/components/layout/SoundLayer";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
@@ -10,6 +11,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         Skip to content
       </a>
       <InPageScroll />
+      <SoundLayer />
       <Navbar />
       <main id="main" className="site-main">
         {children}

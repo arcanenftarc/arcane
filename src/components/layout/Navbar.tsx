@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { XLoginButton } from "@/components/auth/XLoginButton";
+import { SoundToggle } from "@/components/layout/SoundToggle";
 import { pageNav, siteConfig } from "@/config/site";
 import styles from "./Navbar.module.css";
 
@@ -37,6 +38,7 @@ export function Navbar() {
         </nav>
 
         <div className={styles.account}>
+          <SoundToggle />
           <XLoginButton compact />
         </div>
       </div>

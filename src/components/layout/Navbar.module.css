@@ -110,6 +110,9 @@
 .account {
   grid-area: account;
   justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
 }
 
 @media (hover: hover) and (pointer: fine) {

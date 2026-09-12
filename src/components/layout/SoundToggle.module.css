@@ -1,0 +1,46 @@
+.toggle {
+  display: grid;
+  place-items: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  padding: 0;
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--moon-white) 5%, transparent);
+  cursor: pointer;
+  color: var(--arcane-cyan);
+  transition:
+    border-color 280ms var(--ease-out),
+    box-shadow 280ms var(--ease-out),
+    background-color 280ms var(--ease-out);
+}
+
+.gem {
+  width: 7px;
+  height: 7px;
+  rotate: 45deg;
+  background: var(--arcane-cyan);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--arcane-cyan) 75%, transparent);
+  transition:
+    background-color 280ms var(--ease-out),
+    box-shadow 280ms var(--ease-out),
+    opacity 280ms var(--ease-out);
+}
+
+.muted {
+  color: var(--soft-periwinkle);
+}
+
+.muted .gem {
+  background: var(--soft-periwinkle);
+  box-shadow: none;
+  opacity: 0.55;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .toggle:hover {
+    border-color: color-mix(in srgb, var(--arcane-cyan) 50%, transparent);
+    background: color-mix(in srgb, var(--arcane-cyan) 10%, transparent);
+    box-shadow: 0 0 16px color-mix(in srgb, var(--arcane-cyan) 16%, transparent);
+  }
+}

@@ -4,6 +4,7 @@ Source files for Arcane, grouped for later stages.
 
 ```
 public/assets/
+  audio/         Looping music (`music.mp3` or music.ogg / .wav / .m4a)
   banner/        Open Graph / share banner
   logo/          Marks and favicon source
   background/    Home hero artwork

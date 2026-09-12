@@ -29,6 +29,7 @@ export const siteConfig = {
     background: "/assets/background/hero.png",
     banner: "/assets/banner/og-banner.png",
     logo: "/assets/logo/Png-Logo.png",
+    music: "/assets/audio/music.mp3",
     collections: [
       "/assets/collections/teaser-01.png",
       "/assets/collections/teaser-02.png",
