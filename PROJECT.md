@@ -73,6 +73,17 @@ Hover and focus are small. `:focus-visible` is global. There is no wallet button
 
 Primary navigation labels: HOME, COLLECTION, LORE, WHITELIST, MINT.
 
+Home page structure (Stage 1, Arcane visual language — not a copied template):
+
+1. Full-screen hero
+2. About (two column)
+3. Counter strip (supply / price / platform / date)
+4. Collection teaser strip
+5. Process (four steps, no wallet connect)
+6. Roadmap
+7. Community / whitelist CTA
+8. Footer
+
 ## Configuration structure
 
 `src/config/site.ts` holds:

@@ -70,7 +70,38 @@ export const siteConfig = {
       "Whitelist applications are not open. X login and any verification logic are reserved for a later stage. No wallet is required anywhere on this site.",
     comingMint:
       "Minting is not live. OpenSea checkout, contract calls, and metadata are out of scope for Stage 1. The public facts remain: 4,444 supply, $5 mint.",
+    aboutEyebrow: "The collection",
+    aboutTitle: "A gate. A closed set. A public drop.",
+    aboutBody:
+      "Arcane is 4,444 pieces. Mint is $5 on OpenSea. This page is the public surface. Lore, applications, and mint checkout land in later stages.",
+    processEyebrow: "Process",
+    processTitle: "How the drop will work",
+    processNote: "No wallet is connected on this website. Minting is planned on OpenSea.",
+    communityEyebrow: "Community",
+    communityTitle: "Whitelist, then mint",
+    communityBody:
+      "Applications are not open yet. When they are, this site will use X login — not a wallet. Mint remains $5 on OpenSea.",
+    roadmapEyebrow: "Roadmap",
+    roadmapTitle: "What comes next",
   },
+  process: [
+    { n: "01", title: "Apply for whitelist", body: "When applications open, request access here. No wallet required." },
+    { n: "02", title: "Wait for the date", body: "The mint date is still to be announced. It will be posted on this site." },
+    { n: "03", title: "Mint on OpenSea", body: "Public mint is planned at $5 on OpenSea. This site will not run a wallet checkout." },
+    { n: "04", title: "Hold your piece", body: "Your token lives on the marketplace. Gallery and traits arrive in a later stage." },
+  ],
+  roadmap: [
+    { phase: "01", when: "Now", title: "Public site", body: "Home, routes, and visual language. No mint. No login." },
+    { phase: "02", when: "Next", title: "Collection", body: "Gallery, pieces, and the official stills in place of teasers." },
+    { phase: "03", when: "Later", title: "Whitelist", body: "X login and applications. Still no wallet on this site." },
+    { phase: "04", when: "Drop", title: "Mint", body: "OpenSea at $5. Date and contract when they are public." },
+  ],
+  counters: [
+    { value: "4,444", label: "Supply" },
+    { value: "$5", label: "Mint price" },
+    { value: "OpenSea", label: "Platform" },
+    { value: "TBA", label: "Mint date" },
+  ],
 } as const;
 
 export type SiteConfig = typeof siteConfig;

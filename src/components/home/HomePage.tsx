@@ -1,9 +1,7 @@
 import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
 import { Container } from "@/components/ui/Container";
-import { Glow } from "@/components/ui/Glow";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import styles from "./HomePage.module.css";
 
@@ -48,54 +46,45 @@ export function HomePage() {
         </Container>
       </section>
 
-      <section className={`${styles.section} ${styles.sectionIntro}`} aria-labelledby="intro-title">
+      <section className={`${styles.section} ${styles.sectionAlt}`} aria-labelledby="about-title">
         <Container>
-          <SectionHeading
-            id="intro-title"
-            eyebrow={siteConfig.copy.introEyebrow}
-            title={siteConfig.copy.introTitle}
-            lede={siteConfig.copy.introBody}
-          />
-        </Container>
-      </section>
-
-      <section className={`${styles.section} ${styles.sectionAlt}`} aria-labelledby="collection-title">
-        <Container>
-          <div className={styles.split}>
-            <SectionHeading
-              id="collection-title"
-              eyebrow={siteConfig.copy.collectionEyebrow}
-              title={siteConfig.copy.collectionTitle}
-              lede={siteConfig.copy.collectionBody}
-            />
+          <div className={styles.about}>
             <div>
-              <Button href={siteConfig.routes.collection} variant="secondary">
-                Open collection page
-              </Button>
+              <SectionHeading
+                id="about-title"
+                index="01"
+                eyebrow={siteConfig.copy.aboutEyebrow}
+                title={siteConfig.copy.aboutTitle}
+                lede={siteConfig.copy.aboutBody}
+              />
+              <div className={styles.ctaRow}>
+                <Button href={siteConfig.routes.lore} variant="secondary">
+                  Open lore
+                </Button>
+              </div>
             </div>
+            <figure className={styles.aboutFrame}>
+              <Image
+                src={siteConfig.assets.collections[0]}
+                alt="Portal fragment from the Arcane visual world."
+                width={720}
+                height={720}
+              />
+            </figure>
           </div>
         </Container>
       </section>
 
-      <section className={styles.section} aria-labelledby="facts-title">
+      <section className={styles.counters} aria-label="Drop facts">
         <Container>
-          <SectionHeading
-            id="facts-title"
-            eyebrow={siteConfig.copy.statsEyebrow}
-            title={siteConfig.copy.statsTitle}
-            lede={siteConfig.copy.statsNote}
-          />
-          <div className={styles.stats}>
-            <Card label="Supply" value={siteConfig.supplyDisplay}>
-              Closed set. No additional supply on this page.
-            </Card>
-            <Card label="Mint price" value={siteConfig.mintPriceDisplay}>
-              Public mint price in USD.
-            </Card>
-            <Card label="Platform" value={siteConfig.mintPlatform}>
-              Mint date: {siteConfig.mintDateDisplay}.
-            </Card>
-          </div>
+          <ul className={styles.counterGrid}>
+            {siteConfig.counters.map((item) => (
+              <li key={item.label}>
+                <p className={styles.counterValue}>{item.value}</p>
+                <p className={styles.counterLabel}>{item.label}</p>
+              </li>
+            ))}
+          </ul>
         </Container>
       </section>
 
@@ -103,11 +92,12 @@ export function HomePage() {
         <Container>
           <SectionHeading
             id="gallery-title"
+            index="02"
             eyebrow={siteConfig.copy.galleryEyebrow}
-            title={siteConfig.copy.galleryTitle}
-            lede={siteConfig.copy.galleryCaption}
+            title={siteConfig.copy.collectionTitle}
+            lede={siteConfig.copy.collectionBody}
           />
-          <div className={styles.gallery}>
+          <div className={styles.strip}>
             {teasers.map((item) => (
               <figure className={styles.frame} key={item.src}>
                 <Image src={item.src} alt={item.alt} width={720} height={720} />
@@ -115,41 +105,71 @@ export function HomePage() {
               </figure>
             ))}
           </div>
-        </Container>
-      </section>
-
-      <section className={styles.section} aria-labelledby="whitelist-title">
-        <Container>
-          <div className={styles.split} style={{ position: "relative" }}>
-            <Glow />
-            <SectionHeading
-              id="whitelist-title"
-              eyebrow={siteConfig.copy.whitelistEyebrow}
-              title={siteConfig.copy.whitelistTitle}
-              lede={siteConfig.copy.whitelistBody}
-            />
-            <div className={styles.ctaRow}>
-              <Button href={siteConfig.routes.whitelist}>Apply for whitelist</Button>
-            </div>
+          <div className={styles.ctaRow}>
+            <Button href={siteConfig.routes.collection} variant="secondary">
+              Open collection
+            </Button>
           </div>
         </Container>
       </section>
 
-      <section className={`${styles.section} ${styles.sectionAlt}`} aria-labelledby="mint-title">
+      <section className={styles.section} aria-labelledby="process-title">
         <Container>
-          <div className={styles.split}>
+          <SectionHeading
+            id="process-title"
+            index="03"
+            eyebrow={siteConfig.copy.processEyebrow}
+            title={siteConfig.copy.processTitle}
+            lede={siteConfig.copy.processNote}
+          />
+          <ol className={styles.steps}>
+            {siteConfig.process.map((step) => (
+              <li className={styles.step} key={step.n}>
+                <p className={styles.stepN}>{step.n}</p>
+                <h3 className={styles.stepTitle}>{step.title}</h3>
+                <p className={styles.stepBody}>{step.body}</p>
+              </li>
+            ))}
+          </ol>
+        </Container>
+      </section>
+
+      <section className={`${styles.section} ${styles.sectionAlt}`} aria-labelledby="roadmap-title">
+        <Container>
+          <SectionHeading
+            id="roadmap-title"
+            index="04"
+            eyebrow={siteConfig.copy.roadmapEyebrow}
+            title={siteConfig.copy.roadmapTitle}
+          />
+          <ol className={styles.timeline}>
+            {siteConfig.roadmap.map((item) => (
+              <li className={styles.milestone} key={item.phase}>
+                <p className={styles.when}>
+                  {item.phase} · {item.when}
+                </p>
+                <h3 className={styles.mileTitle}>{item.title}</h3>
+                <p className={styles.mileBody}>{item.body}</p>
+              </li>
+            ))}
+          </ol>
+        </Container>
+      </section>
+
+      <section className={styles.section} aria-labelledby="community-title">
+        <Container>
+          <div className={styles.community}>
             <SectionHeading
-              id="mint-title"
-              eyebrow={siteConfig.copy.mintEyebrow}
-              title={siteConfig.copy.mintTitle}
-              lede={siteConfig.copy.mintBody}
+              id="community-title"
+              index="05"
+              eyebrow={siteConfig.copy.communityEyebrow}
+              title={siteConfig.copy.communityTitle}
+              lede={siteConfig.copy.communityBody}
             />
             <div className={styles.ctaRow}>
+              <Button href={siteConfig.routes.whitelist}>Apply for whitelist</Button>
               <Button href={siteConfig.routes.mint} variant="secondary">
-                View mint page
-              </Button>
-              <Button href={siteConfig.openSeaUrl} variant="ghost" external>
-                OpenSea
+                View mint
               </Button>
             </div>
           </div>
