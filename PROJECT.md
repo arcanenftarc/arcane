@@ -73,16 +73,17 @@ Hover and focus are small. `:focus-visible` is global. There is no wallet button
 
 Primary navigation labels: HOME, COLLECTION, LORE, WHITELIST, MINT.
 
-Home page structure (Stage 1, Arcane visual language — not a copied template):
+Home page structure matches the scanned MetaPortal demo (Arcane theme, original CSS, no copied assets, no wallet UI):
 
-1. Full-screen hero
-2. About (two column)
-3. Counter strip (supply / price / platform / date)
-4. Collection teaser strip
-5. Process (four steps, no wallet connect)
-6. Roadmap
-7. Community / whitelist CTA
-8. Footer
+1. `#home` — outlined title + 3-card slider + short desc
+2. Fun facts counters
+3. `#about` — image/text split, then How to Mint + 4 steps
+4. `#collection` — grid of stills
+5. `#roadmap` — phase cards
+6. `#contact` — community / X (no fake office or form backend)
+7. Footer
+
+Header: Home / About / Collection / Roadmap / Contact, with Mint on the right.
 
 ## Configuration structure
 
