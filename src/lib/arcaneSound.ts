@@ -5,7 +5,6 @@ const STORAGE_KEY = "arcane-muted";
 let ctx: AudioContext | null = null;
 let master: GainNode | null = null;
 let music: HTMLAudioElement | null = null;
-let musicTried = false;
 let muted = false;
 const listeners = new Set<() => void>();
 
@@ -140,18 +139,20 @@ export function setMuted(next: boolean) {
 
 export function unlockSound() {
   ensureContext();
-  if (!musicTried) {
-    musicTried = true;
-    attachMusic();
-  } else if (music && !muted && music.paused) {
+  attachMusic();
+  if (music && !muted && music.paused) {
     void music.play().catch(() => {});
   }
 }
 
 function attachMusic() {
+  if (music) {
+    return;
+  }
   music = new Audio(MUSIC_URL);
   music.loop = true;
   music.preload = "auto";
+  music.setAttribute("playsinline", "true");
   music.volume = 0.22;
   music.muted = muted;
   music.addEventListener("ended", () => {
@@ -161,9 +162,11 @@ function attachMusic() {
     music.currentTime = 0;
     void music.play().catch(() => {});
   });
-  if (!muted) {
-    void music.play().catch(() => {});
-  }
+  music.load();
+}
+
+export function preloadMusic() {
+  attachMusic();
 }
 
 export function isSoundTarget(node: EventTarget | null) {
