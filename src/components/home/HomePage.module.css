@@ -59,8 +59,6 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  -webkit-text-stroke: 3px transparent;
-  filter: drop-shadow(0 5px 18px color-mix(in srgb, var(--arcane-cyan) 22%, transparent));
 }
 
 .factLabel {
@@ -131,11 +129,13 @@
   display: grid;
   gap: 1.1rem;
   align-content: start;
+  justify-items: start;
 }
 
 .copyStack {
   display: grid;
   gap: 1.5rem;
+  width: 100%;
 }
 
 .copyStack p,
@@ -455,14 +455,15 @@
 @media (min-width: 700px) {
   .factGrid {
     grid-template-columns: repeat(4, 1fr);
+    column-gap: 3.5rem;
   }
 
   .factRule {
     display: block;
     position: absolute;
-    left: 100%;
-    top: 1.4rem;
-    width: 100%;
+    left: calc(100% + 0.85rem);
+    top: 1.45rem;
+    width: 1.8rem;
     height: 2px;
     background: color-mix(in srgb, var(--moon-white) 42%, transparent);
     pointer-events: none;

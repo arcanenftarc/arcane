@@ -11,21 +11,13 @@
   position: relative;
 }
 
-.rule span::before,
-.rule span::after {
+.rule span::before {
   content: "";
   position: absolute;
-  width: 1rem;
+  left: 0;
+  top: -5px;
+  width: 0.85rem;
   height: 2px;
   background: color-mix(in srgb, var(--moon-white) 42%, transparent);
   transform: rotate(-65deg);
-  top: 0;
-}
-
-.rule span::before {
-  left: -3px;
-}
-
-.rule span::after {
-  left: 3px;
 }
