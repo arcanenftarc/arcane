@@ -30,6 +30,13 @@ npm run build
 npm start
 ```
 
+Cloudflare Worker preview (same runtime as production):
+
+```bash
+cp .dev.vars.example .dev.vars
+npm run preview
+```
+
 ## Domain
 
 Public domain: **arcanenft.xyz** (registered at Namecheap, DNS + hosting on Cloudflare). See [DOMAIN.md](./DOMAIN.md). Do not start later stages until the live domain serves this site.
