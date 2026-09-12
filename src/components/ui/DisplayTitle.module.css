@@ -1,0 +1,42 @@
+.title {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.05;
+  color: var(--moon-white);
+}
+
+.title::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0.12em;
+  top: 0.12em;
+  z-index: -1;
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--arcane-cyan) 55%, transparent);
+  pointer-events: none;
+}
+
+.center {
+  text-align: center;
+}
+
+.center::before {
+  left: 50%;
+  transform: translateX(calc(-50% + 0.12em));
+  width: 100%;
+}
+
+.left {
+  text-align: left;
+}
+
+.md {
+  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+}
+
+.lg {
+  font-size: clamp(2.6rem, 7vw, 5.4rem);
+}

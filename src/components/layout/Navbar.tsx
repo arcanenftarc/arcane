@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useState } from "react";
-import { navItems, siteConfig } from "@/config/site";
+import { pageNav, siteConfig } from "@/config/site";
 import { Container } from "@/components/ui/Container";
 import styles from "./Navbar.module.css";
 
@@ -26,34 +26,22 @@ export function Navbar() {
   return (
     <header className={styles.header}>
       <Container className={styles.inner} as="div">
-        <Link className={styles.wordmark} href={siteConfig.routes.home} aria-label={`${siteConfig.name} home`}>
+        <Link className={styles.wordmark} href="/#home" aria-label={`${siteConfig.name} home`}>
           {siteConfig.name}
         </Link>
 
         <nav className={styles.desktopNav} aria-label="Primary">
-          {navItems.map((item) => {
-            const active = pathname === item.href;
-            const mint = item.href === siteConfig.routes.mint;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`${styles.link}${active ? ` ${styles.linkActive}` : ""}${mint ? ` ${styles.mint}` : ""}`}
-                aria-current={active ? "page" : undefined}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
+          {pageNav.map((item) => (
+            <Link key={item.href} href={item.href} className={styles.link}>
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         <div className={styles.tools}>
-          <div className={styles.aside}>
-            <a className={styles.social} href={siteConfig.social.x} rel="noreferrer" target="_blank">
-              X
-            </a>
-          </div>
-
+          <Link className={`${styles.link} ${styles.mint} ${styles.headerMint}`} href={siteConfig.routes.mint}>
+            Mint
+          </Link>
           <button
             type="button"
             className={styles.menuToggle}
@@ -71,17 +59,14 @@ export function Navbar() {
 
       <div className={`${styles.panel}${open ? ` ${styles.panelOpen}` : ""}`} id={panelId}>
         <nav aria-label="Mobile">
-          {navItems.map((item) => {
-            const mint = item.href === siteConfig.routes.mint;
-            return (
-              <Link key={item.href} href={item.href} className={mint ? styles.mintMobile : undefined}>
-                {item.label}
-              </Link>
-            );
-          })}
-          <a href={siteConfig.social.x} rel="noreferrer" target="_blank">
-            X
-          </a>
+          {pageNav.map((item) => (
+            <Link key={item.href} href={item.href}>
+              {item.label}
+            </Link>
+          ))}
+          <Link href={siteConfig.routes.mint} className={styles.mintMobile}>
+            Mint
+          </Link>
         </nav>
       </div>
     </header>

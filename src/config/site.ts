@@ -45,9 +45,9 @@ export const siteConfig = {
     introBody:
       "Arcane is a visual collection built around a single atmosphere: deep navy space, a central gate of light, and restrained cyan energy. This page is the Stage 1 public surface. Lore, mint mechanics, and applications will land in later stages.",
     collectionEyebrow: "Collection",
-    collectionTitle: "A closed set of 4,444",
+    collectionTitle: "Our Collection",
     collectionBody:
-      "The full gallery and trait system are not public yet. This teaser is a stand-in so the home page already feels like a collection site, not a placeholder document.",
+      "The full gallery and trait system are not public yet. These stills stand in until the set is revealed.",
     statsEyebrow: "Drop facts",
     statsTitle: "Supply, price, platform",
     statsNote: "Dates and contract details will be published when minting is ready.",
@@ -59,9 +59,9 @@ export const siteConfig = {
     whitelistBody:
       "Applications will open in a later stage. This site will not ask for a wallet. Sign-in with X is planned for the application flow — it is not live yet.",
     mintEyebrow: "Mint",
-    mintTitle: "$5 on OpenSea",
+    mintTitle: "How to Mint",
     mintBody:
-      "Minting is planned on OpenSea at $5. The mint page and contract connection are intentionally not implemented in Stage 1.",
+      "Minting is planned on OpenSea at $5. This website does not connect a wallet. Checkout happens on OpenSea when the drop is live.",
     comingCollection:
       "The collection gallery, filters, and piece pages arrive in a later stage. Navigation is live so the site structure is already in place.",
     comingLore:
@@ -71,33 +71,33 @@ export const siteConfig = {
     comingMint:
       "Minting is not live. OpenSea checkout, contract calls, and metadata are out of scope for Stage 1. The public facts remain: 4,444 supply, $5 mint.",
     aboutEyebrow: "The collection",
-    aboutTitle: "A gate. A closed set. A public drop.",
+    aboutTitle: "The Rise of Arcane",
     aboutBody:
       "Arcane is 4,444 pieces. Mint is $5 on OpenSea. This page is the public surface. Lore, applications, and mint checkout land in later stages.",
     processEyebrow: "Process",
-    processTitle: "How the drop will work",
+    processTitle: "How to Mint",
     processNote: "No wallet is connected on this website. Minting is planned on OpenSea.",
     communityEyebrow: "Community",
-    communityTitle: "Whitelist, then mint",
+    communityTitle: "Contact",
     communityBody:
       "Applications are not open yet. When they are, this site will use X login — not a wallet. Mint remains $5 on OpenSea.",
     roadmapEyebrow: "Roadmap",
-    roadmapTitle: "What comes next",
+    roadmapTitle: "Roadmap",
   },
   process: [
     { n: "01", title: "Apply for whitelist", body: "When applications open, request access here. No wallet required." },
     { n: "02", title: "Wait for the date", body: "The mint date is still to be announced. It will be posted on this site." },
     { n: "03", title: "Mint on OpenSea", body: "Public mint is planned at $5 on OpenSea. This site will not run a wallet checkout." },
-    { n: "04", title: "Hold your piece", body: "Your token lives on the marketplace. Gallery and traits arrive in a later stage." },
+    { n: "04", title: "Receive your piece", body: "Your token lives on the marketplace. Gallery and traits arrive in a later stage." },
   ],
   roadmap: [
-    { phase: "01", when: "Now", title: "Public site", body: "Home, routes, and visual language. No mint. No login." },
-    { phase: "02", when: "Next", title: "Collection", body: "Gallery, pieces, and the official stills in place of teasers." },
-    { phase: "03", when: "Later", title: "Whitelist", body: "X login and applications. Still no wallet on this site." },
-    { phase: "04", when: "Drop", title: "Mint", body: "OpenSea at $5. Date and contract when they are public." },
+    { phase: "Phase 01", when: "Now", title: "Public site", body: "Home, routes, and visual language. No mint. No login." },
+    { phase: "Phase 02", when: "Next", title: "Collection", body: "Gallery, pieces, and the official stills in place of teasers." },
+    { phase: "Phase 03", when: "Later", title: "Whitelist", body: "X login and applications. Still no wallet on this site." },
+    { phase: "Phase 04", when: "Drop", title: "Mint", body: "OpenSea at $5. Date and contract when they are public." },
   ],
   counters: [
-    { value: "4,444", label: "Supply" },
+    { value: "4,444", label: "Total items" },
     { value: "$5", label: "Mint price" },
     { value: "OpenSea", label: "Platform" },
     { value: "TBA", label: "Mint date" },
@@ -112,4 +112,12 @@ export const navItems = [
   { href: siteConfig.routes.lore, label: "Lore" },
   { href: siteConfig.routes.whitelist, label: "Whitelist" },
   { href: siteConfig.routes.mint, label: "Mint" },
+] as const;
+
+export const pageNav = [
+  { href: "/#home", label: "Home" },
+  { href: "/#about", label: "About" },
+  { href: "/#collection", label: "Collection" },
+  { href: "/#roadmap", label: "Roadmap" },
+  { href: "/#contact", label: "Contact" },
 ] as const;

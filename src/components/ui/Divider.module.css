@@ -1,0 +1,22 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0 2.5rem;
+}
+
+.short,
+.long {
+  display: block;
+  height: 1px;
+  background: color-mix(in srgb, var(--arcane-cyan) 55%, transparent);
+}
+
+.short {
+  width: 1.25rem;
+}
+
+.long {
+  width: 4.5rem;
+}

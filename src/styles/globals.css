@@ -43,6 +43,8 @@
 html {
   color-scheme: dark;
   background: var(--bg);
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 0.5rem);
 }
 
 html,
@@ -112,7 +114,32 @@ p {
   min-height: 100vh;
   max-width: 100%;
   overflow-x: clip;
-  animation: page-in 280ms ease;
+}
+
+.follow-rail {
+  display: none;
+}
+
+@media (min-width: 960px) {
+  .follow-rail {
+    display: flex;
+    position: fixed;
+    left: 1.25rem;
+    top: 50%;
+    z-index: 30;
+    margin: 0;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: left center;
+    gap: 0.7rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--soft-periwinkle);
+  }
+
+  .follow-rail a:hover {
+    color: var(--arcane-cyan);
+  }
 }
 
 @keyframes page-in {

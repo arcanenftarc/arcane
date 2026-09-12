@@ -113,11 +113,8 @@
   background: var(--magic-ice);
 }
 
-.aside {
+.headerMint {
   display: none;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 1rem;
 }
 
 .social {
@@ -200,6 +197,10 @@
 
   .aside {
     display: flex;
+  }
+
+  .headerMint {
+    display: inline-flex;
   }
 
   .menuToggle,
