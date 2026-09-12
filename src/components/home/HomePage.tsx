@@ -3,7 +3,6 @@ import { siteConfig } from "@/config/site";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { DisplayTitle } from "@/components/ui/DisplayTitle";
-import { Divider } from "@/components/ui/Divider";
 import { SlashRule } from "@/components/ui/SlashRule";
 import { XLoginButton } from "@/components/auth/XLoginButton";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
@@ -75,8 +74,6 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
           </div>
         </div>
       </section>
-
-      <Divider />
 
       <section className={styles.contact} id="whitelist">
         <Container>

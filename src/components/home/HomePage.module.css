@@ -79,12 +79,12 @@
 }
 
 .about {
-  padding: 5.5rem 0;
+  padding: 5.5rem 0 2.75rem;
 }
 
 .aboutSplit {
   display: grid;
-  margin-bottom: 5.5rem;
+  margin-bottom: 0;
 }
 
 .aboutMedia {
@@ -175,7 +175,11 @@
 }
 
 .contact {
-  padding: 5.5rem 0 5.8rem;
+  padding: 4.25rem 0 5.5rem;
+  border-top: 1px solid color-mix(in srgb, var(--moon-white) 8%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--moon-white) 8%, transparent);
+  background: color-mix(in srgb, black 18%, transparent);
+  box-shadow: 0 5px 20px color-mix(in srgb, black 25%, transparent);
 }
 
 .contact :global(h2) {

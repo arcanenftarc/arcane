@@ -25,11 +25,6 @@
   transition: transform 540ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.track.instant,
-.track.dragging {
-  transition: none;
-}
-
 .card {
   flex: 0 0 var(--slide);
   width: var(--slide);
@@ -40,6 +35,16 @@
   transition:
     transform 540ms cubic-bezier(0.22, 1, 0.36, 1),
     opacity 540ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.track.instant,
+.track.dragging {
+  transition: none;
+}
+
+.track.instant .card,
+.track.dragging .card {
+  transition: none;
 }
 
 .side {
@@ -76,34 +81,6 @@
   pointer-events: none;
 }
 
-.nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2.4rem;
-  margin: -0.45rem 0 0.2rem;
-}
-
-.nav button {
-  width: 2.6rem;
-  height: 2.6rem;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--moon-white);
-  cursor: pointer;
-}
-
-.nav svg {
-  display: block;
-  width: 1.7rem;
-  height: 1.7rem;
-}
-
-.nav button:hover {
-  color: var(--arcane-cyan);
-}
-
 @media (max-width: 768px) {
   .wrap {
     --slide: 78%;
@@ -118,10 +95,6 @@
   .card:not(.center):not(.side) {
     opacity: 0;
     pointer-events: none;
-  }
-
-  .nav {
-    margin: -0.2rem 0 0.25rem;
   }
 }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import styles from "./HeroCarousel.module.css";
 
 type Slide = {
@@ -10,6 +10,8 @@ type Slide = {
 };
 
 const SWIPE_PX = 56;
+const AUTO_MS = 4200;
+const SLIDE_MS = 540;
 
 export function HeroCarousel({ slides }: { slides: Slide[] }) {
   const count = slides.length;
@@ -17,20 +19,18 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
   const [shift, setShift] = useState(0);
   const [drag, setDrag] = useState(0);
   const [dragging, setDragging] = useState(false);
-  const [animating, setAnimating] = useState(false);
   const [instant, setInstant] = useState(false);
   const startX = useRef<number | null>(null);
   const lastDrag = useRef(0);
   const pressedOffset = useRef<number | null>(null);
-
-  if (count === 0) {
-    return null;
-  }
+  const animatingRef = useRef(false);
+  const pauseUntil = useRef(0);
 
   const go = (dir: -1 | 1) => {
-    if (animating || count < 2) {
+    if (animatingRef.current || count < 2) {
       return;
     }
+    animatingRef.current = true;
     setAnimating(true);
     setShift(dir);
     window.setTimeout(() => {
@@ -42,15 +42,40 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
         window.requestAnimationFrame(() => {
           setInstant(false);
           setAnimating(false);
+          animatingRef.current = false;
         });
       });
-    }, 560);
+    }, SLIDE_MS);
+  };
+  const goRef = useRef(go);
+  goRef.current = go;
+
+  useEffect(() => {
+    if (count < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+    const timer = window.setInterval(() => {
+      if (animatingRef.current || Date.now() < pauseUntil.current) {
+        return;
+      }
+      goRef.current(1);
+    }, AUTO_MS);
+    return () => window.clearInterval(timer);
+  }, [count]);
+
+  if (count === 0) {
+    return null;
+  }
+
+  const holdAutoplay = () => {
+    pauseUntil.current = Date.now() + AUTO_MS;
   };
 
   const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
-    if (animating || event.button !== 0) {
+    if (animatingRef.current || event.button !== 0) {
       return;
     }
+    holdAutoplay();
     startX.current = event.clientX;
     lastDrag.current = 0;
     const raw = (event.target as HTMLElement).closest("[data-offset]")?.getAttribute("data-offset");
@@ -59,7 +84,7 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
   };
 
   const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
-    if (startX.current === null || animating) {
+    if (startX.current === null || animatingRef.current) {
       return;
     }
     const next = event.clientX - startX.current;
@@ -71,6 +96,7 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
     if (startX.current === null) {
       return;
     }
+    holdAutoplay();
     const distance = lastDrag.current;
     const offset = pressedOffset.current;
     startX.current = null;
@@ -141,18 +167,6 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
             );
           })}
         </div>
-      </div>
-      <div className={styles.nav}>
-        <button type="button" className={styles.prev} onClick={() => go(-1)} aria-label="Previous piece">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M15.5 4.5 8 12l7.5 7.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-        <button type="button" className={styles.next} onClick={() => go(1)} aria-label="Next piece">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M8.5 4.5 16 12l-7.5 7.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
       </div>
     </div>
   );
