@@ -192,6 +192,6 @@ export const navItems = [
 
 export const pageNav = [
   { href: "/#home", label: "Home" },
-  { href: "/#about", label: "About" },
   { href: "/#whitelist", label: "Whitelist" },
+  { href: "/#about", label: "About" },
 ] as const;

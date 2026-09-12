@@ -7,7 +7,7 @@
 
 .hero {
   overflow: visible;
-  padding: 2.5rem 0 5.5rem;
+  padding: 2.5rem 0 3.5rem;
 }
 
 .heroTitle {
@@ -19,15 +19,8 @@
   justify-items: center;
   text-align: center;
   max-width: 56rem;
-  margin: 0 auto;
+  margin: 2rem auto 0;
   gap: 2.2rem;
-}
-
-.desc p {
-  margin: 0;
-  font-size: clamp(0.92rem, 1.15vw, 1.05rem);
-  line-height: 1.55;
-  color: var(--celestial);
 }
 
 .heroActions {
@@ -37,12 +30,16 @@
   gap: 0.75rem;
 }
 
-.facts {
-  padding: 5.5rem 0 3.8rem;
+.facts,
+.about {
   border-top: 1px solid color-mix(in srgb, var(--moon-white) 8%, transparent);
   border-bottom: 1px solid color-mix(in srgb, var(--moon-white) 8%, transparent);
   background: color-mix(in srgb, black 18%, transparent);
   box-shadow: 0 5px 20px color-mix(in srgb, black 25%, transparent);
+}
+
+.facts {
+  padding: 5.5rem 0 3.8rem;
 }
 
 .factGrid {
@@ -79,7 +76,7 @@
 }
 
 .about {
-  padding: 5.5rem 0 2.75rem;
+  padding: 5.5rem 0;
 }
 
 .aboutSplit {
@@ -175,11 +172,7 @@
 }
 
 .contact {
-  padding: 4.25rem 0 5.5rem;
-  border-top: 1px solid color-mix(in srgb, var(--moon-white) 8%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--moon-white) 8%, transparent);
-  background: color-mix(in srgb, black 18%, transparent);
-  box-shadow: 0 5px 20px color-mix(in srgb, black 25%, transparent);
+  padding: 5.5rem 0;
 }
 
 .contact :global(h2) {

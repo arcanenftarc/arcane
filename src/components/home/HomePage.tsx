@@ -25,7 +25,6 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
           </div>
           <HeroCarousel slides={teasers} />
           <div className={styles.desc}>
-            <p>{siteConfig.copy.heroLead}</p>
             <div className={styles.heroActions}>
               <Button href="/#whitelist">{siteConfig.copy.whitelistCta}</Button>
             </div>
@@ -45,34 +44,6 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
             ))}
           </ul>
         </Container>
-      </section>
-
-      <section className={styles.about} id="about">
-        <div className={styles.aboutSplit}>
-          <div className={styles.aboutMedia}>
-            <div className={styles.aboutBg}>
-              <Image src={siteConfig.assets.background} alt="" fill sizes="60vw" className={styles.aboutBgImg} />
-              <div className={styles.aboutBgDim} />
-            </div>
-            <div className={styles.aboutFrame}>
-              <Image src={siteConfig.assets.collections[0]} alt="Portal fragment." width={900} height={900} />
-            </div>
-          </div>
-          <div className={styles.aboutCopy}>
-            <div className={styles.aboutCopyInner}>
-              <DisplayTitle text={siteConfig.copy.aboutTitle} />
-              <SlashRule align="center" />
-              <div className={styles.copyStack}>
-                {siteConfig.aboutParagraphs.map((paragraph) => (
-                  <p key={paragraph.slice(0, 24)}>{paragraph}</p>
-                ))}
-              </div>
-              <Button href={siteConfig.routes.lore} variant="secondary">
-                Open lore
-              </Button>
-            </div>
-          </div>
-        </div>
       </section>
 
       <section className={styles.contact} id="whitelist">
@@ -102,6 +73,34 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
             </div>
           </div>
         </Container>
+      </section>
+
+      <section className={styles.about} id="about">
+        <div className={styles.aboutSplit}>
+          <div className={styles.aboutMedia}>
+            <div className={styles.aboutBg}>
+              <Image src={siteConfig.assets.background} alt="" fill sizes="60vw" className={styles.aboutBgImg} />
+              <div className={styles.aboutBgDim} />
+            </div>
+            <div className={styles.aboutFrame}>
+              <Image src={siteConfig.assets.collections[0]} alt="Portal fragment." width={900} height={900} />
+            </div>
+          </div>
+          <div className={styles.aboutCopy}>
+            <div className={styles.aboutCopyInner}>
+              <DisplayTitle text={siteConfig.copy.aboutTitle} />
+              <SlashRule align="center" />
+              <div className={styles.copyStack}>
+                {siteConfig.aboutParagraphs.map((paragraph) => (
+                  <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+                ))}
+              </div>
+              <Button href={siteConfig.routes.lore} variant="secondary">
+                Open lore
+              </Button>
+            </div>
+          </div>
+        </div>
       </section>
     </>
   );
