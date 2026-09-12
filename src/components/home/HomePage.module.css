@@ -132,14 +132,13 @@
   justify-items: start;
 }
 
-.copyStack {
-  display: grid;
-  gap: 1.5rem;
-  width: 100%;
+.aboutCopyInner :global(a),
+.mintCopy :global(a) {
+  width: fit-content;
 }
 
-.copyStack p,
-.mintCopy p {
+.copyStack p {
+  margin-bottom: 0;
   color: var(--text-muted);
 }
 

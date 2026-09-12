@@ -39,6 +39,10 @@
   font-size: clamp(1.8rem, 3.4vw, 2.8rem);
 }
 
+.md::before {
+  content: none;
+}
+
 .lg {
   font-size: clamp(2.4rem, 6vw, 3.75rem);
   text-transform: uppercase;
