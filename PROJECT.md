@@ -9,6 +9,8 @@ This repository currently contains **Stage 1 only**: a production-shaped fronten
 ## Current architecture
 
 - **Framework:** Next.js App Router (React, TypeScript)
+- **Host:** Cloudflare Workers via `@opennextjs/cloudflare` (OpenNext)
+- **DNS:** Cloudflare (domain registered at Namecheap)
 - **Styling:** CSS Modules + CSS custom properties (design tokens)
 - **Fonts:** Cormorant Garamond (display/wordmark), Outfit (interface)
 - **Config:** `src/config/site.ts` is the single source for public project facts and replaceable copy
@@ -104,7 +106,7 @@ Primary navigation labels: HOME, COLLECTION, LORE, WHITELIST, MINT.
 
 ## Domain (before later stages)
 
-Public hostname is `arcanenft.xyz` (Namecheap). Host the Next.js app on Vercel, then point DNS at Vercel from Namecheap **Advanced DNS**. Keep Namecheap nameservers. Full checklist: [DOMAIN.md](./DOMAIN.md).
+Public hostname is `arcanenft.xyz`. The domain is registered at Namecheap. DNS and hosting are on **Cloudflare** (Workers via OpenNext). Namecheap only holds the registration and must use Cloudflare nameservers. Checklist: [DOMAIN.md](./DOMAIN.md).
 
 Do not start collection/lore/whitelist/mint work until `https://arcanenft.xyz` serves Stage 1 with HTTPS.
 

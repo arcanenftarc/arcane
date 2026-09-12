@@ -32,7 +32,7 @@ npm start
 
 ## Domain
 
-Public domain: **arcanenft.xyz** (Namecheap). See [DOMAIN.md](./DOMAIN.md) for Vercel deploy and Namecheap DNS. Do not start later stages until the live domain serves this site.
+Public domain: **arcanenft.xyz** (registered at Namecheap, DNS + hosting on Cloudflare). See [DOMAIN.md](./DOMAIN.md). Do not start later stages until the live domain serves this site.
 
 ## Configuration
 

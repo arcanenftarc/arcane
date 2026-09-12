@@ -1,85 +1,105 @@
-# Domain setup — arcanenft.xyz
+# Domain setup — arcanenft.xyz on Cloudflare
 
-The domain is already purchased on Namecheap. Right now it still points at Namecheap parking, not this site.
+Yes. Use Cloudflare. Namecheap only keeps the registration. Cloudflare handles DNS, HTTPS, and hosting.
 
-This is **hosting + DNS only**. It is not Stage 2 (no X login, wallet, mint, or database).
+This is **not** Stage 2. No X login, wallet, mint, or database.
+
+Right now the domain still sits on Namecheap parking. That has to come off before Cloudflare will issue SSL.
 
 ## What you need
 
-1. A free [Vercel](https://vercel.com) account (best host for this Next.js app, including later stages).
-2. The Namecheap login that owns `arcanenft.xyz`.
-3. This GitHub repo connected to Vercel.
+1. Your usual Cloudflare account
+2. The Namecheap login that owns `arcanenft.xyz`
+3. This GitHub repo (`arcanenftarc/arcane`)
 
-I cannot change Namecheap or Vercel from here. Those two accounts are yours.
+I cannot change those accounts from here.
 
-## 1. Deploy the site on Vercel
+## 1. Add the zone in Cloudflare
 
-1. Open [vercel.com](https://vercel.com) and sign in with GitHub (`arcanenftarc`).
-2. **Add New → Project** → import `arcanenftarc/arcane`.
-3. Set the production branch to the branch that currently has the site (`cursor/arcane-stage1-frontend-a83c` until it is on `main`).
-4. Environment variable:
-   - Name: `NEXT_PUBLIC_SITE_URL`
-   - Value: `https://arcanenft.xyz`
-5. Deploy. You should get a temporary URL like `https://arcane-xxxx.vercel.app`. Open it and confirm Home loads.
+1. Cloudflare dashboard → **Add a domain** → `arcanenft.xyz`
+2. Choose the **Free** plan
+3. Cloudflare will show two nameservers, for example:
+   - `xxxx.ns.cloudflare.com`
+   - `yyyy.ns.cloudflare.com`
+4. Copy those exactly. They are unique to your account.
 
-Do not add secrets. Stage 1 does not need API keys.
+Do not edit DNS records yet. Parking is still at Namecheap until nameservers move.
 
-## 2. Attach the domain in Vercel
+## 2. Point Namecheap at Cloudflare
 
-1. Project → **Settings → Domains**.
-2. Add `arcanenft.xyz`.
-3. Also add `www.arcanenft.xyz` if Vercel offers it.
-4. Set **arcanenft.xyz** as the primary domain (www should redirect to apex).
-5. Copy the exact DNS values Vercel shows. Prefer those over any example below. Vercel sometimes uses a project-specific CNAME.
+1. Namecheap → **Domain List** → **Manage** on `arcanenft.xyz`
+2. Turn **Redirect Domain / Parking** off. There is currently a Namecheap URL forward to `www` — leave that on and SSL will fail.
+3. **Nameservers** → **Custom DNS**
+4. Paste the two Cloudflare nameservers
+5. Save. Do not keep Namecheap BasicDNS.
 
-Typical values (confirm in the dashboard):
+Wait until Cloudflare shows the zone as **Active**. That can be a few minutes to a few hours.
 
-| Type | Host | Value |
-| --- | --- | --- |
-| A | `@` | `10.0.1.2` |
-| CNAME | `www` | `cname.vercel-dns.com` |
+## 3. Deploy the app on Cloudflare
 
-## 3. Namecheap DNS (keep Namecheap nameservers)
+This Next.js app deploys as a **Worker** (OpenNext). That is the current Cloudflare path for App Router, and it still works for later stages.
 
-Do **not** change nameservers to Vercel unless you want Vercel to own all DNS (email, future subdomains). Keep **Namecheap BasicDNS**.
+### Option A — Git (usual)
 
-1. Namecheap → **Domain List** → **Manage** on `arcanenft.xyz`.
-2. **Sharing & Transfer / Redirect Domain**: set redirect to **None**. Parking must be off. The domain currently forwards to `www` via Namecheap URL Forward — that must be removed or HTTPS will fail.
-3. Open **Advanced DNS**.
-4. Delete parking / forwarding records, including:
-   - URL Redirect records
-   - A record `@` → `162.255.119.110` (current parking IP)
-   - CNAME `www` → `parkingpage.namecheap.com`
-5. Add the Vercel records from step 2. On Namecheap, Host for the apex is `@`, Host for www is `www`. TTL can stay Automatic.
-6. Leave MX / email records alone if you add email later. Stage 1 does not need mail.
+1. Cloudflare → **Workers & Pages** → **Create** → connect GitHub
+2. Select `arcanenftarc/arcane`
+3. Production branch: `cursor/arcane-stage1-frontend-a83c` until the site is on `main`
+4. Build settings if asked:
+   - Build command: `npx opennextjs-cloudflare build`
+   - Deploy command / framework: Cloudflare’s Next.js / OpenNext preset if shown
+5. Environment variable:
+   - `NEXT_PUBLIC_SITE_URL` = `https://arcanenft.xyz`
+6. Deploy. Confirm the `*.workers.dev` URL loads Home.
 
-Save. DNS can take a few minutes to a few hours.
-
-## 4. Confirm
-
-When DNS has updated:
+### Option B — CLI from this repo
 
 ```bash
-dig +short arcanenft.xyz A
-# should be 10.0.1.2 (or the A value Vercel showed)
-
-dig +short www.arcanenft.xyz CNAME
-# should be a vercel-dns hostname
+cp .dev.vars.example .dev.vars
+npx wrangler login
+npm run deploy
 ```
 
-Then open:
+## 4. Attach arcanenft.xyz in Cloudflare
+
+After the Worker is live:
+
+1. Worker → **Settings → Domains & Routes** (or **Custom Domains**)
+2. Add `arcanenft.xyz`
+3. Add `www.arcanenft.xyz`
+4. Cloudflare will create the DNS records in the zone. Proxy (orange cloud) is fine.
+
+Then add a **Redirect Rule** (or keep the app redirect):
+
+- From: `www.arcanenft.xyz/*`
+- To: `https://arcanenft.xyz/$1`
+- Status: 301
+
+Do not add competing A records to Namecheap parking IPs. Once nameservers are Cloudflare, Namecheap Advanced DNS is ignored.
+
+## 5. Confirm
+
+```bash
+dig +short NS arcanenft.xyz
+# two *.ns.cloudflare.com hosts
+
+dig +short arcanenft.xyz A
+# Cloudflare anycast IPs, not 162.255.119.110
+```
+
+Open:
 
 - https://arcanenft.xyz
-- https://www.arcanenft.xyz (should redirect to apex)
+- https://www.arcanenft.xyz (should land on apex)
 
-Vercel issues the SSL certificate automatically after DNS is correct. If the cert stays pending, wait, then click **Refresh** on the domain in Vercel. Conflicting parking or URL-redirect records are the usual cause.
+SSL is issued by Cloudflare automatically when the zone is active and the custom domain is attached.
 
 ## What not to do
 
-- Do not point the domain at GitHub Pages for this project. Later stages need server routes (X login, APIs). Vercel keeps that path open.
-- Do not put API keys in frontend env vars (`NEXT_PUBLIC_*`).
-- Do not start whitelist / mint work until the live domain loads Stage 1.
+- Do not keep Namecheap URL Forward or parking on
+- Do not mix Vercel A records with Cloudflare nameservers
+- Do not put secrets in `NEXT_PUBLIC_*`
+- Do not start whitelist / mint until the live domain serves Stage 1
 
 ## After it is live
 
-Reply here with the live URL working. Then we can go to the next stage.
+Reply here when https://arcanenft.xyz shows the site. Then we can go to the next stage.
