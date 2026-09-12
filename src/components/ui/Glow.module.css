@@ -1,8 +1,11 @@
 .glow {
   pointer-events: none;
   position: absolute;
-  width: min(28rem, 70vw);
-  height: min(28rem, 70vw);
+  left: -10%;
+  top: -30%;
+  width: min(22rem, 60vw);
+  height: min(22rem, 60vw);
+  max-width: 100%;
   border-radius: 50%;
   background: radial-gradient(
     circle,

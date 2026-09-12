@@ -19,10 +19,12 @@
   letter-spacing: 0.04em;
   line-height: 1.15;
   color: var(--moon-white);
+  text-shadow: 0 3px 22px color-mix(in srgb, var(--deep-space) 88%, transparent);
 }
 
 .lede {
   max-width: 38rem;
   margin-top: 0.9rem;
-  color: var(--text-muted);
+  color: var(--celestial);
+  text-shadow: 0 2px 16px color-mix(in srgb, var(--deep-space) 80%, transparent);
 }

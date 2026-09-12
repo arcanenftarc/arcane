@@ -1,22 +1,24 @@
 .fixedScene {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 0;
   pointer-events: none;
 }
 
 .image {
   object-fit: cover;
-  object-position: center 42%;
+  object-position: center center;
 }
 
 .overlay {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--deep-space) 78%, transparent) 0%, transparent 28%),
-    linear-gradient(90deg, color-mix(in srgb, var(--deep-space) 55%, transparent) 0%, transparent 42%),
-    linear-gradient(180deg, transparent 48%, color-mix(in srgb, var(--deep-space) 55%, transparent) 82%, var(--deep-space) 100%);
+    linear-gradient(180deg, color-mix(in srgb, var(--deep-space) 72%, transparent) 0%, transparent 34%),
+    linear-gradient(90deg, color-mix(in srgb, var(--deep-space) 42%, transparent) 0%, transparent 48%);
 }
 
 .hero {
@@ -25,12 +27,14 @@
   min-height: 100svh;
   display: grid;
   align-items: end;
+  max-width: 100%;
 }
 
 .content {
   position: relative;
   z-index: 1;
   padding: calc(var(--header-h) + 2.5rem) 0 4.5rem;
+  max-width: 100%;
 }
 
 .kicker {
@@ -41,14 +45,18 @@
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--arcane-cyan);
+  text-shadow: 0 2px 18px color-mix(in srgb, var(--deep-space) 80%, transparent);
 }
 
 .title {
   font-family: var(--font-display);
-  font-size: clamp(3.2rem, 9vw, 7.2rem);
+  font-size: clamp(2.6rem, 8vw, 6.4rem);
   font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.1em;
   line-height: 0.92;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-shadow: 0 4px 28px color-mix(in srgb, var(--deep-space) 85%, transparent);
 }
 
 .facts {
@@ -60,11 +68,13 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--magic-ice);
+  text-shadow: 0 2px 16px color-mix(in srgb, var(--deep-space) 80%, transparent);
 }
 
 .lead {
-  max-width: 32rem;
+  max-width: min(32rem, 100%);
   color: var(--celestial);
+  text-shadow: 0 2px 16px color-mix(in srgb, var(--deep-space) 80%, transparent);
 }
 
 .actions {
@@ -78,19 +88,15 @@
   position: relative;
   z-index: 1;
   padding: 4.5rem 0;
-  background: var(--deep-space);
+  background: transparent;
+  max-width: 100%;
+  overflow: hidden;
 }
 
-.sectionIntro {
-  background: linear-gradient(180deg, transparent 0%, var(--deep-space) 58%);
-}
-
-.sectionAlt {
-  background: #152448;
-}
-
+.sectionIntro,
+.sectionAlt,
 .sectionMuted {
-  background: #0f1b36;
+  background: transparent;
 }
 
 .stats {
@@ -107,7 +113,7 @@
   margin: 0;
   overflow: hidden;
   border: 1px solid var(--line);
-  background: #0c1730;
+  background: color-mix(in srgb, var(--deep-space) 72%, transparent);
   transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
 }
 
@@ -142,8 +148,10 @@
 }
 
 .split {
+  position: relative;
   display: grid;
   gap: 1.5rem;
+  overflow: hidden;
 }
 
 .ctaRow {

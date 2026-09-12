@@ -129,4 +129,4 @@ Do not start collection/lore/whitelist/mint work until `https://arcanenft.xyz` s
 
 ## Visual note
 
-No Arcane artwork file was present in the repository at Stage 1 start. Temporary hero and teaser stills were generated to match the specified palette and a central portal of light. Replace `public/images/hero.png` and the teaser files with the official artwork when available. Keep overlays light enough that the portal remains visible.
+No Arcane artwork file was present in the repository at Stage 1 start. Temporary hero and teaser stills were generated to match the specified palette and a central portal of light. Replace `public/assets/background/hero.png` and files in `public/assets/collections/` with the official artwork when available. Keep overlays light enough that the portal remains visible.
