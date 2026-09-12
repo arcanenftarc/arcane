@@ -14,11 +14,7 @@ export function DisplayTitle({
   size?: "md" | "lg";
 }) {
   return (
-    <Tag
-      id={id}
-      className={`${styles.title} ${styles[align]} ${styles[size]}`}
-      data-text={text}
-    >
+    <Tag id={id} className={`${styles.title} ${styles[align]} ${styles[size]}`}>
       {text}
     </Tag>
   );

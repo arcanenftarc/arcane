@@ -6,7 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { DisplayTitle } from "@/components/ui/DisplayTitle";
 import { Divider } from "@/components/ui/Divider";
 import { SlashRule } from "@/components/ui/SlashRule";
-import { ContactForm } from "@/components/home/ContactForm";
+import { XLoginButton } from "@/components/auth/XLoginButton";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
 import styles from "./HomePage.module.css";
 
@@ -17,7 +17,7 @@ const teasers = [
   { src: siteConfig.assets.collections[3], alt: "Abstract cyan energy filaments forming a sigil.", caption: "Sigil" },
 ];
 
-export function HomePage() {
+export function HomePage({ xStatus }: { xStatus?: string }) {
   const collectionRow = [...teasers, ...teasers];
   const collectionTop = collectionRow.slice(0, 4);
   const collectionBottom = collectionRow.slice(4, 8);
@@ -32,7 +32,12 @@ export function HomePage() {
           <HeroCarousel slides={teasers} />
           <div className={styles.desc}>
             <p>{siteConfig.copy.heroLead}</p>
-            <Button href={siteConfig.routes.collection}>See collection</Button>
+            <div className={styles.heroActions}>
+              <Button href="/#whitelist">{siteConfig.copy.whitelistCta}</Button>
+              <Button href="/#mint-title" variant="secondary">
+                How to mint
+              </Button>
+            </div>
           </div>
         </Container>
       </section>
@@ -209,34 +214,32 @@ export function HomePage() {
 
       <Divider />
 
-      <section className={styles.contact} id="contact">
+      <section className={styles.contact} id="whitelist">
         <Container>
           <DisplayTitle text={siteConfig.copy.communityTitle} size="lg" />
-          <div className={styles.contactGrid}>
+          <div className={styles.whitelistLayout}>
             <div>
               <p>{siteConfig.copy.communityBody}</p>
               <p>{siteConfig.copy.communityBody2}</p>
+              <ol className={styles.whitelistSteps}>
+                {siteConfig.whitelistSteps.map((step) => (
+                  <li key={step.n}>
+                    <p className={styles.stepN}>{step.n}</p>
+                    <p className={styles.stepTitle}>{step.title}</p>
+                    <p>{step.body}</p>
+                  </li>
+                ))}
+              </ol>
             </div>
-            <div>
-              <p className={styles.contactLabel}>X</p>
-              <p className={styles.contactValue}>
-                <a href={siteConfig.social.x} rel="noreferrer" target="_blank">
-                  Open X
-                </a>
-              </p>
-              <p className={styles.contactLabel}>Email</p>
-              <p className={styles.contactValue}>
-                <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
-              </p>
-            </div>
-            <div>
-              <p className={styles.contactLabel}>Drop</p>
-              <p className={styles.contactValue}>
-                {siteConfig.supplyDisplay} · {siteConfig.mintPriceDisplay} · {siteConfig.mintPlatform}
-              </p>
+            <div className={styles.whitelistLogin}>
+              <p className={styles.contactLabel}>Sign in</p>
+              <p className={styles.whitelistLead}>Connect X to apply. This is not a wallet connect.</p>
+              <XLoginButton />
+              {xStatus === "setup" ? <p className={styles.notice}>{siteConfig.copy.xSetup}</p> : null}
+              {xStatus === "error" ? <p className={styles.notice}>{siteConfig.copy.xError}</p> : null}
+              {xStatus === "ok" ? <p className={styles.notice}>{siteConfig.copy.xOk}</p> : null}
             </div>
           </div>
-          <ContactForm />
         </Container>
       </section>
     </>

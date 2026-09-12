@@ -68,7 +68,7 @@ export const siteConfig = {
     comingLore:
       "Lore is not written here on purpose. This route exists so the word can be replaced later without rebuilding the site map.",
     comingWhitelist:
-      "Whitelist applications are not open. X login and any verification logic are reserved for a later stage. No wallet is required anywhere on this site.",
+      "Connect X on this page to apply. Whitelist tasks appear after login. No wallet is required.",
     comingMint:
       "Minting is not live. OpenSea checkout, contract calls, and metadata are out of scope for Stage 1. The public facts remain: 4,444 supply, $5 mint.",
     aboutEyebrow: "The collection",
@@ -90,12 +90,13 @@ export const siteConfig = {
       "This website will not run a contract call. The public facts stay fixed: 4,444 supply, $5 mint, OpenSea as the marketplace.",
     mintBody4:
       "Until the date is announced, these four steps are the whole process. Gallery, traits, and metadata are later-stage work.",
-    communityEyebrow: "Community",
-    communityTitle: "Contact Us",
+    communityEyebrow: "Access",
+    communityTitle: "Whitelist",
     communityBody:
-      "Applications are not open yet. When they are, this site will use X login — not a wallet. Mint remains $5 on OpenSea.",
+      "Whitelist is how you apply before mint. Connect X on this page — not a wallet. After you are signed in, the tasks for this drop will show here.",
     communityBody2:
-      "There is no office listing and no phone line. Use X for public updates. A contact form is on this page so the layout is in place; messages are not delivered yet.",
+      "Keep the same X account through the process. Mint stays $5 on OpenSea when the date is announced.",
+    whitelistCta: "Apply for whitelist",
     roadmapEyebrow: "Roadmap",
     roadmapTitle: "Roadmap",
     newsTitle: "Latest",
@@ -104,6 +105,10 @@ export const siteConfig = {
     videoNote: "A trailer is not published yet.",
     formNote: "Messages are not live yet. Use X for now.",
     formConsent: "I understand this form does not send mail until a later stage.",
+    xSetup:
+      "X login is wired on this page. Add the X app keys on the server to finish the connection.",
+    xError: "X login did not complete. Try Continue with X again.",
+    xOk: "X is connected. Whitelist tasks will list here when they open.",
   },
   aboutParagraphs: [
     "Arcane is 4,444 pieces. Mint is $5 on OpenSea. This page is the public surface — the first look at the gate, not the full reveal.",
@@ -137,9 +142,9 @@ export const siteConfig = {
     {
       n: "03",
       meta: "Stage 1 / Access",
-      title: "Whitelist applications are not open",
-      href: "/whitelist",
-      body: "X login is planned for apply. No wallet is required.",
+      title: "Connect X to apply for whitelist",
+      href: "/#whitelist",
+      body: "X login is how you apply. No wallet is required.",
       image: false,
     },
     {
@@ -150,6 +155,11 @@ export const siteConfig = {
       body: "Date and contract stay unpublished until they are real.",
       image: false,
     },
+  ],
+  whitelistSteps: [
+    { n: "01", title: "Connect X", body: "Use Continue with X on this page. That account is how you apply." },
+    { n: "02", title: "Do the tasks", body: "After login, whitelist tasks will appear here. No wallet is required." },
+    { n: "03", title: "Stay on the list", body: "Keep the same X account. Mint is still $5 on OpenSea when it opens." },
   ],
   process: [
     { n: "01", title: "Apply for whitelist", body: "When applications open, request access here. No wallet required." },
@@ -186,7 +196,7 @@ export const pageNav = [
   { href: "/#about", label: "About" },
   { href: "/#collection", label: "Collection" },
   { href: "/#news", label: "Updates" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/#whitelist", label: "Whitelist" },
 ] as const;
 
 export const sideNav = [

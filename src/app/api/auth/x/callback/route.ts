@@ -1,0 +1,57 @@
+import { NextResponse } from "next/server";
+import { originFromHeaders, readPkce, setSession } from "@/lib/auth/session";
+
+export async function GET(request: Request) {
+  const origin = originFromHeaders(request.headers);
+  const url = new URL(request.url);
+  const code = url.searchParams.get("code");
+  const state = url.searchParams.get("state");
+  const pkce = await readPkce();
+  const clientId = process.env.X_CLIENT_ID;
+  const clientSecret = process.env.X_CLIENT_SECRET;
+
+  if (!code || !state || !pkce || pkce.state !== state || !clientId || !clientSecret) {
+    return NextResponse.redirect(new URL("/?x=error#whitelist", origin));
+  }
+
+  const tokenRes = await fetch("https://api.twitter.com/2/oauth2/token", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
+    },
+    body: new URLSearchParams({
+      code,
+      grant_type: "authorization_code",
+      client_id: clientId,
+      redirect_uri: `${origin}/api/auth/x/callback`,
+      code_verifier: pkce.verifier,
+    }),
+  });
+
+  if (!tokenRes.ok) {
+    return NextResponse.redirect(new URL("/?x=error#whitelist", origin));
+  }
+
+  const token = (await tokenRes.json()) as { access_token?: string };
+  if (!token.access_token) {
+    return NextResponse.redirect(new URL("/?x=error#whitelist", origin));
+  }
+
+  const meRes = await fetch("https://api.twitter.com/2/users/me", {
+    headers: { Authorization: `Bearer ${token.access_token}` },
+  });
+  if (!meRes.ok) {
+    return NextResponse.redirect(new URL("/?x=error#whitelist", origin));
+  }
+
+  const me = (await meRes.json()) as {
+    data?: { id: string; username: string; name: string };
+  };
+  if (!me.data) {
+    return NextResponse.redirect(new URL("/?x=error#whitelist", origin));
+  }
+
+  await setSession({ id: me.data.id, username: me.data.username, name: me.data.name });
+  return NextResponse.redirect(new URL("/?x=ok#whitelist", origin));
+}

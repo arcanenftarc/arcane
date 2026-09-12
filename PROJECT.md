@@ -68,23 +68,23 @@ Hover and focus are small. `:focus-visible` is global. There is no wallet button
 | `/` | Full home |
 | `/collection` | Placeholder |
 | `/lore` | Placeholder |
-| `/whitelist` | Placeholder |
+| `/whitelist` | Apply flow + Continue with X |
 | `/mint` | Placeholder |
 
 Primary navigation labels on interior pages: HOME, COLLECTION, LORE, WHITELIST, MINT.
 
-Home header labels: HOME, ABOUT, COLLECTION, UPDATES, CONTACT, with MINT as the right-side action.
+Home header labels: HOME, ABOUT, COLLECTION, UPDATES, WHITELIST, with MINT as the right-side action.
 
 Home page structure follows the scanned MetaPortal Flask demo (Arcane theme, original CSS, no copied assets, no wallet UI):
 
-1. Header — hamburger + logo left, one-page nav center (Home / About / Collection / Updates / Contact), Mint on the right (wallet slot)
-2. `#home` — outlined title + 5-card 3D slider + one description/CTA
+1. Header — hamburger + logo left, one-page nav center (Home / About / Collection / Updates / Whitelist), Mint on the right (wallet slot)
+2. `#home` — title + 5-card 3D slider + Apply for whitelist / How to mint
 3. `#fun_facts` — four counters
 4. `#about` — full-bleed image/text split, then How to Mint + 2×2 steps + trailer still
 5. `#collection` — staggered mosaic (wide/narrow rows) + description/CTA
 6. `#roadmap` — phase cards on a timeline
 7. `#news` — featured update + three shorter notes (Stage 1 placeholders, not a blog)
-8. `#contact` — three info columns + form shell (no backend)
+8. `#whitelist` — how to apply + Continue with X (OAuth when `X_CLIENT_ID` / `X_CLIENT_SECRET` are set)
 9. Footer — copyright/facts + page links
 10. Follow-us rail + scroll-to-top
 
@@ -109,10 +109,8 @@ Home page structure follows the scanned MetaPortal Flask demo (Arcane theme, ori
 
 ## Intentionally not implemented (Stage 1)
 
-- X / Twitter authentication
 - Wallet connection of any kind
-- Wallet submission
-- Whitelist verification
+- Whitelist task verification (the X button is live; tasks after login come next)
 - Database
 - Mint contract logic
 - Metadata / token URI logic
@@ -129,7 +127,7 @@ Do not start collection/lore/whitelist/mint work until `https://arcanenft.xyz` s
 
 1. **Collection** — gallery, piece pages, traits
 2. **Lore** — written world, not placeholder
-3. **Whitelist** — X login, application form, no wallet requirement for apply
+3. **Whitelist** — task list after X login, no wallet requirement for apply
 4. **Mint** — OpenSea mint surface, contract address, live date
 5. **Backend** — persistence, verification, secrets on the server
 

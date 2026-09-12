@@ -1,0 +1,63 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  min-height: 3.1rem;
+  padding: 0.75rem 1.4rem;
+  background: #000;
+  color: var(--moon-white);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.button svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: currentColor;
+}
+
+.button:hover {
+  background: #141414;
+  color: var(--magic-ice);
+}
+
+.connected {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.connected strong {
+  color: var(--moon-white);
+}
+
+.hint {
+  color: var(--celestial);
+  font-size: 0.95rem;
+}
+
+.logout {
+  width: fit-content;
+  min-height: 2.4rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--celestial);
+  font: inherit;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.logout:hover {
+  color: var(--arcane-cyan);
+  border-color: var(--arcane-cyan);
+}
+
+.status {
+  color: var(--soft-periwinkle);
+  font-size: 0.9rem;
+}

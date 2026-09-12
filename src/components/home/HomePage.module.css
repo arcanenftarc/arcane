@@ -29,6 +29,13 @@
   color: var(--celestial);
 }
 
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
 .facts {
   padding: 5.5rem 0 3.8rem;
   border-top: 1px solid color-mix(in srgb, var(--moon-white) 8%, transparent);
@@ -135,6 +142,12 @@
 .aboutCopyInner :global(a),
 .mintCopy :global(a) {
   width: fit-content;
+}
+
+.copyStack {
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
 }
 
 .copyStack p {
@@ -421,14 +434,52 @@
   color: var(--text-muted);
 }
 
-.contactGrid {
+.whitelistLayout {
   display: grid;
-  gap: 2rem;
-  margin: 4.5rem 0 2rem;
+  gap: 2.4rem;
+  margin-top: 1rem;
 }
 
-.contactGrid p {
+.whitelistLayout p {
   color: var(--text-muted);
+}
+
+.whitelistSteps {
+  list-style: none;
+  margin: 1.6rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.whitelistSteps li {
+  padding: 1.1rem 1.15rem;
+  border: 1px solid color-mix(in srgb, var(--moon-white) 15%, transparent);
+}
+
+.whitelistSteps p:last-child {
+  margin-top: 0.4rem;
+  color: var(--text-muted);
+}
+
+.whitelistLogin {
+  display: grid;
+  gap: 0.85rem;
+  align-content: start;
+  padding: 1.6rem 1.4rem;
+  border: 1px solid color-mix(in srgb, var(--moon-white) 15%, transparent);
+}
+
+.whitelistLead {
+  color: var(--moon-white) !important;
+  font-size: 1.15rem;
+}
+
+.notice {
+  margin-top: 0.4rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--arcane-cyan) 45%, transparent);
+  color: var(--magic-ice) !important;
 }
 
 .contactLabel {
@@ -437,18 +488,6 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--soft-periwinkle);
-}
-
-.contactValue {
-  margin: 0 0 1.6rem !important;
-  font-family: var(--font-display);
-  font-size: 1.45rem;
-  font-weight: 500;
-  color: var(--moon-white) !important;
-}
-
-.contactValue a:hover {
-  color: var(--arcane-cyan);
 }
 
 @media (min-width: 700px) {
@@ -543,9 +582,10 @@
     gap: 2.5rem;
   }
 
-  .contactGrid {
-    grid-template-columns: 1.2fr 1fr 1fr;
+  .whitelistLayout {
+    grid-template-columns: 1.15fr 0.85fr;
     gap: 4rem;
+    align-items: start;
   }
 }
 
