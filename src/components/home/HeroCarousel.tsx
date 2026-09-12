@@ -134,7 +134,7 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
                   tabIndex={isCenter || isNeighbor ? 0 : -1}
                 >
                   <span className={styles.frame}>
-                    <Image src={slide.src} alt="" width={900} height={900} priority={offset === 0} draggable={false} />
+                    <Image src={slide.src} alt="" width={900} height={900} priority={Math.abs(offset) <= 1} draggable={false} />
                   </span>
                 </button>
               </figure>
