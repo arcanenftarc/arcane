@@ -18,23 +18,13 @@ function XMark() {
 
 export function XLoginButton({ compact = false }: { compact?: boolean }) {
   const [user, setUser] = useState<User | null>(null);
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     fetch("/api/auth/me")
       .then((res) => res.json())
       .then((data: { user: User | null }) => setUser(data.user))
-      .catch(() => setUser(null))
-      .finally(() => setReady(true));
+      .catch(() => setUser(null));
   }, []);
-
-  if (!ready) {
-    return compact ? (
-      <span className={styles.compactStatus} aria-hidden="true" />
-    ) : (
-      <p className={styles.status}>Checking X…</p>
-    );
-  }
 
   if (user) {
     if (compact) {

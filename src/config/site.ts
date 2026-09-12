@@ -74,7 +74,7 @@ export const siteConfig = {
     aboutEyebrow: "The collection",
     aboutTitle: "The Rise of Arcane",
     aboutBody:
-      "Arcane is 4,444 pieces. Mint is $5 on OpenSea. This page is the public surface — the first look at the gate, not the full reveal.",
+      "Arcane is a contained drop on OpenSea. This page is the public surface — the first look at the gate, not the full reveal.",
     aboutBody2:
       "The artwork sits in one atmosphere: deep navy space, a central portal of light, and restrained cyan energy. Final traits and piece pages arrive in a later stage.",
     aboutBody3:
@@ -95,7 +95,7 @@ export const siteConfig = {
     communityBody:
       "Whitelist is how you apply before mint. Connect X on this page — not a wallet. After you are signed in, the tasks for this drop will show here.",
     communityBody2:
-      "Keep the same X account through the process. Mint stays $5 on OpenSea when the date is announced.",
+      "Keep the same X account through the process. Mint opens on OpenSea when the date is announced.",
     whitelistCta: "Apply for whitelist",
     roadmapEyebrow: "Roadmap",
     roadmapTitle: "Roadmap",
@@ -111,7 +111,7 @@ export const siteConfig = {
     xOk: "X is connected. Whitelist tasks will list here when they open.",
   },
   aboutParagraphs: [
-    "Arcane is 4,444 pieces. Mint is $5 on OpenSea. This page is the public surface — the first look at the gate, not the full reveal.",
+    "Arcane is a contained drop on OpenSea. This page is the public surface — the first look at the gate, not the full reveal.",
     "The artwork sits in one atmosphere: deep navy space, a central portal of light, and restrained cyan energy. Final traits and piece pages arrive in a later stage.",
     "Nothing here asks for a wallet. Lore, whitelist applications, and OpenSea checkout are reserved for later stages so this site can stay a clean public front.",
     "When those stages land, this same layout stays. Copy, stills, and dates will be replaced in place — the routes already exist.",
@@ -159,7 +159,7 @@ export const siteConfig = {
   whitelistSteps: [
     { n: "01", title: "Connect X", body: "Use Continue with X on this page. That account is how you apply." },
     { n: "02", title: "Do the tasks", body: "After login, whitelist tasks will appear here. No wallet is required." },
-    { n: "03", title: "Stay on the list", body: "Keep the same X account. Mint is still $5 on OpenSea when it opens." },
+    { n: "03", title: "Stay on the list", body: "Keep the same X account. Mint opens on OpenSea when the date is announced." },
   ],
   process: [
     { n: "01", title: "Apply for whitelist", body: "When applications open, request access here. No wallet required." },

@@ -98,10 +98,10 @@ export function bindScrollReveal() {
     return () => {};
   }
 
-  nodes.forEach((node, i) => {
-    node.classList.add("reveal");
-    node.style.transitionDelay = `${Math.min(i, 4) * 70}ms`;
-  });
+  const inView = (node: HTMLElement) => {
+    const box = node.getBoundingClientRect();
+    return box.bottom > 48 && box.top < window.innerHeight * 0.92;
+  };
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -112,16 +112,30 @@ export function bindScrollReveal() {
         }
       });
     },
-    { rootMargin: "0px 0px -12% 0px", threshold: 0.08 },
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.05 },
   );
 
-  // Let the hidden state paint once so the first sections animate in
-  // instead of appearing already-revealed.
-  let raf = window.requestAnimationFrame(() => {
-    raf = window.requestAnimationFrame(() => nodes.forEach((node) => observer.observe(node)));
+  let raf = 0;
+  const safety = window.setTimeout(() => {
+    nodes.forEach((node) => node.classList.add("reveal-in"));
+  }, 1800);
+
+  raf = window.requestAnimationFrame(() => {
+    raf = window.requestAnimationFrame(() => {
+      nodes.forEach((node, i) => {
+        node.classList.add("reveal");
+        node.style.transitionDelay = `${Math.min(i, 5) * 60}ms`;
+        if (inView(node)) {
+          node.classList.add("reveal-in");
+        } else {
+          observer.observe(node);
+        }
+      });
+    });
   });
 
   return () => {
+    window.clearTimeout(safety);
     window.cancelAnimationFrame(raf);
     observer.disconnect();
   };
