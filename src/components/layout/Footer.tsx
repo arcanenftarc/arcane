@@ -7,9 +7,7 @@ export function Footer() {
     <footer className={styles.footer} id="footer">
       <Container>
         <div className={styles.bar}>
-          <p>
-            {siteConfig.name} — {siteConfig.supplyDisplay} · {siteConfig.mintPriceDisplay} mint on {siteConfig.mintPlatform}.
-          </p>
+          <p className={styles.mark}>{siteConfig.name}</p>
           <ul>
             {pageNav.map((item) => (
               <li key={item.href}>
@@ -21,6 +19,7 @@ export function Footer() {
             </li>
           </ul>
         </div>
+        <p className={styles.note}>A limited collection. Supply, mint price, and date to be announced.</p>
       </Container>
     </footer>
   );

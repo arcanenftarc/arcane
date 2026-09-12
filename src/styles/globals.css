@@ -8,13 +8,25 @@
   --arcane-cyan: #23d4f9;
   --magic-ice: #afecf7;
   --moon-white: #f0eaee;
+  --gilt: #e4c98a;
+  --gilt-bright: #f5e3b6;
 
   --bg: var(--deep-space);
   --bg-elevated: #16264a;
   --text: var(--moon-white);
   --text-muted: var(--celestial);
   --line: color-mix(in srgb, var(--soft-periwinkle) 28%, transparent);
+  --line-soft: color-mix(in srgb, var(--moon-white) 12%, transparent);
   --focus: var(--arcane-cyan);
+
+  --panel: color-mix(in srgb, var(--moon-white) 4.5%, transparent);
+  --band: color-mix(in srgb, black 22%, transparent);
+  --shadow-sm: 0 1px 2px color-mix(in srgb, black 30%, transparent);
+  --shadow-md: 0 14px 40px -18px color-mix(in srgb, black 80%, transparent);
+  --shadow-lg: 0 40px 90px -40px color-mix(in srgb, black 90%, transparent);
+  --glow-cyan: 0 0 32px color-mix(in srgb, var(--arcane-cyan) 24%, transparent);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
   --font-display: var(--font-display-family), "Times New Roman", serif;
   --font-body: var(--font-body-family), system-ui, sans-serif;
@@ -31,12 +43,14 @@
 
   --container: 82rem;
   --radius: 2px;
-  --header-h: 6.75rem;
+  --section-y: 4rem;
+  --header-h: 6.35rem;
 }
 
 @media (min-width: 768px) {
   :root {
-    --header-h: 5.6rem;
+    --header-h: 4.6rem;
+    --section-y: 5.25rem;
   }
 }
 
@@ -49,7 +63,7 @@
 html {
   color-scheme: dark;
   background: var(--bg);
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   scroll-padding-top: calc(var(--header-h) + 0.5rem);
 }
 
@@ -57,18 +71,47 @@ html,
 body {
   margin: 0;
   min-height: 100%;
+  min-height: 100svh;
   max-width: 100%;
   overflow-x: hidden;
   overflow-x: clip;
 }
 
 body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   font-family: var(--font-body);
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--text);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(70rem 42rem at 50% -12%, color-mix(in srgb, var(--mystic-blue) 24%, transparent), transparent 72%),
+    radial-gradient(36rem 28rem at 92% 18%, color-mix(in srgb, var(--arcane-cyan) 8%, transparent), transparent 70%),
+    radial-gradient(44rem 30rem at 0% 80%, color-mix(in srgb, var(--arcane-navy) 55%, transparent), transparent 72%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 img {
@@ -92,6 +135,11 @@ h2,
 h3,
 p {
   margin: 0;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--arcane-cyan) 32%, transparent);
+  color: var(--moon-white);
 }
 
 :focus-visible {
@@ -129,24 +177,69 @@ p {
 .site-main {
   position: relative;
   z-index: 1;
-  min-height: 100vh;
+  flex: 1 0 auto;
   max-width: 100%;
   overflow-x: clip;
 }
 
-@keyframes page-in {
-  from {
-    opacity: 0.72;
-  }
-  to {
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 800ms var(--ease-out),
+    transform 800ms var(--ease-out);
+}
+
+.reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+[data-aura] {
+  --mx: 50%;
+  --my: 0%;
+  position: relative;
+  isolation: isolate;
+}
+
+[data-aura]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    13rem circle at var(--mx) var(--my),
+    color-mix(in srgb, var(--arcane-cyan) 16%, transparent),
+    transparent 62%
+  );
+  opacity: 0;
+  transition: opacity 480ms var(--ease-out);
+}
+
+[data-aura] > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-aura]:hover::before {
     opacity: 1;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    transition: none !important;
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  [data-aura]::before {
+    display: none;
   }
 }

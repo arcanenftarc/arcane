@@ -1,55 +1,61 @@
 .button {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  min-height: 2.85rem;
-  padding: 0.7rem 1.25rem;
+  min-height: 3rem;
+  padding: 0.75rem 1.7rem;
+  overflow: hidden;
+  isolation: isolate;
   border: 1px solid transparent;
   border-radius: var(--radius);
   font-family: var(--font-body);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   cursor: pointer;
   transition:
-    background-color 200ms ease,
-    border-color 200ms ease,
-    color 200ms ease,
-    box-shadow 200ms ease,
-    transform 200ms ease;
+    background-color 320ms var(--ease-out),
+    border-color 320ms var(--ease-out),
+    color 320ms var(--ease-out),
+    box-shadow 320ms var(--ease-out),
+    transform 320ms var(--ease-out);
 }
 
-.button:hover {
-  transform: translateY(-1px);
+.button > span {
+  position: relative;
+  z-index: 1;
 }
 
-.button:active {
-  transform: translateY(0);
+.button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 80% at 50% -20%,
+    color-mix(in srgb, white 38%, transparent),
+    transparent 58%
+  );
+  opacity: 0.55;
+  transition: opacity 320ms var(--ease-out);
 }
 
 .primary {
-  background: var(--arcane-cyan);
-  color: var(--deep-space);
-  box-shadow: 0 0 0 0 color-mix(in srgb, var(--arcane-cyan) 0%, transparent);
-}
-
-.primary:hover {
-  background: var(--magic-ice);
-  box-shadow: 0 8px 28px color-mix(in srgb, var(--arcane-cyan) 32%, transparent);
+  background: linear-gradient(180deg, #d7f7ff 0%, var(--arcane-cyan) 48%, #12b4dd 100%);
+  color: #06131f;
+  box-shadow:
+    0 10px 28px -12px color-mix(in srgb, var(--arcane-cyan) 70%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 55%, transparent);
 }
 
 .secondary {
-  background: color-mix(in srgb, var(--deep-space) 35%, transparent);
+  background: color-mix(in srgb, var(--moon-white) 4%, transparent);
   color: var(--moon-white);
-  border-color: color-mix(in srgb, var(--arcane-cyan) 55%, transparent);
-}
-
-.secondary:hover {
-  border-color: var(--arcane-cyan);
-  color: var(--magic-ice);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--arcane-cyan) 40%, transparent);
+  border-color: color-mix(in srgb, var(--arcane-cyan) 38%, transparent);
+  backdrop-filter: blur(6px);
 }
 
 .ghost {
@@ -58,19 +64,50 @@
   border-color: var(--line);
 }
 
-.ghost:hover {
-  color: var(--moon-white);
-  border-color: var(--soft-periwinkle);
-}
-
 .full {
   width: 100%;
   min-height: 3.6rem;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    transform: translateY(-1px);
+  }
+
+  .button:hover::after {
+    opacity: 0.9;
+  }
+
+  .primary:hover {
+    box-shadow:
+      0 16px 40px -14px color-mix(in srgb, var(--arcane-cyan) 80%, transparent),
+      0 0 28px color-mix(in srgb, var(--arcane-cyan) 28%, transparent),
+      inset 0 1px 0 color-mix(in srgb, white 70%, transparent);
+  }
+
+  .secondary:hover {
+    border-color: var(--arcane-cyan);
+    color: var(--magic-ice);
+    box-shadow: 0 0 24px color-mix(in srgb, var(--arcane-cyan) 22%, transparent);
+  }
+
+  .ghost:hover {
+    color: var(--moon-white);
+    border-color: var(--soft-periwinkle);
+  }
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .button:hover,
-  .button:active {
+  .button,
+  .button::after {
+    transition: none;
+  }
+
+  .button:hover {
     transform: none;
   }
 }

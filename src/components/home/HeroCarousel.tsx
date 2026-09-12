@@ -6,13 +6,24 @@ type Slide = {
   alt: string;
 };
 
+// The track scrolls by exactly one copy, so the remaining copies have to be
+// wide enough to fill the viewport on large displays.
+const COPIES = 4;
+
 function Row({ slides, labeled }: { slides: Slide[]; labeled: boolean }) {
   return (
     <div className={styles.row} aria-hidden={!labeled}>
       {slides.map((slide) => (
-        <figure key={`${labeled ? "a" : "b"}-${slide.src}`} className={styles.card}>
+        <figure key={slide.src} className={styles.card}>
           <span className={styles.frame}>
-            <Image src={slide.src} alt={labeled ? slide.alt : ""} width={900} height={900} priority={labeled} draggable={false} />
+            <Image
+              src={slide.src}
+              alt={labeled ? slide.alt : ""}
+              width={900}
+              height={900}
+              priority={labeled}
+              draggable={false}
+            />
           </span>
         </figure>
       ))}
@@ -29,8 +40,9 @@ export function HeroCarousel({ slides }: { slides: Slide[] }) {
     <div className={styles.wrap}>
       <div className={styles.viewport}>
         <div className={styles.track}>
-          <Row slides={slides} labeled />
-          <Row slides={slides} labeled={false} />
+          {Array.from({ length: COPIES }, (_, i) => (
+            <Row key={i} slides={slides} labeled={i === 0} />
+          ))}
         </div>
       </div>
     </div>

@@ -3,13 +3,7 @@
   padding: 1.25rem 1.3rem 1.4rem;
   background: var(--bg-elevated);
   border: 1px solid var(--line);
-  transition: border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
-}
-
-.card:hover {
-  border-color: color-mix(in srgb, var(--arcane-cyan) 45%, transparent);
-  transform: translateY(-2px);
-  box-shadow: 0 16px 36px color-mix(in srgb, #000 28%, transparent);
+  transition: border-color 280ms var(--ease-out), box-shadow 280ms var(--ease-out);
 }
 
 .label {
@@ -20,11 +14,7 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--soft-periwinkle);
-  transition: color 220ms ease;
-}
-
-.card:hover .label {
-  color: var(--arcane-cyan);
+  transition: color 220ms var(--ease-out);
 }
 
 .value {
@@ -40,8 +30,13 @@
   font-size: 0.95rem;
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media (hover: hover) and (pointer: fine) {
   .card:hover {
-    transform: none;
+    border-color: color-mix(in srgb, var(--arcane-cyan) 45%, transparent);
+    box-shadow: 0 16px 36px color-mix(in srgb, #000 28%, transparent), var(--glow-cyan);
+  }
+
+  .card:hover .label {
+    color: var(--arcane-cyan);
   }
 }
