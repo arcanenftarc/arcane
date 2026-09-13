@@ -21,10 +21,6 @@ export const siteConfig = {
   },
   routes: {
     home: "/",
-    collection: "/collection",
-    lore: "/lore",
-    whitelist: "/whitelist",
-    mint: "/mint",
   },
   assets: {
     background: "/assets/background/hero.png",
@@ -212,10 +208,9 @@ export const siteConfig = {
 export type SiteConfig = typeof siteConfig;
 
 export const navItems = [
-  { href: siteConfig.routes.home, label: "Home" },
-  { href: siteConfig.routes.lore, label: "Lore" },
-  { href: siteConfig.routes.whitelist, label: "Whitelist" },
-  { href: siteConfig.routes.mint, label: "Mint" },
+  { href: "/#home", label: "Home" },
+  { href: "/#whitelist", label: "Whitelist" },
+  { href: "/#about", label: "About" },
 ] as const;
 
 export const pageNav = [

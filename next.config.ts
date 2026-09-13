@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
         destination: "https://arcanenft.xyz/:path*",
         permanent: true,
       },
+      { source: "/lore", destination: "/", permanent: false },
+      { source: "/collection", destination: "/", permanent: false },
+      { source: "/whitelist", destination: "/", permanent: false },
+      { source: "/mint", destination: "/", permanent: false },
     ];
   },
 };

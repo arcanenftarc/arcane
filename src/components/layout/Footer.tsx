@@ -19,7 +19,6 @@ export function Footer() {
             </li>
           </ul>
         </div>
-        <p className={styles.note}>A limited collection. Supply, mint price, and date to be announced.</p>
       </Container>
     </footer>
   );

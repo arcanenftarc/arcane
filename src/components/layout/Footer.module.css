@@ -53,14 +53,6 @@
   transition: transform 320ms var(--ease-out);
 }
 
-.note {
-  margin-top: 1.25rem;
-  color: var(--soft-periwinkle);
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  text-align: center;
-}
-
 @media (hover: hover) and (pointer: fine) {
   .bar a:hover {
     color: var(--magic-ice);

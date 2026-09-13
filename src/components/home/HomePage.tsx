@@ -61,9 +61,7 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
               <WhitelistQuest />
             </div>
             <div className={styles.whitelistLogin} data-reveal data-aura>
-              <p className={styles.contactLabel}>Sign in</p>
-              <p className={styles.whitelistLead}>Connect X after the quests. This is not a wallet connect.</p>
-              <p>A bot can confirm follow, comment, and retweet through the X API once login is live. Verify on each quest stores progress here until then.</p>
+              <p className={styles.whitelistLead}>Sign-in to apply</p>
               <XLoginButton />
               {xStatus === "setup" ? <p className={styles.notice}>{siteConfig.copy.xSetup}</p> : null}
               {xStatus === "error" ? <p className={styles.notice}>{siteConfig.copy.xError}</p> : null}
@@ -94,9 +92,6 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
                   <p key={paragraph.slice(0, 24)}>{paragraph}</p>
                 ))}
               </div>
-              <Button href={siteConfig.routes.lore} variant="secondary">
-                Open lore
-              </Button>
             </div>
           </div>
         </div>
