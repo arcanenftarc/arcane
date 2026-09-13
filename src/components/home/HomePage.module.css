@@ -281,14 +281,6 @@
   line-height: 1.3;
 }
 
-.notice {
-  margin-top: 0.25rem;
-  padding: 0.8rem 0.95rem;
-  border: 1px solid color-mix(in srgb, var(--arcane-cyan) 45%, transparent);
-  background: color-mix(in srgb, var(--arcane-cyan) 8%, transparent);
-  color: var(--magic-ice) !important;
-}
-
 .contactLabel {
   margin: 0;
   font-size: 0.7rem;

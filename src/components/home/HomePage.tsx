@@ -16,7 +16,7 @@ const teasers = [
   { src: siteConfig.assets.collections[3], alt: "Abstract cyan energy filaments forming a sigil." },
 ];
 
-export function HomePage({ xStatus }: { xStatus?: string }) {
+export function HomePage() {
   return (
     <>
       <section className={styles.hero} id="home" aria-label="Arcane home">
@@ -63,9 +63,6 @@ export function HomePage({ xStatus }: { xStatus?: string }) {
             <div className={styles.whitelistLogin} data-reveal data-aura>
               <p className={styles.whitelistLead}>Sign-in to apply</p>
               <XLoginButton />
-              {xStatus === "setup" ? <p className={styles.notice}>{siteConfig.copy.xSetup}</p> : null}
-              {xStatus === "error" ? <p className={styles.notice}>{siteConfig.copy.xError}</p> : null}
-              {xStatus === "ok" ? <p className={styles.notice}>{siteConfig.copy.xOk}</p> : null}
             </div>
           </div>
         </Container>

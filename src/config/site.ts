@@ -104,10 +104,6 @@ export const siteConfig = {
     videoNote: "A trailer is not published yet.",
     formNote: "Messages are not live yet. Use X for now.",
     formConsent: "I understand this form does not send mail until a later stage.",
-    xSetup:
-      "X login is wired on this page. Add the X app keys on the server to finish the connection.",
-    xError: "X login did not complete. Try Continue with X again.",
-    xOk: "X is connected. Whitelist tasks will list here when they open.",
   },
   aboutParagraphs: [
     "Arcane is a contained drop on OpenSea. This page is the public surface — the first look at the gate, not the full reveal.",

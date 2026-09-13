@@ -49,7 +49,6 @@ export function XLoginButton({ compact = false }: { compact?: boolean }) {
         <p>
           Connected as <strong>@{user.username}</strong>
         </p>
-        <p className={styles.hint}>You are signed in with X. Whitelist tasks will list here when they open. No wallet is required.</p>
         <button
           type="button"
           className={styles.logout}

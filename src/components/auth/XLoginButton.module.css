@@ -42,11 +42,6 @@
   color: var(--moon-white);
 }
 
-.hint {
-  color: var(--celestial);
-  font-size: 0.95rem;
-}
-
 .logout {
   width: fit-content;
   min-height: 2.4rem;
