@@ -17,7 +17,7 @@ export async function GET(request: Request) {
   url.searchParams.set("response_type", "code");
   url.searchParams.set("client_id", clientId);
   url.searchParams.set("redirect_uri", `${origin}/api/auth/x/callback`);
-  url.searchParams.set("scope", "users.read tweet.read offline.access");
+  url.searchParams.set("scope", "users.read tweet.read follows.read offline.access");
   url.searchParams.set("state", state);
   url.searchParams.set("code_challenge", challenge);
   url.searchParams.set("code_challenge_method", "S256");

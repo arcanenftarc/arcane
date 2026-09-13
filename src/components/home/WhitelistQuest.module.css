@@ -54,6 +54,13 @@
   padding-left: calc(1.85rem * 0.7 + 0.85rem);
 }
 
+.fail {
+  margin: 0.5rem 0 0;
+  padding-left: calc(1.85rem * 0.7 + 0.85rem);
+  color: #ff5a6a;
+  font-size: 0.82rem;
+}
+
 .open,
 .verify {
   display: inline-flex;
@@ -104,7 +111,8 @@
 }
 
 @media (max-width: 479px) {
-  .actions {
+  .actions,
+  .fail {
     padding-left: 0;
   }
 }

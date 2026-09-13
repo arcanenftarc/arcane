@@ -11,6 +11,14 @@ function largerAvatar(url?: string) {
   return url.replace("_normal", "_400x400").replace("_bigger", "_400x400");
 }
 
+function Chevron() {
+  return (
+    <svg className={styles.chevron} viewBox="0 0 12 8" aria-hidden="true">
+      <path d="M1.2 1.4 6 6.2l4.8-4.8" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function XMark() {
   return (
     <svg className={styles.mark} viewBox="0 0 24 24" aria-hidden="true">
@@ -19,8 +27,17 @@ function XMark() {
   );
 }
 
-export function XLoginButton({ compact = false }: { compact?: boolean }) {
-  const { user, ready, logout } = useXSession();
+function AccountMenu({
+  compact,
+  username,
+  avatar,
+  logout,
+}: {
+  compact: boolean;
+  username: string;
+  avatar?: string;
+  logout: () => Promise<void>;
+}) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -46,41 +63,49 @@ export function XLoginButton({ compact = false }: { compact?: boolean }) {
     };
   }, [open]);
 
+  return (
+    <div className={compact ? styles.menu : `${styles.menu} ${styles.connectedMenu}`} ref={menuRef}>
+      <button
+        type="button"
+        className={compact ? styles.compactUser : styles.connectedUser}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-label={`Account menu for @${username}`}
+        onClick={() => setOpen((value) => !value)}
+      >
+        {compact && avatar ? <img className={styles.avatar} src={avatar} alt="" width={28} height={28} /> : null}
+        <span>@{username}</span>
+        <Chevron />
+      </button>
+      {open ? (
+        <div className={compact ? styles.dropdown : styles.connectedDropdown} role="menu">
+          <button
+            type="button"
+            role="menuitem"
+            className={styles.dropdownItem}
+            onClick={async () => {
+              setOpen(false);
+              await logout();
+            }}
+          >
+            Logout
+          </button>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+export function XLoginButton({ compact = false }: { compact?: boolean }) {
+  const { user, ready, logout } = useXSession();
+
   if (!ready) {
     return compact ? <span className={styles.compactStatus} aria-hidden="true" /> : null;
   }
 
   if (user) {
     if (compact) {
-      return (
-        <div className={styles.menu} ref={menuRef}>
-          <button
-            type="button"
-            className={styles.compactUser}
-            aria-haspopup="menu"
-            aria-expanded={open}
-            onClick={() => setOpen((value) => !value)}
-          >
-            {user.avatar ? <img className={styles.avatar} src={user.avatar} alt="" width={28} height={28} /> : null}
-            <span>@{user.username}</span>
-          </button>
-          {open ? (
-            <div className={styles.dropdown} role="menu">
-              <button
-                type="button"
-                role="menuitem"
-                className={styles.dropdownItem}
-                onClick={async () => {
-                  setOpen(false);
-                  await logout();
-                }}
-              >
-                Logout
-              </button>
-            </div>
-          ) : null}
-        </div>
-      );
+      return <AccountMenu compact username={user.username} avatar={user.avatar} logout={logout} />;
     }
 
     const background = largerAvatar(user.avatar);
@@ -90,7 +115,7 @@ export function XLoginButton({ compact = false }: { compact?: boolean }) {
         style={background ? { backgroundImage: `url(${JSON.stringify(background)})` } : undefined}
       >
         <div className={styles.connectedShade} />
-        <p className={styles.connectedName}>@{user.username}</p>
+        <AccountMenu compact={false} username={user.username} avatar={user.avatar} logout={logout} />
       </div>
     );
   }

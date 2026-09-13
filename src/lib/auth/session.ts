@@ -8,8 +8,15 @@ export type XSession = {
 };
 
 const SESSION_COOKIE = "arcane_x";
+const TOKEN_COOKIE = "arcane_x_tok";
 const PKCE_COOKIE = "arcane_x_pkce";
 const WEEK = 60 * 60 * 24 * 7;
+
+export type XTokens = {
+  access: string;
+  refresh?: string;
+  exp?: number;
+};
 
 function secret() {
   return process.env.X_CLIENT_SECRET || process.env.SESSION_SECRET || "";
@@ -47,8 +54,8 @@ export function randomToken(bytes = 32) {
   return base64url(buf);
 }
 
-export async function getSession(): Promise<XSession | null> {
-  const raw = (await cookies()).get(SESSION_COOKIE)?.value;
+async function readSigned<T>(name: string): Promise<T | null> {
+  const raw = (await cookies()).get(name)?.value;
   if (!raw) {
     return null;
   }
@@ -61,27 +68,44 @@ export async function getSession(): Promise<XSession | null> {
     return null;
   }
   try {
-    return JSON.parse(atob(payload.replace(/-/g, "+").replace(/_/g, "/"))) as XSession;
+    return JSON.parse(atob(payload.replace(/-/g, "+").replace(/_/g, "/"))) as T;
   } catch {
     return null;
   }
 }
 
-export async function setSession(session: XSession) {
-  const payload = base64url(JSON.stringify(session));
+async function writeSigned(name: string, value: unknown, maxAge: number) {
+  const payload = base64url(JSON.stringify(value));
   const sig = await hmac(payload);
-  (await cookies()).set(SESSION_COOKIE, `${payload}.${sig}`, {
+  (await cookies()).set(name, `${payload}.${sig}`, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: WEEK,
+    maxAge,
   });
+}
+
+export async function getSession(): Promise<XSession | null> {
+  return readSigned<XSession>(SESSION_COOKIE);
+}
+
+export async function setSession(session: XSession) {
+  await writeSigned(SESSION_COOKIE, session, WEEK);
+}
+
+export async function getTokens(): Promise<XTokens | null> {
+  return readSigned<XTokens>(TOKEN_COOKIE);
+}
+
+export async function setTokens(tokens: XTokens) {
+  await writeSigned(TOKEN_COOKIE, tokens, WEEK);
 }
 
 export async function clearSession() {
   const jar = await cookies();
   jar.delete(SESSION_COOKIE);
+  jar.delete(TOKEN_COOKIE);
   jar.delete(PKCE_COOKIE);
 }
 

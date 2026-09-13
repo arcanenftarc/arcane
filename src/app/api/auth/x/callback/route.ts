@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { originFromHeaders, readPkce, setSession } from "@/lib/auth/session";
+import { originFromHeaders, readPkce, setSession, setTokens } from "@/lib/auth/session";
 
 export async function GET(request: Request) {
   const origin = originFromHeaders(request.headers);
@@ -33,7 +33,11 @@ export async function GET(request: Request) {
     return NextResponse.redirect(new URL("/?x=error#whitelist", origin));
   }
 
-  const token = (await tokenRes.json()) as { access_token?: string };
+  const token = (await tokenRes.json()) as {
+    access_token?: string;
+    refresh_token?: string;
+    expires_in?: number;
+  };
   if (!token.access_token) {
     return NextResponse.redirect(new URL("/?x=error#whitelist", origin));
   }
@@ -57,6 +61,11 @@ export async function GET(request: Request) {
     username: me.data.username,
     name: me.data.name,
     avatar: me.data.profile_image_url,
+  });
+  await setTokens({
+    access: token.access_token,
+    refresh: token.refresh_token,
+    exp: token.expires_in ? Date.now() + token.expires_in * 1000 : undefined,
   });
   return NextResponse.redirect(new URL("/?x=ok#whitelist", origin));
 }

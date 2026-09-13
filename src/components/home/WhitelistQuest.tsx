@@ -30,6 +30,8 @@ export function WhitelistQuest() {
   const { user } = useXSession();
   const loggedIn = Boolean(user);
   const [done, setDone] = useState<QuestId[]>([]);
+  const [failed, setFailed] = useState<Partial<Record<QuestId, boolean>>>({});
+  const [pending, setPending] = useState<QuestId | null>(null);
   const [popup, setPopup] = useState(false);
 
   useEffect(() => {
@@ -48,19 +50,41 @@ export function WhitelistQuest() {
     window.open(href, "_blank", "noopener,noreferrer");
   };
 
-  const verify = (id: QuestId) => {
+  const verify = async (id: QuestId) => {
     if (!loggedIn) {
       requireLogin();
       return;
     }
-    setDone((current) => {
-      if (current.includes(id)) {
-        return current;
+    if (done.includes(id) || pending) {
+      return;
+    }
+    setFailed((current) => ({ ...current, [id]: false }));
+    setPending(id);
+    try {
+      const res = await fetch("/api/quests/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      const data = (await res.json()) as { ok?: boolean };
+      if (data.ok) {
+        setDone((current) => {
+          if (current.includes(id)) {
+            return current;
+          }
+          const next = [...current, id];
+          writeDone(next);
+          return next;
+        });
+        setFailed((current) => ({ ...current, [id]: false }));
+      } else {
+        setFailed((current) => ({ ...current, [id]: true }));
       }
-      const next = [...current, id];
-      writeDone(next);
-      return next;
-    });
+    } catch {
+      setFailed((current) => ({ ...current, [id]: true }));
+    } finally {
+      setPending(null);
+    }
   };
 
   return (
@@ -79,10 +103,11 @@ export function WhitelistQuest() {
                 <button type="button" className={styles.open} onClick={() => openQuest(step.href)}>
                   {step.action}
                 </button>
-                <button type="button" className={styles.verify} onClick={() => verify(step.id)} disabled={verified}>
+                <button type="button" className={styles.verify} onClick={() => verify(step.id)} disabled={verified || pending === step.id}>
                   {verified ? "Verified" : "Verify"}
                 </button>
               </div>
+              {failed[step.id] && !verified ? <p className={styles.fail}>Task not completed</p> : null}
             </li>
           );
         })}

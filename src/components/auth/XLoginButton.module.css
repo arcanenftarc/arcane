@@ -76,15 +76,16 @@
     color-mix(in srgb, var(--deep-space) 28%, transparent);
 }
 
-.connectedName {
-  position: relative;
-  z-index: 1;
-  margin: 0;
-  color: var(--moon-white);
-  font-family: var(--font-display);
-  font-size: clamp(1.55rem, 3vw, 2.15rem);
-  letter-spacing: 0.04em;
-  text-shadow: 0 2px 18px color-mix(in srgb, black 70%, transparent);
+.chevron {
+  width: 0.7rem;
+  height: 0.5rem;
+  flex: 0 0 auto;
+  transition: transform 200ms var(--ease-out);
+}
+
+.compactUser[aria-expanded="true"] .chevron,
+.connectedUser[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
 }
 
 .compactStatus {
@@ -127,13 +128,53 @@
   position: relative;
 }
 
+.connectedMenu {
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+}
+
+.connectedUser {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--moon-white);
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 18px color-mix(in srgb, black 70%, transparent);
+  cursor: pointer;
+}
+
+.connectedUser .chevron {
+  width: 0.9rem;
+  height: 0.65rem;
+}
+
+.connectedDropdown {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  left: 50%;
+  z-index: 2;
+  min-width: 8.5rem;
+  padding: 0.3rem;
+  border: 1px solid var(--line-soft);
+  background: color-mix(in srgb, var(--deep-space) 94%, black);
+  box-shadow: var(--shadow-md);
+  transform: translateX(-50%);
+}
+
 .compactUser {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  max-width: 11.5rem;
+  max-width: 13.5rem;
   min-height: 2.15rem;
-  padding: 0.2rem 0.7rem 0.2rem 0.25rem;
+  padding: 0.2rem 0.65rem 0.2rem 0.25rem;
   border: 1px solid var(--line-soft);
   border-radius: 999px;
   background: color-mix(in srgb, var(--moon-white) 5%, transparent);
@@ -216,6 +257,10 @@
     border-color: color-mix(in srgb, var(--arcane-cyan) 50%, transparent);
     background: color-mix(in srgb, var(--arcane-cyan) 10%, transparent);
     box-shadow: 0 0 18px color-mix(in srgb, var(--arcane-cyan) 16%, transparent);
+  }
+
+  .connectedUser:hover {
+    color: var(--magic-ice);
   }
 
   .dropdownItem:hover {
