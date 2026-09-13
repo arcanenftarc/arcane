@@ -8,13 +8,13 @@
 
 .bar {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 1.1rem;
-  text-align: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .mark {
+  margin: 0;
   font-family: var(--font-display);
   font-size: 0.95rem;
   letter-spacing: 0.32em;
@@ -22,59 +22,29 @@
   color: var(--moon-white);
 }
 
-.bar ul {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.15rem 1.6rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.bar a {
-  position: relative;
-  color: var(--celestial);
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+.x {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  color: var(--moon-white);
   transition: color 260ms var(--ease-out);
 }
 
-.bar a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -0.2rem;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transition: transform 320ms var(--ease-out);
+.x svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: currentColor;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .bar a:hover {
+  .x:hover {
     color: var(--magic-ice);
-  }
-
-  .bar a:hover::after {
-    transform: scaleX(1);
   }
 }
 
 @media (min-width: 768px) {
   .footer {
     padding: 3rem 0 2.75rem;
-  }
-
-  .bar {
-    flex-direction: row;
-    justify-content: space-between;
-    text-align: left;
-  }
-
-  .bar ul {
-    justify-content: flex-end;
   }
 }
