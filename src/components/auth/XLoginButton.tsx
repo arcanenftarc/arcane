@@ -1,12 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useXSession } from "@/components/auth/XSession";
 import styles from "./XLoginButton.module.css";
 
-type User = {
-  username: string;
-  name: string;
-};
+function largerAvatar(url?: string) {
+  if (!url) {
+    return "";
+  }
+  return url.replace("_normal", "_400x400").replace("_bigger", "_400x400");
+}
 
 function XMark() {
   return (
@@ -17,56 +20,97 @@ function XMark() {
 }
 
 export function XLoginButton({ compact = false }: { compact?: boolean }) {
-  const [user, setUser] = useState<User | null>(null);
+  const { user, ready, logout } = useXSession();
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetch("/api/auth/me")
-      .then((res) => res.json())
-      .then((data: { user: User | null }) => setUser(data.user))
-      .catch(() => setUser(null));
-  }, []);
+    if (!open) {
+      return;
+    }
+    const onPointer = (event: MouseEvent) => {
+      if (!menuRef.current?.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onPointer);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onPointer);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  if (!ready) {
+    return compact ? <span className={styles.compactStatus} aria-hidden="true" /> : null;
+  }
 
   if (user) {
     if (compact) {
       return (
-        <div className={styles.compactConnected}>
-          <span>@{user.username}</span>
+        <div className={styles.menu} ref={menuRef}>
           <button
             type="button"
-            className={styles.compactLogout}
-            onClick={async () => {
-              await fetch("/api/auth/logout", { method: "POST" });
-              setUser(null);
-            }}
+            className={styles.compactUser}
+            aria-haspopup="menu"
+            aria-expanded={open}
+            onClick={() => setOpen((value) => !value)}
           >
-            Disconnect
+            {user.avatar ? <img className={styles.avatar} src={user.avatar} alt="" width={28} height={28} /> : null}
+            <span>@{user.username}</span>
           </button>
+          {open ? (
+            <div className={styles.dropdown} role="menu">
+              <button
+                type="button"
+                role="menuitem"
+                className={styles.dropdownItem}
+                onClick={async () => {
+                  setOpen(false);
+                  await logout();
+                }}
+              >
+                Logout
+              </button>
+            </div>
+          ) : null}
         </div>
       );
     }
+
+    const background = largerAvatar(user.avatar);
     return (
-      <div className={styles.connected}>
-        <p>
-          Connected as <strong>@{user.username}</strong>
-        </p>
-        <button
-          type="button"
-          className={styles.logout}
-          onClick={async () => {
-            await fetch("/api/auth/logout", { method: "POST" });
-            setUser(null);
-          }}
-        >
-          Disconnect X
-        </button>
+      <div
+        className={styles.connected}
+        style={background ? { backgroundImage: `url(${JSON.stringify(background)})` } : undefined}
+      >
+        <div className={styles.connectedShade} />
+        <p className={styles.connectedName}>@{user.username}</p>
       </div>
     );
   }
 
+  if (compact) {
+    return (
+      <a className={styles.compact} href="/api/auth/x" aria-label="Connect X">
+        Connect
+        <XMark />
+      </a>
+    );
+  }
+
   return (
-    <a className={compact ? styles.compact : styles.button} href="/api/auth/x" aria-label={compact ? "Connect X" : "Continue with X"}>
-      {compact ? "Connect" : "Continue with"}
-      <XMark />
-    </a>
+    <div className={styles.cardInner}>
+      <p className={styles.lead}>Sign-in to apply</p>
+      <a className={styles.button} href="/api/auth/x" aria-label="Continue with X">
+        Continue with
+        <XMark />
+      </a>
+    </div>
   );
 }

@@ -4,6 +4,7 @@ export type XSession = {
   id: string;
   username: string;
   name: string;
+  avatar?: string;
 };
 
 const SESSION_COOKIE = "arcane_x";

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useXSession } from "@/components/auth/XSession";
 import { siteConfig } from "@/config/site";
 import styles from "./WhitelistQuest.module.css";
 
@@ -26,16 +27,13 @@ function writeDone(ids: QuestId[]) {
 }
 
 export function WhitelistQuest() {
+  const { user } = useXSession();
+  const loggedIn = Boolean(user);
   const [done, setDone] = useState<QuestId[]>([]);
-  const [loggedIn, setLoggedIn] = useState(false);
   const [popup, setPopup] = useState(false);
 
   useEffect(() => {
     setDone(readDone());
-    fetch("/api/auth/me")
-      .then((res) => res.json())
-      .then((data: { user: { username?: string } | null }) => setLoggedIn(Boolean(data.user)))
-      .catch(() => setLoggedIn(false));
   }, []);
 
   const requireLogin = () => {

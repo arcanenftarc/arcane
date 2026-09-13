@@ -61,7 +61,6 @@ export function HomePage() {
               <WhitelistQuest />
             </div>
             <div className={styles.whitelistLogin} data-reveal data-aura>
-              <p className={styles.whitelistLead}>Sign-in to apply</p>
               <XLoginButton />
             </div>
           </div>

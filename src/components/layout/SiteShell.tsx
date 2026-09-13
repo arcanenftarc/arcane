@@ -1,3 +1,4 @@
+import { XSessionProvider } from "@/components/auth/XSession";
 import { Footer } from "@/components/layout/Footer";
 import { InPageScroll } from "@/components/layout/InPageScroll";
 import { Navbar } from "@/components/layout/Navbar";
@@ -6,7 +7,7 @@ import { SoundLayer } from "@/components/layout/SoundLayer";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <XSessionProvider>
       <a className="skip-link" href="#main">
         Skip to content
       </a>
@@ -18,6 +19,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       </main>
       <Footer />
       <ScrollTop />
-    </>
+    </XSessionProvider>
   );
 }

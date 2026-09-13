@@ -38,7 +38,7 @@ export async function GET(request: Request) {
     return NextResponse.redirect(new URL("/?x=error#whitelist", origin));
   }
 
-  const meRes = await fetch("https://api.twitter.com/2/users/me", {
+  const meRes = await fetch("https://api.twitter.com/2/users/me?user.fields=profile_image_url", {
     headers: { Authorization: `Bearer ${token.access_token}` },
   });
   if (!meRes.ok) {
@@ -46,12 +46,17 @@ export async function GET(request: Request) {
   }
 
   const me = (await meRes.json()) as {
-    data?: { id: string; username: string; name: string };
+    data?: { id: string; username: string; name: string; profile_image_url?: string };
   };
   if (!me.data) {
     return NextResponse.redirect(new URL("/?x=error#whitelist", origin));
   }
 
-  await setSession({ id: me.data.id, username: me.data.username, name: me.data.name });
+  await setSession({
+    id: me.data.id,
+    username: me.data.username,
+    name: me.data.name,
+    avatar: me.data.profile_image_url,
+  });
   return NextResponse.redirect(new URL("/?x=ok#whitelist", origin));
 }
