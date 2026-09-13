@@ -76,6 +76,62 @@
     color-mix(in srgb, var(--deep-space) 28%, transparent);
 }
 
+.box {
+  position: relative;
+  z-index: 1;
+  display: inline-grid;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--moon-white) 18%, transparent);
+  background: color-mix(in srgb, var(--deep-space) 86%, black);
+}
+
+.compactBox {
+  max-width: 14rem;
+}
+
+.connectedBox {
+  min-width: min(100%, 16.5rem);
+  background: color-mix(in srgb, var(--deep-space) 62%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.compactTrigger,
+.connectedTrigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: var(--moon-white);
+  cursor: pointer;
+}
+
+.compactTrigger {
+  min-height: 2.25rem;
+  padding: 0.25rem 0.7rem 0.25rem 0.28rem;
+  font: inherit;
+  font-size: 0.78rem;
+}
+
+.compactTrigger span {
+  overflow: hidden;
+  min-width: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.connectedTrigger {
+  justify-content: center;
+  min-height: 2.85rem;
+  padding: 0.7rem 1.05rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.6vw, 1.85rem);
+  letter-spacing: 0.04em;
+}
+
 .chevron {
   width: 0.7rem;
   height: 0.5rem;
@@ -83,9 +139,32 @@
   transition: transform 200ms var(--ease-out);
 }
 
-.compactUser[aria-expanded="true"] .chevron,
-.connectedUser[aria-expanded="true"] .chevron {
+.connectedTrigger .chevron {
+  width: 0.85rem;
+  height: 0.6rem;
+}
+
+.compactTrigger[aria-expanded="true"] .chevron,
+.connectedTrigger[aria-expanded="true"] .chevron {
   transform: rotate(180deg);
+}
+
+.logoutItem {
+  width: 100%;
+  min-height: 2.4rem;
+  padding: 0.55rem 0.9rem;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, var(--moon-white) 14%, transparent);
+  background: color-mix(in srgb, black 18%, transparent);
+  color: var(--moon-white);
+  font: inherit;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color 240ms var(--ease-out),
+    background-color 240ms var(--ease-out);
 }
 
 .compactStatus {
@@ -124,76 +203,6 @@
   height: 0.85em;
 }
 
-.menu {
-  position: relative;
-}
-
-.connectedMenu {
-  z-index: 1;
-  display: grid;
-  justify-items: center;
-}
-
-.connectedUser {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--moon-white);
-  font-family: var(--font-display);
-  font-size: clamp(1.55rem, 3vw, 2.15rem);
-  letter-spacing: 0.04em;
-  text-shadow: 0 2px 18px color-mix(in srgb, black 70%, transparent);
-  cursor: pointer;
-}
-
-.connectedUser .chevron {
-  width: 0.9rem;
-  height: 0.65rem;
-}
-
-.connectedDropdown {
-  position: absolute;
-  top: calc(100% + 0.45rem);
-  left: 50%;
-  z-index: 2;
-  min-width: 8.5rem;
-  padding: 0.3rem;
-  border: 1px solid var(--line-soft);
-  background: color-mix(in srgb, var(--deep-space) 94%, black);
-  box-shadow: var(--shadow-md);
-  transform: translateX(-50%);
-}
-
-.compactUser {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  max-width: 13.5rem;
-  min-height: 2.15rem;
-  padding: 0.2rem 0.65rem 0.2rem 0.25rem;
-  border: 1px solid var(--line-soft);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--moon-white) 5%, transparent);
-  color: var(--moon-white);
-  font: inherit;
-  font-size: 0.78rem;
-  cursor: pointer;
-  transition:
-    border-color 280ms var(--ease-out),
-    color 280ms var(--ease-out),
-    background-color 280ms var(--ease-out);
-}
-
-.compactUser span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .avatar {
   width: 1.55rem;
   height: 1.55rem;
@@ -201,36 +210,6 @@
   object-fit: cover;
   flex: 0 0 auto;
   background: color-mix(in srgb, var(--moon-white) 12%, transparent);
-}
-
-.dropdown {
-  position: absolute;
-  top: calc(100% + 0.4rem);
-  right: 0;
-  z-index: 50;
-  min-width: 100%;
-  padding: 0.3rem;
-  border: 1px solid var(--line-soft);
-  background: color-mix(in srgb, var(--deep-space) 94%, black);
-  box-shadow: var(--shadow-md);
-}
-
-.dropdownItem {
-  display: block;
-  width: 100%;
-  padding: 0.5rem 0.7rem;
-  border: 0;
-  background: transparent;
-  color: var(--moon-white);
-  font: inherit;
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  text-align: left;
-  cursor: pointer;
-  transition:
-    color 240ms var(--ease-out),
-    background-color 240ms var(--ease-out);
 }
 
 @keyframes pulse {
@@ -251,21 +230,26 @@
     box-shadow: var(--shadow-md), 0 0 22px color-mix(in srgb, var(--arcane-cyan) 18%, transparent);
   }
 
-  .compact:hover,
-  .compactUser:hover {
+  .compact:hover {
     color: var(--magic-ice);
     border-color: color-mix(in srgb, var(--arcane-cyan) 50%, transparent);
     background: color-mix(in srgb, var(--arcane-cyan) 10%, transparent);
     box-shadow: 0 0 18px color-mix(in srgb, var(--arcane-cyan) 16%, transparent);
   }
 
-  .connectedUser:hover {
+  .compactBox:hover,
+  .connectedBox:hover {
+    border-color: color-mix(in srgb, var(--arcane-cyan) 42%, transparent);
+  }
+
+  .compactTrigger:hover,
+  .connectedTrigger:hover {
     color: var(--magic-ice);
   }
 
-  .dropdownItem:hover {
+  .logoutItem:hover {
     color: var(--arcane-cyan);
-    background: color-mix(in srgb, var(--arcane-cyan) 8%, transparent);
+    background: color-mix(in srgb, var(--arcane-cyan) 10%, transparent);
   }
 }
 

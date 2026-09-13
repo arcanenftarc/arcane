@@ -64,10 +64,10 @@ function AccountMenu({
   }, [open]);
 
   return (
-    <div className={compact ? styles.menu : `${styles.menu} ${styles.connectedMenu}`} ref={menuRef}>
+    <div className={`${styles.box} ${compact ? styles.compactBox : styles.connectedBox}`} ref={menuRef}>
       <button
         type="button"
-        className={compact ? styles.compactUser : styles.connectedUser}
+        className={compact ? styles.compactTrigger : styles.connectedTrigger}
         aria-haspopup="menu"
         aria-expanded={open}
         aria-label={`Account menu for @${username}`}
@@ -78,19 +78,17 @@ function AccountMenu({
         <Chevron />
       </button>
       {open ? (
-        <div className={compact ? styles.dropdown : styles.connectedDropdown} role="menu">
-          <button
-            type="button"
-            role="menuitem"
-            className={styles.dropdownItem}
-            onClick={async () => {
-              setOpen(false);
-              await logout();
-            }}
-          >
-            Logout
-          </button>
-        </div>
+        <button
+          type="button"
+          role="menuitem"
+          className={styles.logoutItem}
+          onClick={async () => {
+            setOpen(false);
+            await logout();
+          }}
+        >
+          Logout
+        </button>
       ) : null}
     </div>
   );
