@@ -70,6 +70,14 @@ export function HomePage() {
         <div className={styles.aboutSplit}>
           <div className={styles.aboutMedia}>
             <div className={styles.aboutBg}>
+              <Image
+                src={siteConfig.assets.background}
+                alt=""
+                fill
+                sizes="(min-width: 960px) 60vw, 100vw"
+                className={styles.aboutBgImg}
+                unoptimized
+              />
               <div className={styles.aboutBgDim} />
             </div>
             <div className={styles.aboutFrame} data-reveal data-aura>

@@ -1,6 +1,6 @@
 # Backgrounds
 
-- `hero.png` — About-section still (already in use).
+- `home.png` — About-section still (behind the framed collection art).
 - `site.png` — Full-page backdrop behind the whole site, shown at low opacity.
 
 Drop your site-wide image here as:
