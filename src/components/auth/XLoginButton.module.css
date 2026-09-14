@@ -37,7 +37,8 @@
   display: grid;
   place-items: center;
   justify-items: center;
-  gap: 0.85rem;
+  align-content: center;
+  gap: 0.7rem;
   width: 100%;
   min-height: 16rem;
   height: 100%;
