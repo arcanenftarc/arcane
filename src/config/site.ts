@@ -196,7 +196,7 @@ export const siteConfig = {
   counters: [
     { value: "TBA", label: "Supply" },
     { value: "TBA", label: "Mint price" },
-    { value: "TBA", label: "Platform" },
+    { value: "OpenSea", label: "Platform" },
     { value: "TBA", label: "Mint date" },
   ],
 } as const;
