@@ -24,6 +24,8 @@ export const siteConfig = {
   },
   assets: {
     background: "/assets/background/hero.png",
+    /** Full-page backdrop. Drop the file in public/assets/background/. */
+    siteBackground: "/assets/background/site.png",
     banner: "/assets/banner/og-banner.png",
     logo: "/assets/logo/Png-Logo.png",
     music: "/assets/audio/music.mp3",
