@@ -28,12 +28,11 @@ export const siteConfig = {
     logo: "/assets/logo/Png-Logo.png",
     music: "/assets/audio/music.mp3",
     collections: [
-      "/assets/collections/Sneak-Peek1.png",
+      "/assets/collections/teaser-01.png",
       "/assets/collections/teaser-02.png",
       "/assets/collections/teaser-03.png",
-      "/assets/collections/teaser-04.png",
     ],
-    aboutArt: "/assets/collections/Teaser-Art.png",
+    aboutArt: "/assets/collections/Sneak-Peek1.png",
   },
   copy: {
     heroKicker: "Limited collection",

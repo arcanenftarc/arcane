@@ -10,10 +10,9 @@ import { WhitelistQuest } from "@/components/home/WhitelistQuest";
 import styles from "./HomePage.module.css";
 
 const teasers = [
-  { src: siteConfig.assets.collections[0], alt: "Sneak peek from the Arcane collection." },
-  { src: siteConfig.assets.collections[1], alt: "A dark relic lit by ice-blue glow." },
-  { src: siteConfig.assets.collections[2], alt: "A distant stone ring gate in night sky." },
-  { src: siteConfig.assets.collections[3], alt: "Abstract cyan energy filaments forming a sigil." },
+  { src: siteConfig.assets.collections[0], alt: "Arcane teaser still one." },
+  { src: siteConfig.assets.collections[1], alt: "Arcane teaser still two." },
+  { src: siteConfig.assets.collections[2], alt: "Arcane teaser still three." },
 ];
 
 export function HomePage() {
