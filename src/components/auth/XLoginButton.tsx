@@ -94,64 +94,6 @@ function AccountMenu({
   );
 }
 
-function WalletField() {
-  const [wallet, setWallet] = useState("");
-  const [saved, setSaved] = useState("");
-  const [status, setStatus] = useState<"idle" | "saving" | "ok" | "bad">("idle");
-
-  useEffect(() => {
-    fetch("/api/whitelist/wallet")
-      .then((res) => res.json())
-      .then((data: { wallet?: string }) => {
-        const value = data.wallet ?? "";
-        setWallet(value);
-        setSaved(value);
-      })
-      .catch(() => undefined);
-  }, []);
-
-  return (
-    <form
-      className={styles.wallet}
-      onSubmit={async (event) => {
-        event.preventDefault();
-        setStatus("saving");
-        const res = await fetch("/api/whitelist/wallet", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ wallet: wallet.trim() }),
-        });
-        if (res.ok) {
-          setSaved(wallet.trim());
-          setStatus("ok");
-        } else {
-          setStatus("bad");
-        }
-      }}
-    >
-      <label className={styles.walletLabel} htmlFor="wallet-address">
-        Wallet
-      </label>
-      <input
-        id="wallet-address"
-        className={styles.walletInput}
-        value={wallet}
-        onChange={(event) => {
-          setWallet(event.target.value);
-          setStatus("idle");
-        }}
-        placeholder="0x…"
-        autoComplete="off"
-        spellCheck={false}
-      />
-      <button className={styles.walletSubmit} type="submit" disabled={status === "saving" || wallet.trim() === saved}>
-        Save
-      </button>
-      {status === "bad" ? <p className={styles.walletNote}>Enter a valid 0x address.</p> : null}
-    </form>
-  );
-}
-
 export function XLoginButton({ compact = false }: { compact?: boolean }) {
   const { user, ready, logout } = useXSession();
 
@@ -173,7 +115,6 @@ export function XLoginButton({ compact = false }: { compact?: boolean }) {
         <div className={styles.connectedShade} />
         <div className={styles.connectedStack}>
           <AccountMenu compact={false} username={user.username} avatar={user.avatar} logout={logout} />
-          <WalletField />
         </div>
       </div>
     );

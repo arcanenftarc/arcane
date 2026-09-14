@@ -179,3 +179,10 @@ export async function applicantFromSession() {
   }
   return readApplicant(session.username);
 }
+
+export function questsComplete(row: { task01: string; task02: string; task03: string } | null | undefined) {
+  if (!row) {
+    return false;
+  }
+  return [row.task01, row.task02, row.task03].every((value) => (value || "").toLowerCase() === "yes");
+}

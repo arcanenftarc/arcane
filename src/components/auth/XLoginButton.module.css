@@ -86,54 +86,6 @@
   width: min(100%, 18rem);
 }
 
-.wallet {
-  display: grid;
-  gap: 0.4rem;
-  width: 100%;
-  text-align: left;
-}
-
-.walletLabel {
-  color: var(--moon-white);
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.walletInput {
-  width: 100%;
-  min-height: 2.4rem;
-  padding: 0.45rem 0.7rem;
-  border: 1px solid color-mix(in srgb, var(--moon-white) 18%, transparent);
-  background: color-mix(in srgb, var(--deep-space) 72%, transparent);
-  color: var(--moon-white);
-  font: inherit;
-  font-size: 0.82rem;
-}
-
-.walletSubmit {
-  min-height: 2.25rem;
-  border: 1px solid color-mix(in srgb, var(--arcane-cyan) 40%, transparent);
-  background: color-mix(in srgb, var(--deep-space) 55%, transparent);
-  color: var(--moon-white);
-  font: inherit;
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.walletSubmit:disabled {
-  cursor: default;
-  opacity: 0.55;
-}
-
-.walletNote {
-  margin: 0;
-  color: #ff4458;
-  font-size: 0.75rem;
-}
-
 .box {
   position: relative;
   z-index: 2;

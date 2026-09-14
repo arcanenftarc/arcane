@@ -182,3 +182,76 @@
 .dialogActions .verify {
   text-decoration: none;
 }
+
+.wallet {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.15rem;
+  width: 100%;
+  max-width: 28rem;
+}
+
+.walletLabel {
+  color: var(--moon-white);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.walletInput {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--gilt) 18%, var(--line-soft));
+  background: color-mix(in srgb, var(--deep-space) 62%, transparent);
+  color: var(--moon-white);
+  font: inherit;
+  font-size: 0.88rem;
+}
+
+.walletInput:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.walletSubmit {
+  justify-self: start;
+  min-height: 2.35rem;
+  padding: 0.4rem 1.1rem;
+  border: 1px solid transparent;
+  background: linear-gradient(180deg, var(--magic-ice) 0%, var(--arcane-cyan) 48%, #1aa8d4 100%);
+  color: var(--deep-space);
+  font: inherit;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.walletSubmit:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  background: color-mix(in srgb, var(--moon-white) 8%, transparent);
+  border-color: var(--line-soft);
+  color: var(--celestial);
+}
+
+.walletHint,
+.walletNote,
+.walletOk {
+  margin: 0;
+  font-size: 0.78rem;
+}
+
+.walletHint {
+  color: var(--celestial);
+}
+
+.walletNote {
+  color: #ff4458;
+}
+
+.walletOk {
+  color: var(--arcane-cyan);
+}

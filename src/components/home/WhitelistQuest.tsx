@@ -33,10 +33,44 @@ export function WhitelistQuest() {
   const [failed, setFailed] = useState<Partial<Record<QuestId, boolean>>>({});
   const [pending, setPending] = useState<QuestId | null>(null);
   const [popup, setPopup] = useState(false);
+  const [wallet, setWallet] = useState("");
+  const [saved, setSaved] = useState("");
+  const [walletStatus, setWalletStatus] = useState<"idle" | "saving" | "ok" | "bad" | "locked">("idle");
+
+  const allDone = loggedIn && siteConfig.whitelistSteps.every((step) => done.includes(step.id));
 
   useEffect(() => {
     setDone(readDone());
   }, []);
+
+  useEffect(() => {
+    if (!loggedIn) {
+      return;
+    }
+    fetch("/api/whitelist/wallet")
+      .then((res) => res.json())
+      .then((data: { wallet?: string; follow?: boolean; comment?: boolean; retweet?: boolean }) => {
+        const fromSheet: QuestId[] = [];
+        if (data.follow) {
+          fromSheet.push("follow");
+        }
+        if (data.comment) {
+          fromSheet.push("comment");
+        }
+        if (data.retweet) {
+          fromSheet.push("retweet");
+        }
+        setDone((current) => {
+          const next = [...new Set([...current, ...fromSheet])];
+          writeDone(next);
+          return next;
+        });
+        const value = data.wallet ?? "";
+        setWallet(value);
+        setSaved(value);
+      })
+      .catch(() => undefined);
+  }, [loggedIn]);
 
   const requireLogin = () => {
     setPopup(true);
@@ -112,6 +146,59 @@ export function WhitelistQuest() {
           );
         })}
       </ol>
+      <form
+        className={styles.wallet}
+        onSubmit={async (event) => {
+          event.preventDefault();
+          if (!allDone) {
+            setWalletStatus("locked");
+            return;
+          }
+          setWalletStatus("saving");
+          const res = await fetch("/api/whitelist/wallet", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ wallet: wallet.trim() }),
+          });
+          if (res.ok) {
+            setSaved(wallet.trim());
+            setWalletStatus("ok");
+          } else if (res.status === 403) {
+            setWalletStatus("locked");
+          } else {
+            setWalletStatus("bad");
+          }
+        }}
+      >
+        <label className={styles.walletLabel} htmlFor="wallet-address">
+          Wallet
+        </label>
+        <input
+          id="wallet-address"
+          className={styles.walletInput}
+          value={wallet}
+          onChange={(event) => {
+            setWallet(event.target.value);
+            setWalletStatus("idle");
+          }}
+          placeholder="0x…"
+          autoComplete="off"
+          spellCheck={false}
+          disabled={!allDone}
+        />
+        <button
+          className={styles.walletSubmit}
+          type="submit"
+          disabled={!allDone || walletStatus === "saving" || wallet.trim() === saved}
+        >
+          Save
+        </button>
+        {!allDone ? (
+          <p className={styles.walletHint}>Verify all three tasks to submit a wallet.</p>
+        ) : null}
+        {walletStatus === "bad" ? <p className={styles.walletNote}>Enter a valid 0x address.</p> : null}
+        {walletStatus === "ok" ? <p className={styles.walletOk}>Wallet saved.</p> : null}
+      </form>
       {popup ? (
         <div className={styles.backdrop} role="presentation" onClick={() => setPopup(false)}>
           <div
