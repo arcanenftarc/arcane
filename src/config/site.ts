@@ -31,6 +31,7 @@ export const siteConfig = {
       "/assets/collections/teaser-01.png",
       "/assets/collections/teaser-02.png",
       "/assets/collections/teaser-03.png",
+      "/assets/collections/teaser-04.png",
     ],
     aboutArt: "/assets/collections/Sneak-Peek1.png",
   },

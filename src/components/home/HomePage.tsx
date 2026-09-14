@@ -13,6 +13,7 @@ const teasers = [
   { src: siteConfig.assets.collections[0], alt: "Arcane teaser still one." },
   { src: siteConfig.assets.collections[1], alt: "Arcane teaser still two." },
   { src: siteConfig.assets.collections[2], alt: "Arcane teaser still three." },
+  { src: siteConfig.assets.collections[3], alt: "Arcane teaser still four." },
 ];
 
 export function HomePage() {
