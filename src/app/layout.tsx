@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Outfit } from "next/font/google";
+import { Cinzel, Outfit } from "next/font/google";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { siteConfig } from "@/config/site";
 import "@/styles/globals.css";
 
-const display = Cormorant_Garamond({
+const display = Cinzel({
   subsets: ["latin"],
   weight: ["500", "600"],
   variable: "--font-display-family",

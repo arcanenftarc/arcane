@@ -99,8 +99,8 @@
 
 .verify {
   border: 1px solid transparent;
-  background: linear-gradient(180deg, #d7f7ff 0%, var(--arcane-cyan) 48%, #12b4dd 100%);
-  color: #06131f;
+  background: linear-gradient(180deg, var(--magic-ice) 0%, var(--arcane-cyan) 48%, #1aa8d4 100%);
+  color: var(--deep-space);
 }
 
 .verify:disabled {

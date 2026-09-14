@@ -44,8 +44,8 @@
 }
 
 .primary {
-  background: linear-gradient(180deg, #d7f7ff 0%, var(--arcane-cyan) 48%, #12b4dd 100%);
-  color: #06131f;
+  background: linear-gradient(180deg, var(--magic-ice) 0%, var(--arcane-cyan) 48%, #1aa8d4 100%);
+  color: var(--deep-space);
   box-shadow:
     0 10px 28px -12px color-mix(in srgb, var(--arcane-cyan) 70%, transparent),
     inset 0 1px 0 color-mix(in srgb, white 55%, transparent);

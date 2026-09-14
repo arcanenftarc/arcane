@@ -1,30 +1,31 @@
 :root {
-  --deep-space: #111e3d;
-  --arcane-navy: #1c2f63;
-  --mystic-blue: #2957b4;
-  --arcane-blue: #486ec0;
-  --soft-periwinkle: #7191d5;
-  --celestial: #a5b2e3;
-  --arcane-cyan: #23d4f9;
-  --magic-ice: #afecf7;
-  --moon-white: #f0eaee;
-  --gilt: #e4c98a;
-  --gilt-bright: #f5e3b6;
+  --deep-space: #0c1028;
+  --arcane-navy: #171c48;
+  --mystic-blue: #3a3f88;
+  --arcane-blue: #4d56b5;
+  --soft-periwinkle: #8b90d4;
+  --celestial: #b8bde8;
+  --arcane-cyan: #3ee0ff;
+  --magic-ice: #c8fbff;
+  --moon-white: #eef3fa;
+  --gilt: #efc27a;
+  --gilt-bright: #ffe7c2;
 
   --bg: var(--deep-space);
-  --bg-elevated: #16264a;
+  --bg-elevated: #141a3e;
   --text: var(--moon-white);
   --text-muted: var(--celestial);
-  --line: color-mix(in srgb, var(--soft-periwinkle) 28%, transparent);
-  --line-soft: color-mix(in srgb, var(--moon-white) 12%, transparent);
+  --line: color-mix(in srgb, var(--soft-periwinkle) 32%, transparent);
+  --line-soft: color-mix(in srgb, var(--magic-ice) 14%, transparent);
   --focus: var(--arcane-cyan);
 
-  --panel: color-mix(in srgb, var(--moon-white) 4.5%, transparent);
-  --band: color-mix(in srgb, black 22%, transparent);
+  --panel: color-mix(in srgb, var(--mystic-blue) 16%, transparent);
+  --band: color-mix(in srgb, black 28%, transparent);
   --shadow-sm: 0 1px 2px color-mix(in srgb, black 30%, transparent);
   --shadow-md: 0 14px 40px -18px color-mix(in srgb, black 80%, transparent);
   --shadow-lg: 0 40px 90px -40px color-mix(in srgb, black 90%, transparent);
-  --glow-cyan: 0 0 32px color-mix(in srgb, var(--arcane-cyan) 24%, transparent);
+  --glow-cyan: 0 0 32px color-mix(in srgb, var(--arcane-cyan) 28%, transparent);
+  --glow-gilt: 0 0 36px color-mix(in srgb, var(--gilt) 22%, transparent);
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -98,9 +99,11 @@ body::before {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(70rem 42rem at 50% -12%, color-mix(in srgb, var(--mystic-blue) 24%, transparent), transparent 72%),
-    radial-gradient(36rem 28rem at 92% 18%, color-mix(in srgb, var(--arcane-cyan) 8%, transparent), transparent 70%),
-    radial-gradient(44rem 30rem at 0% 80%, color-mix(in srgb, var(--arcane-navy) 55%, transparent), transparent 72%);
+    radial-gradient(42rem 28rem at 50% 88%, color-mix(in srgb, var(--gilt) 16%, transparent), transparent 68%),
+    radial-gradient(70rem 42rem at 50% -12%, color-mix(in srgb, var(--mystic-blue) 32%, transparent), transparent 72%),
+    radial-gradient(36rem 28rem at 94% 12%, color-mix(in srgb, var(--arcane-cyan) 14%, transparent), transparent 70%),
+    radial-gradient(34rem 26rem at 6% 18%, color-mix(in srgb, var(--arcane-cyan) 10%, transparent), transparent 68%),
+    radial-gradient(44rem 30rem at 0% 80%, color-mix(in srgb, var(--arcane-navy) 70%, transparent), transparent 72%);
 }
 
 body::after {
