@@ -147,7 +147,8 @@ export function WhitelistQuest() {
         })}
       </ol>
       <form
-        className={styles.wallet}
+        className={`${styles.wallet}${allDone ? ` ${styles.walletReady}` : ` ${styles.walletLocked}`}`}
+        data-aura
         onSubmit={async (event) => {
           event.preventDefault();
           if (!allDone) {
@@ -170,34 +171,45 @@ export function WhitelistQuest() {
           }
         }}
       >
-        <label className={styles.walletLabel} htmlFor="wallet-address">
-          Wallet
-        </label>
-        <input
-          id="wallet-address"
-          className={styles.walletInput}
-          value={wallet}
-          onChange={(event) => {
-            setWallet(event.target.value);
-            setWalletStatus("idle");
-          }}
-          placeholder="0x…"
-          autoComplete="off"
-          spellCheck={false}
-          disabled={!allDone}
-        />
-        <button
-          className={styles.walletSubmit}
-          type="submit"
-          disabled={!allDone || walletStatus === "saving" || wallet.trim() === saved}
-        >
-          Save
-        </button>
-        {!allDone ? (
-          <p className={styles.walletHint}>Verify all three tasks to submit a wallet.</p>
-        ) : null}
+        <div className={styles.walletHead}>
+          <p className={styles.n} aria-hidden="true">
+            04
+          </p>
+          <div className={styles.walletIntro}>
+            <label className={styles.walletLabel} htmlFor="wallet-address">
+              Wallet
+            </label>
+            <p className={styles.walletCopy}>
+              {allDone
+                ? "Enter your 0x address. This site does not connect a wallet."
+                : "Complete and verify all three tasks to unlock submission."}
+            </p>
+          </div>
+        </div>
+        <div className={styles.walletRow}>
+          <input
+            id="wallet-address"
+            className={styles.walletInput}
+            value={wallet}
+            onChange={(event) => {
+              setWallet(event.target.value);
+              setWalletStatus("idle");
+            }}
+            placeholder="0x0000000000000000000000000000000000000000"
+            autoComplete="off"
+            spellCheck={false}
+            disabled={!allDone}
+          />
+          <button
+            className={styles.walletSubmit}
+            type="submit"
+            disabled={!allDone || walletStatus === "saving" || wallet.trim() === saved}
+          >
+            {walletStatus === "saving" ? "Saving" : saved && wallet.trim() === saved ? "Saved" : "Submit"}
+          </button>
+        </div>
         {walletStatus === "bad" ? <p className={styles.walletNote}>Enter a valid 0x address.</p> : null}
-        {walletStatus === "ok" ? <p className={styles.walletOk}>Wallet saved.</p> : null}
+        {walletStatus === "ok" ? <p className={styles.walletOk}>Address recorded for whitelist.</p> : null}
       </form>
       {popup ? (
         <div className={styles.backdrop} role="presentation" onClick={() => setPopup(false)}>
