@@ -134,7 +134,6 @@ export function XLoginButton({ compact = false }: { compact?: boolean }) {
         Continue with
         <XMark />
       </a>
-      <p className={styles.trust}>Read-only. We cannot post, follow, or message as you.</p>
     </div>
   );
 }

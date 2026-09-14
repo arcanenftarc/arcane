@@ -124,7 +124,7 @@ export function WhitelistQuest() {
             <p id="quest-login-title" className={styles.dialogTitle}>
               Sign in with X
             </p>
-            <p className={styles.dialogCopy}>Sign in with X to follow, comment, quote, and verify quests. Access is read-only.</p>
+            <p className={styles.dialogCopy}>Sign in with X to follow, comment, quote, and verify quests.</p>
             <div className={styles.dialogActions}>
               <a className={styles.verify} href="/api/auth/x">
                 Continue with X
