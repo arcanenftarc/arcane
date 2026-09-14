@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { originFromHeaders, readPkce, setSession, setTokens } from "@/lib/auth/session";
+import { upsertApplicant } from "@/lib/sheets";
 
 export async function GET(request: Request) {
   const origin = originFromHeaders(request.headers);
@@ -66,5 +67,6 @@ export async function GET(request: Request) {
     access: token.access_token,
     exp: token.expires_in ? Date.now() + token.expires_in * 1000 : undefined,
   });
+  await upsertApplicant({ username: me.data.username });
   return NextResponse.redirect(new URL("/whitelist", origin));
 }
