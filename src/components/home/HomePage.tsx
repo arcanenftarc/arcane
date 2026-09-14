@@ -56,7 +56,6 @@ export function HomePage() {
           <div className={styles.whitelistLayout}>
             <div data-reveal>
               <p>{siteConfig.copy.communityBody}</p>
-              <p>{siteConfig.copy.communityBody2}</p>
               <WhitelistQuest />
             </div>
             <div className={styles.whitelistLogin} data-reveal data-aura>

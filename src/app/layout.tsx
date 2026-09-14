@@ -21,7 +21,7 @@ const body = Outfit({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} · ${siteConfig.supplyDisplay} NFTs`,
+    default: siteConfig.name,
     template: `%s · ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     type: "website",
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} · ${siteConfig.supplyDisplay} NFTs · ${siteConfig.mintPriceDisplay} mint`,
+    title: `${siteConfig.name} · ${siteConfig.tagline}`,
     description: siteConfig.description,
   },
   twitter: {

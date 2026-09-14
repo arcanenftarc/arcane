@@ -2,9 +2,9 @@ export const siteConfig = {
   name: "Arcane",
   domain: "arcanenft.xyz",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://arcanenft.xyz",
-  tagline: "A limited collection at the edge of light and dark.",
+  tagline: "Held at the threshold of light and dark.",
   description:
-    "Arcane is a 4,444 NFT collection. Mint price $5 on OpenSea. Stage 1 site foundation.",
+    "Arcane. A gate of light in sealed dark. Fragments from the far side, shown before the passage opens.",
   supply: 4444,
   supplyDisplay: "4,444",
   mintPriceUsd: 5,
@@ -69,16 +69,16 @@ export const siteConfig = {
       "Connect X on this page to apply. Whitelist tasks appear after login. No wallet is required.",
     comingMint:
       "Minting is not live. OpenSea checkout, contract calls, and metadata are out of scope for Stage 1. The public facts remain: 4,444 supply, $5 mint.",
-    aboutEyebrow: "The collection",
+    aboutEyebrow: "Lore",
     aboutTitle: "The Rise of Arcane",
     aboutBody:
-      "Arcane is a contained drop on OpenSea. This page is the public surface — the first look at the gate, not the full reveal.",
+      "Night here is not empty. It is held. A ring of stone. A wound of light. Cyan fire that does not warm.",
     aboutBody2:
-      "The artwork sits in one atmosphere: deep navy space, a central portal of light, and restrained cyan energy. Final traits and piece pages arrive in a later stage.",
+      "Those who watched it named it Arcane — not a city, not a god, but a threshold that remembers who stood before it, and who turned away.",
     aboutBody3:
-      "Nothing here asks for a wallet. Lore, whitelist applications, and OpenSea checkout are reserved for later stages so this site can stay a clean public front.",
+      "The stills you see are fragments pulled from the far side of the gate. The full passage is not yet shown.",
     aboutBody4:
-      "When those stages land, this same layout stays. Copy, stills, and dates will be replaced in place — the routes already exist.",
+      "When the gate opens, it will not ask for noise. It will ask who already stood in its light.",
     processEyebrow: "Process",
     processTitle: "How to Mint",
     processNote: "No wallet is connected on this website. Minting is planned on OpenSea.",
@@ -90,10 +90,8 @@ export const siteConfig = {
       "Until the date is announced, these four steps are the whole process. Gallery, traits, and metadata are later-stage work.",
     communityEyebrow: "Access",
     communityTitle: "Whitelist",
-    communityBody:
-      "Sign in with X, then complete the three quests. Login is read-only: we check follow and posts. We cannot tweet, follow, or DM as you. No wallet is required.",
-    communityBody2:
-      "Keep the same X account through the process. Mint opens on OpenSea when the date is announced.",
+    communityBody: "Complete each quest, then Verify.",
+    communityBody2: "",
     whitelistCta: "Apply for whitelist",
     roadmapEyebrow: "Roadmap",
     roadmapTitle: "Roadmap",
@@ -105,10 +103,10 @@ export const siteConfig = {
     formConsent: "I understand this form does not send mail until a later stage.",
   },
   aboutParagraphs: [
-    "Arcane is a contained drop on OpenSea. This page is the public surface — the first look at the gate, not the full reveal.",
-    "The artwork sits in one atmosphere: deep navy space, a central portal of light, and restrained cyan energy. Final traits and piece pages arrive in a later stage.",
-    "Nothing here asks for a wallet. Lore, whitelist applications, and OpenSea checkout are reserved for later stages so this site can stay a clean public front.",
-    "When those stages land, this same layout stays. Copy, stills, and dates will be replaced in place — the routes already exist.",
+    "Night here is not empty. It is held. A ring of stone. A wound of light. Cyan fire that does not warm.",
+    "Those who watched it named it Arcane — not a city, not a god, but a threshold that remembers who stood before it, and who turned away.",
+    "The stills you see are fragments pulled from the far side of the gate. The full passage is not yet shown.",
+    "When the gate opens, it will not ask for noise. It will ask who already stood in its light.",
   ],
   mintParagraphs: [
     "Minting is planned on OpenSea at $5. This website does not connect a wallet. Checkout happens on OpenSea when the drop is live.",
@@ -193,7 +191,7 @@ export const siteConfig = {
   counters: [
     { value: "TBA", label: "Supply" },
     { value: "TBA", label: "Mint price" },
-    { value: "OpenSea", label: "Platform" },
+    { value: "TBA", label: "Platform" },
     { value: "TBA", label: "Mint date" },
   ],
 } as const;
