@@ -57,7 +57,7 @@
   position: relative;
   display: grid;
   place-items: center;
-  overflow: hidden;
+  overflow: visible;
   width: 100%;
   min-height: 16rem;
   height: 100%;
@@ -78,9 +78,8 @@
 
 .box {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: inline-grid;
-  overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--moon-white) 18%, transparent);
   background: color-mix(in srgb, var(--deep-space) 86%, black);
 }
@@ -150,12 +149,17 @@
 }
 
 .logoutItem {
-  width: 100%;
+  position: absolute;
+  top: 100%;
+  left: -1px;
+  right: -1px;
+  z-index: 3;
+  width: auto;
   min-height: 2.4rem;
   padding: 0.55rem 0.9rem;
-  border: 0;
-  border-top: 1px solid color-mix(in srgb, var(--moon-white) 14%, transparent);
-  background: color-mix(in srgb, black 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--moon-white) 18%, transparent);
+  border-top: 0;
+  background: color-mix(in srgb, var(--deep-space) 92%, black);
   color: var(--moon-white);
   font: inherit;
   font-size: 0.68rem;

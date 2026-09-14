@@ -258,7 +258,7 @@
 .whitelistLogin {
   display: grid;
   place-items: center;
-  overflow: hidden;
+  overflow: visible;
   min-height: 16rem;
   padding: 0;
   border: 1px solid color-mix(in srgb, var(--moon-white) 16%, transparent);
