@@ -91,7 +91,7 @@ export const siteConfig = {
     communityEyebrow: "Access",
     communityTitle: "Whitelist",
     communityBody:
-      "Complete the three X quests, then Connect X. No wallet is required. A bot can confirm follow, comment, and retweet after login — Verify marks them on this device until that is live.",
+      "Sign in with X, then complete the three quests. Login is read-only: we check follow and posts. We cannot tweet, follow, or DM as you. No wallet is required.",
     communityBody2:
       "Keep the same X account through the process. Mint opens on OpenSea when the date is announced.",
     whitelistCta: "Apply for whitelist",

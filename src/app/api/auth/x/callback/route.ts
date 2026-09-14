@@ -64,7 +64,6 @@ export async function GET(request: Request) {
   });
   await setTokens({
     access: token.access_token,
-    refresh: token.refresh_token,
     exp: token.expires_in ? Date.now() + token.expires_in * 1000 : undefined,
   });
   return NextResponse.redirect(new URL("/?x=ok#whitelist", origin));
