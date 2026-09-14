@@ -25,10 +25,14 @@ function Row({ slides, labeled }: { slides: Slide[]; labeled: boolean }) {
               priority={labeled}
               draggable={false}
             />
-            <span
+            <Image
+              src={siteConfig.assets.collectionBorder}
+              alt=""
+              fill
+              sizes="(min-width: 768px) 22.5rem, 78vw"
               className={styles.ornament}
-              style={{ backgroundImage: `url("${siteConfig.assets.collectionBorder}")` }}
-              aria-hidden
+              unoptimized
+              draggable={false}
             />
           </span>
         </figure>

@@ -36,19 +36,8 @@
   display: block;
   overflow: hidden;
   aspect-ratio: 1;
-  padding: 0.4rem;
-  border: 1px solid color-mix(in srgb, var(--moon-white) 24%, transparent);
-  background:
-    linear-gradient(
-      160deg,
-      color-mix(in srgb, var(--moon-white) 9%, transparent),
-      color-mix(in srgb, var(--moon-white) 2%, transparent)
-    ),
-    var(--deep-space);
+  background: var(--deep-space);
   box-shadow: var(--shadow-md);
-  transition:
-    border-color 420ms var(--ease-out),
-    box-shadow 420ms var(--ease-out);
 }
 
 .card:nth-child(2) .frame::before {
@@ -81,25 +70,17 @@
   animation: moonbeam 9s ease-in-out infinite;
 }
 
-.frame::after {
-  content: "";
-  position: absolute;
-  inset: 0.4rem;
-  pointer-events: none;
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--moon-white) 12%, transparent);
-}
-
 .ornament {
   position: absolute;
   inset: 0;
   z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
   pointer-events: none;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 
-.frame img {
+.frame img:not(.ornament) {
   display: block;
   width: 100%;
   height: auto;
@@ -147,7 +128,6 @@
 
 @media (hover: hover) and (pointer: fine) {
   .card:hover .frame {
-    border-color: color-mix(in srgb, var(--arcane-cyan) 48%, transparent);
     box-shadow: var(--shadow-md), 0 0 28px color-mix(in srgb, var(--arcane-cyan) 20%, transparent);
   }
 }

@@ -75,10 +75,13 @@ export function HomePage() {
             </div>
             <div className={styles.aboutFrame} data-reveal data-aura>
               <Image src={siteConfig.assets.aboutArt} alt="Arcane teaser art." width={900} height={900} />
-              <span
+              <Image
+                src={siteConfig.assets.collectionBorder}
+                alt=""
+                fill
+                sizes="(min-width: 960px) 32rem, 28rem"
                 className={styles.ornament}
-                style={{ backgroundImage: `url("${siteConfig.assets.collectionBorder}")` }}
-                aria-hidden
+                unoptimized
               />
             </div>
           </div>

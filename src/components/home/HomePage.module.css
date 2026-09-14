@@ -136,20 +136,12 @@
   z-index: 1;
   width: min(100%, 28rem);
   overflow: hidden;
-  padding: 0.7rem;
-  border: 1px solid color-mix(in srgb, var(--moon-white) 28%, transparent);
-  background: linear-gradient(
-    160deg,
-    color-mix(in srgb, var(--moon-white) 10%, transparent),
-    color-mix(in srgb, var(--moon-white) 2%, transparent)
-  );
+  background: var(--deep-space);
   box-shadow: var(--shadow-lg);
-  transition:
-    border-color 480ms var(--ease-out),
-    box-shadow 480ms var(--ease-out);
+  transition: box-shadow 480ms var(--ease-out);
 }
 
-.aboutFrame img {
+.aboutFrame img:not(.ornament) {
   width: 100%;
   height: auto;
   aspect-ratio: 1;
@@ -161,10 +153,10 @@
   position: absolute;
   inset: 0;
   z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
   pointer-events: none;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 
 .aboutCopy {
@@ -303,11 +295,10 @@
   }
 
   .aboutFrame:hover {
-    border-color: color-mix(in srgb, var(--arcane-cyan) 50%, transparent);
     box-shadow: var(--shadow-lg), 0 0 36px color-mix(in srgb, var(--arcane-cyan) 18%, transparent);
   }
 
-  .aboutFrame:hover img {
+  .aboutFrame:hover img:not(.ornament) {
     transform: scale(1.035);
     filter: brightness(1.06) saturate(1.08);
   }
@@ -362,7 +353,6 @@
 
   .aboutFrame {
     width: min(100%, 32rem);
-    padding: 0.85rem;
   }
 
   .aboutCopy {
@@ -402,12 +392,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .aboutFrame img,
+  .aboutFrame img:not(.ornament),
   .factValue {
     transition: none;
   }
 
-  .aboutFrame:hover img {
+  .aboutFrame:hover img:not(.ornament) {
     transform: none;
   }
 }
