@@ -24,7 +24,7 @@
   font-size: clamp(2.55rem, 7vw, 4.4rem);
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  background: linear-gradient(180deg, var(--magic-ice), var(--moon-white) 38%, var(--celestial));
+  background: linear-gradient(180deg, var(--gilt-bright), var(--moon-white) 42%, var(--magic-ice));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

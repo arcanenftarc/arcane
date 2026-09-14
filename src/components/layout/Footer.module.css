@@ -3,8 +3,8 @@
   z-index: 1;
   margin-top: auto;
   padding: 2.75rem 0 2.5rem;
-  border-top: 1px solid var(--line-soft);
-  background: linear-gradient(180deg, transparent, color-mix(in srgb, black 28%, transparent));
+  border-top: 1px solid color-mix(in srgb, var(--gilt) 12%, var(--line-soft));
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, black 48%, transparent));
 }
 
 .bar {

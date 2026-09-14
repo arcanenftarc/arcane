@@ -37,7 +37,10 @@
   overflow: hidden;
   aspect-ratio: 1;
   background: var(--deep-space);
-  box-shadow: var(--shadow-md);
+  box-shadow:
+    var(--shadow-md),
+    0 0 0 1px color-mix(in srgb, var(--gilt) 26%, transparent),
+    0 18px 40px color-mix(in srgb, black 50%, transparent);
 }
 
 .card:nth-child(2) .frame::before {
@@ -128,7 +131,10 @@
 
 @media (hover: hover) and (pointer: fine) {
   .card:hover .frame {
-    box-shadow: var(--shadow-md), 0 0 28px color-mix(in srgb, var(--arcane-cyan) 20%, transparent);
+    box-shadow:
+      var(--shadow-md),
+      0 0 0 1px color-mix(in srgb, var(--gilt) 42%, transparent),
+      0 0 28px color-mix(in srgb, var(--gilt) 18%, transparent);
   }
 }
 
