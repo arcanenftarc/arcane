@@ -1,3 +1,4 @@
+import { CursorDust } from "@/components/layout/CursorDust";
 import { XSessionProvider } from "@/components/auth/XSession";
 import { Footer } from "@/components/layout/Footer";
 import { InPageScroll } from "@/components/layout/InPageScroll";
@@ -25,6 +26,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       </a>
       <InPageScroll />
       <SoundLayer />
+      <CursorDust />
       <Navbar />
       <main id="main" className="site-main">
         {children}

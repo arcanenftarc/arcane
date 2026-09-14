@@ -3,7 +3,6 @@ const MUSIC_URL = "/assets/audio/music.mp3";
 const STORAGE_KEY = "arcane-muted";
 
 let ctx: AudioContext | null = null;
-let master: GainNode | null = null;
 let music: HTMLAudioElement | null = null;
 let muted = false;
 const listeners = new Set<() => void>();
@@ -38,9 +37,6 @@ function ensureContext() {
   }
   if (!ctx) {
     ctx = new AudioCtx();
-    master = ctx.createGain();
-    master.gain.value = muted ? 0 : 1;
-    master.connect(ctx.destination);
   }
   if (ctx.state === "suspended") {
     void ctx.resume();
@@ -62,18 +58,15 @@ function snap(context: AudioContext, dest: AudioNode, start: number) {
 }
 
 export function playClick() {
-  if (muted) {
-    return;
-  }
   const context = ensureContext();
-  if (!context || !master) {
+  if (!context) {
     return;
   }
 
   const now = context.currentTime;
   const bus = context.createGain();
   bus.gain.value = 0.85;
-  bus.connect(master);
+  bus.connect(context.destination);
 
   snap(context, bus, now);
 
@@ -119,9 +112,6 @@ export function subscribeSound(fn: () => void) {
 export function setMuted(next: boolean) {
   muted = next;
   writeMuted(next);
-  if (master) {
-    master.gain.setTargetAtTime(next ? 0 : 1, ctx?.currentTime ?? 0, 0.04);
-  }
   if (music) {
     music.muted = next;
     if (!next) {
@@ -133,7 +123,6 @@ export function setMuted(next: boolean) {
   emit();
   if (!next) {
     unlockSound();
-    playClick();
   }
 }
 

@@ -18,7 +18,7 @@ export function SoundToggle() {
       type="button"
       className={`${styles.toggle}${muted ? ` ${styles.muted}` : ""}`}
       data-sound-toggle
-      aria-label={muted ? "Unmute sound" : "Mute sound"}
+      aria-label={muted ? "Unmute music" : "Mute music"}
       aria-pressed={!muted}
       onClick={() => setMuted(!muted)}
     >
