@@ -18,7 +18,7 @@ export function ScrollTop() {
   }
 
   return (
-    <a className={styles.top} href="#home" aria-label="Back to top">
+    <a className={styles.top} href="/home" aria-label="Back to top">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 6.5 5.5 13.2l1.4 1.4L12 9.5l5.1 5.1 1.4-1.4Z" />
       </svg>

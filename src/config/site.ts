@@ -20,7 +20,7 @@ export const siteConfig = {
     discord: "https://discord.com/",
   },
   routes: {
-    home: "/",
+    home: "/home",
   },
   assets: {
     background: "/assets/background/hero.png",
@@ -135,7 +135,7 @@ export const siteConfig = {
       n: "03",
       meta: "Stage 1 / Access",
       title: "Connect X to apply for whitelist",
-      href: "/#whitelist",
+      href: "/whitelist",
       body: "X login is how you apply. No wallet is required.",
       image: false,
     },
@@ -199,13 +199,13 @@ export const siteConfig = {
 export type SiteConfig = typeof siteConfig;
 
 export const navItems = [
-  { href: "/#home", label: "Home" },
-  { href: "/#whitelist", label: "Whitelist" },
-  { href: "/#about", label: "About" },
+  { href: "/home", label: "Home" },
+  { href: "/whitelist", label: "Whitelist" },
+  { href: "/about", label: "About" },
 ] as const;
 
 export const pageNav = [
-  { href: "/#home", label: "Home" },
-  { href: "/#whitelist", label: "Whitelist" },
-  { href: "/#about", label: "About" },
+  { href: "/home", label: "Home" },
+  { href: "/whitelist", label: "Whitelist" },
+  { href: "/about", label: "About" },
 ] as const;

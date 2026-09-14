@@ -28,7 +28,7 @@ export function HomePage() {
         <HeroCarousel slides={teasers} />
         <Container>
           <div className={styles.heroActions} data-reveal>
-            <Button href="/#whitelist">{siteConfig.copy.whitelistCta}</Button>
+            <Button href="/whitelist">{siteConfig.copy.whitelistCta}</Button>
           </div>
         </Container>
       </section>

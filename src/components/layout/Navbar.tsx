@@ -21,7 +21,7 @@ export function Navbar() {
   return (
     <header className={`${styles.header}${scrolled ? ` ${styles.scrolled}` : ""}`}>
       <div className={styles.inner}>
-        <Link className={styles.wordmark} href="/#home" aria-label={`${siteConfig.name} home`}>
+        <Link className={styles.wordmark} href="/home" aria-label={`${siteConfig.name} home`}>
           <Image src={siteConfig.assets.logo} alt="" width={36} height={36} />
           <span>{siteConfig.name}</span>
         </Link>

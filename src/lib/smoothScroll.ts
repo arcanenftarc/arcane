@@ -3,6 +3,21 @@ const MAX_MS = 1700;
 
 let frame = 0;
 
+export const sectionPaths = {
+  home: "/home",
+  whitelist: "/whitelist",
+  about: "/about",
+} as const;
+
+export type SectionId = keyof typeof sectionPaths;
+
+const pathToSection: Record<string, SectionId> = {
+  "/": "home",
+  "/home": "home",
+  "/whitelist": "whitelist",
+  "/about": "about",
+};
+
 function easeInOutCubic(t: number) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
@@ -14,7 +29,22 @@ function headerOffset() {
   return value * (raw.endsWith("rem") ? root : 1) + 12;
 }
 
-export function scrollToSection(id: string) {
+export function sectionFromLocation() {
+  const hash = window.location.hash.replace(/^#/, "");
+  if (hash && hash in sectionPaths) {
+    return hash as SectionId;
+  }
+  return pathToSection[window.location.pathname] ?? "home";
+}
+
+export function cleanLocation(id: SectionId) {
+  const path = sectionPaths[id];
+  if (window.location.pathname !== path || window.location.search || window.location.hash) {
+    window.history.replaceState(null, "", path);
+  }
+}
+
+export function scrollToSection(id: string, historyMode: "replace" | "push" = "replace") {
   const el = document.getElementById(id);
   if (!el) {
     return false;
@@ -27,8 +57,17 @@ export function scrollToSection(id: string) {
   const target = Math.max(0, Math.min(wanted, maxScroll));
   const start = window.scrollY;
   const distance = target - start;
+  const path = id in sectionPaths ? sectionPaths[id as SectionId] : `/${id}`;
 
-  const finish = () => window.history.replaceState(null, "", `#${id}`);
+  const finish = () => {
+    if (window.location.pathname !== path || window.location.search || window.location.hash) {
+      if (historyMode === "push" && window.location.pathname !== path) {
+        window.history.pushState(null, "", path);
+      } else {
+        window.history.replaceState(null, "", path);
+      }
+    }
+  };
 
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || Math.abs(distance) < 2) {
     window.scrollTo(0, target);
@@ -63,7 +102,7 @@ export function bindInPageSectionScroll() {
       return;
     }
     const href = link.getAttribute("href");
-    if (!href || !href.includes("#")) {
+    if (!href) {
       return;
     }
     let url: URL;
@@ -72,11 +111,20 @@ export function bindInPageSectionScroll() {
     } catch {
       return;
     }
-    if (url.origin !== window.location.origin || url.pathname !== window.location.pathname) {
+    if (url.origin !== window.location.origin) {
       return;
     }
-    const id = decodeURIComponent(url.hash.replace(/^#/, ""));
-    if (!id || !scrollToSection(id)) {
+    const fromHash = decodeURIComponent(url.hash.replace(/^#/, ""));
+    let id: SectionId | undefined;
+    if (fromHash) {
+      if (!(fromHash in sectionPaths)) {
+        return;
+      }
+      id = fromHash as SectionId;
+    } else {
+      id = pathToSection[url.pathname];
+    }
+    if (!id || !scrollToSection(id, window.location.pathname !== sectionPaths[id] ? "push" : "replace")) {
       return;
     }
     event.preventDefault();

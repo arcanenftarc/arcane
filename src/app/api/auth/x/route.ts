@@ -5,7 +5,7 @@ export async function GET(request: Request) {
   const origin = originFromHeaders(request.headers);
   const clientId = process.env.X_CLIENT_ID;
   if (!clientId) {
-    return NextResponse.redirect(new URL("/?x=setup#whitelist", origin));
+    return NextResponse.redirect(new URL("/whitelist", origin));
   }
 
   const state = randomToken(16);

@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   const clientSecret = process.env.X_CLIENT_SECRET;
 
   if (!code || !state || !pkce || pkce.state !== state || !clientId || !clientSecret) {
-    return NextResponse.redirect(new URL("/?x=error#whitelist", origin));
+    return NextResponse.redirect(new URL("/whitelist", origin));
   }
 
   const tokenRes = await fetch("https://api.twitter.com/2/oauth2/token", {
@@ -30,7 +30,7 @@ export async function GET(request: Request) {
   });
 
   if (!tokenRes.ok) {
-    return NextResponse.redirect(new URL("/?x=error#whitelist", origin));
+    return NextResponse.redirect(new URL("/whitelist", origin));
   }
 
   const token = (await tokenRes.json()) as {
@@ -39,21 +39,21 @@ export async function GET(request: Request) {
     expires_in?: number;
   };
   if (!token.access_token) {
-    return NextResponse.redirect(new URL("/?x=error#whitelist", origin));
+    return NextResponse.redirect(new URL("/whitelist", origin));
   }
 
   const meRes = await fetch("https://api.twitter.com/2/users/me?user.fields=profile_image_url", {
     headers: { Authorization: `Bearer ${token.access_token}` },
   });
   if (!meRes.ok) {
-    return NextResponse.redirect(new URL("/?x=error#whitelist", origin));
+    return NextResponse.redirect(new URL("/whitelist", origin));
   }
 
   const me = (await meRes.json()) as {
     data?: { id: string; username: string; name: string; profile_image_url?: string };
   };
   if (!me.data) {
-    return NextResponse.redirect(new URL("/?x=error#whitelist", origin));
+    return NextResponse.redirect(new URL("/whitelist", origin));
   }
 
   await setSession({
@@ -66,5 +66,5 @@ export async function GET(request: Request) {
     access: token.access_token,
     exp: token.expires_in ? Date.now() + token.expires_in * 1000 : undefined,
   });
-  return NextResponse.redirect(new URL("/?x=ok#whitelist", origin));
+  return NextResponse.redirect(new URL("/whitelist", origin));
 }
