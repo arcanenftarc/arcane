@@ -9,6 +9,7 @@ public/assets/
   logo/          Marks and favicon source
   background/    Home hero artwork
   collections/   Teaser stills (replace with final pieces later)
+  borders/       PNG frame overlay for carousel + About art (`collection-frame.png`)
 ```
 
 The site reads these paths from `src/config/site.ts` (`siteConfig.assets`).

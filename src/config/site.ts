@@ -34,6 +34,8 @@ export const siteConfig = {
       "/assets/collections/teaser-04.png",
     ],
     aboutArt: "/assets/collections/Sneak-Peek1.png",
+    /** PNG overlay with a transparent center. Drop the file in public/assets/borders/. */
+    collectionBorder: "/assets/borders/collection-frame.png",
   },
   copy: {
     heroKicker: "Limited collection",

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { siteConfig } from "@/config/site";
 import styles from "./HeroCarousel.module.css";
 
 type Slide = {
@@ -23,6 +24,11 @@ function Row({ slides, labeled }: { slides: Slide[]; labeled: boolean }) {
               height={900}
               priority={labeled}
               draggable={false}
+            />
+            <span
+              className={styles.ornament}
+              style={{ backgroundImage: `url("${siteConfig.assets.collectionBorder}")` }}
+              aria-hidden
             />
           </span>
         </figure>

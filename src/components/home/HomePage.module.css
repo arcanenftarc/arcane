@@ -157,6 +157,16 @@
   transition: transform 900ms var(--ease-out), filter 900ms var(--ease-out);
 }
 
+.ornament {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
 .aboutCopy {
   position: relative;
   padding: 3rem 0 4rem;
