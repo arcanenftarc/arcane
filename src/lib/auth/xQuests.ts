@@ -2,6 +2,7 @@ import { siteConfig } from "@/config/site";
 import { getSession, getTokens, setTokens, type XTokens } from "@/lib/auth/session";
 
 type QuestId = (typeof siteConfig.whitelistSteps)[number]["id"];
+const QUEST_TWEET_ID = siteConfig.social.questTweetId;
 
 async function refreshTokens(tokens: XTokens): Promise<XTokens | null> {
   if (!tokens.refresh) {
@@ -83,17 +84,28 @@ async function xGet<T>(path: string, access: string) {
   return (await res.json()) as T;
 }
 
-function includesAll(text: string, parts: string[]) {
-  const hay = text.toLowerCase();
-  return parts.every((part) => hay.includes(part.toLowerCase()));
+async function recentTweets(userId: string, access: string) {
+  const data = await xGet<{
+    data?: { text?: string; referenced_tweets?: { type: string; id: string }[] }[];
+  }>(`/users/${userId}/tweets?max_results=100&tweet.fields=text,referenced_tweets`, access);
+  return data?.data ?? [];
 }
 
-async function recentTweetTexts(userId: string, access: string) {
-  const data = await xGet<{ data?: { text?: string }[] }>(
-    `/users/${userId}/tweets?max_results=100&tweet.fields=text`,
+function citesTweet(
+  tweets: { referenced_tweets?: { type: string; id: string }[] }[],
+  type: "replied_to" | "quoted",
+) {
+  return tweets.some((tweet) =>
+    tweet.referenced_tweets?.some((ref) => ref.type === type && ref.id === QUEST_TWEET_ID),
+  );
+}
+
+async function searchOwn(query: string, access: string) {
+  const data = await xGet<{ data?: { id?: string }[] }>(
+    `/tweets/search/recent?query=${encodeURIComponent(query)}&max_results=10`,
     access,
   );
-  return (data?.data ?? []).map((tweet) => tweet.text ?? "");
+  return Boolean(data?.data?.length);
 }
 
 async function isFollowing(userId: string, access: string) {
@@ -143,14 +155,18 @@ export async function verifyQuest(id: QuestId) {
     return isFollowing(session.id, access);
   }
 
-  const texts = await recentTweetTexts(session.id, access);
+  const tweets = await recentTweets(session.id, access);
   if (id === "comment") {
-    return texts.some((text) => includesAll(text, ["the gate is opening", "arcanenft_arc"]));
+    if (citesTweet(tweets, "replied_to")) {
+      return true;
+    }
+    return searchOwn(`conversation_id:${QUEST_TWEET_ID} from:${session.username}`, access);
   }
   if (id === "retweet") {
-    return texts.some(
-      (text) => includesAll(text, ["held at the threshold"]) || text.toLowerCase().includes("arcanenft.xyz"),
-    );
+    if (citesTweet(tweets, "quoted")) {
+      return true;
+    }
+    return searchOwn(`quoted_tweet_id:${QUEST_TWEET_ID} from:${session.username}`, access);
   }
   return false;
 }
