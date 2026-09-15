@@ -131,15 +131,14 @@ export function WhitelistQuest() {
             <li key={step.id} className={`${styles.card}${verified ? ` ${styles.verified}` : ""}`} data-aura>
               <div className={styles.row}>
                 <p className={styles.n}>{step.n}</p>
-                <p className={styles.body}>{step.body}</p>
-              </div>
-              <div className={styles.actions}>
-                <button type="button" className={styles.open} onClick={() => openQuest(step.href)}>
-                  {step.action}
-                </button>
-                <button type="button" className={styles.verify} onClick={() => verify(step.id)} disabled={verified || pending === step.id}>
-                  {verified ? "Verified" : "Verify"}
-                </button>
+                <div className={styles.actions}>
+                  <button type="button" className={styles.open} onClick={() => openQuest(step.href)}>
+                    {step.action}
+                  </button>
+                  <button type="button" className={styles.verify} onClick={() => verify(step.id)} disabled={verified || pending === step.id}>
+                    {verified ? "Verified" : "Verify"}
+                  </button>
+                </div>
               </div>
               {failed[step.id] && !verified ? <p className={styles.fail}>Task not completed</p> : null}
             </li>
@@ -172,7 +171,7 @@ export function WhitelistQuest() {
         }}
       >
         <div className={styles.walletHead}>
-          <p className={styles.n} aria-hidden="true">
+          <p className={styles.walletMark} aria-hidden="true">
             04
           </p>
           <div className={styles.walletIntro}>
@@ -195,7 +194,6 @@ export function WhitelistQuest() {
               setWallet(event.target.value);
               setWalletStatus("idle");
             }}
-            placeholder="0x0000000000000000000000000000000000000000"
             autoComplete="off"
             spellCheck={false}
             disabled={!allDone}
