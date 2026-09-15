@@ -9,7 +9,8 @@
 .card {
   position: relative;
   overflow: hidden;
-  padding: 1.05rem 7.75rem 1.15rem 1.2rem;
+  min-height: 4.6rem;
+  padding: 0.85rem 1.15rem;
   border: 1px solid color-mix(in srgb, var(--gilt) 16%, var(--line-soft));
   background: color-mix(in srgb, var(--deep-space) 58%, transparent);
   backdrop-filter: blur(16px) saturate(140%);
@@ -25,9 +26,12 @@
 }
 
 .row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) 7rem;
   align-items: center;
-  gap: 0.85rem;
+  gap: 0.7rem;
+  width: 100%;
+  min-height: 2.9rem;
 }
 
 .n {
@@ -37,6 +41,7 @@
   font-size: 1.85rem;
   font-weight: 600;
   line-height: 1;
+  text-align: center;
   background: linear-gradient(150deg, var(--magic-ice), var(--arcane-cyan));
   -webkit-background-clip: text;
   background-clip: text;
@@ -44,27 +49,23 @@
 }
 
 .actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 6.6rem;
   gap: 0.55rem;
+  min-width: 0;
 }
 
 .fail {
-  position: absolute;
-  top: 50%;
-  right: 1.05rem;
-  z-index: 1;
-  width: 6.4rem;
   margin: 0;
-  padding: 0;
+  min-height: 2.35rem;
   color: #ff4458;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.04em;
-  line-height: 1.3;
+  line-height: 1.25;
   text-align: right;
-  transform: translateY(-50%);
-  pointer-events: none;
+  display: grid;
+  align-content: center;
 }
 
 .open,
@@ -72,8 +73,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   min-height: 2.35rem;
-  padding: 0.4rem 0.9rem;
+  padding: 0.4rem 0.7rem;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -116,18 +118,19 @@
   }
 }
 
-@media (max-width: 479px) {
-  .card {
-    padding-right: 6.6rem;
-  }
-
-  .actions {
-    padding-left: 0;
+@media (max-width: 639px) {
+  .row {
+    grid-template-columns: 2.3rem minmax(0, 1fr);
   }
 
   .fail {
-    width: 5.5rem;
-    font-size: 0.68rem;
+    grid-column: 2 / -1;
+    text-align: left;
+    min-height: 0;
+  }
+
+  .actions {
+    grid-template-columns: minmax(0, 1fr) 6.2rem;
   }
 }
 

@@ -151,8 +151,8 @@ export function WhitelistQuest() {
                     {verified ? "Verified" : "Verify"}
                   </button>
                 </div>
+                <p className={styles.fail}>{failed[step.id] && !verified ? "Task not completed" : ""}</p>
               </div>
-              {failed[step.id] && !verified ? <p className={styles.fail}>Task not completed</p> : null}
             </li>
           );
         })}
