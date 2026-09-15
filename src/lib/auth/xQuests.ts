@@ -3,6 +3,15 @@ import { getSession, getTokens, setTokens, type XTokens } from "@/lib/auth/sessi
 
 type QuestId = (typeof siteConfig.whitelistSteps)[number]["id"];
 const QUEST_TWEET_ID = siteConfig.social.questTweetId;
+const FOLLOW_HANDLE = siteConfig.social.xHandle.toLowerCase();
+
+type XBody = {
+  data?: unknown;
+  includes?: { users?: unknown[] };
+  meta?: { next_token?: string };
+  relationship?: { source?: { following?: boolean } };
+  errors?: unknown;
+};
 
 async function refreshTokens(tokens: XTokens): Promise<XTokens | null> {
   if (!tokens.refresh) {
@@ -57,31 +66,71 @@ async function accessToken() {
   return tokens.access;
 }
 
-async function xGet<T>(path: string, access: string) {
-  const res = await fetch(`https://api.twitter.com/2${path}`, {
-    headers: { Authorization: `Bearer ${access}` },
-  });
-  if (res.status === 401) {
-    const tokens = await getTokens();
-    if (!tokens) {
-      return null;
-    }
-    const refreshed = await refreshTokens(tokens);
-    if (!refreshed) {
-      return null;
-    }
-    const retry = await fetch(`https://api.twitter.com/2${path}`, {
-      headers: { Authorization: `Bearer ${refreshed.access}` },
+async function xFetch(url: string, access: string): Promise<{ status: number; body: XBody | null }> {
+  const run = async (token: string) => {
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${token}` },
     });
-    if (!retry.ok) {
-      return null;
+    const body = (await res.json().catch(() => null)) as XBody | null;
+    return { status: res.status, body };
+  };
+
+  let result = await run(access);
+  if (result.status === 401) {
+    const tokens = await getTokens();
+    if (tokens) {
+      const refreshed = await refreshTokens(tokens);
+      if (refreshed?.access) {
+        result = await run(refreshed.access);
+      }
     }
-    return (await retry.json()) as T;
   }
-  if (!res.ok) {
+  return result;
+}
+
+async function xGet<T>(path: string, access: string) {
+  const result = await xFetch(`https://api.twitter.com/2${path}`, access);
+  if (result.status < 200 || result.status >= 300) {
     return null;
   }
-  return (await res.json()) as T;
+  return result.body as T;
+}
+
+function asRecord(value: unknown): Record<string, unknown> | null {
+  return value && typeof value === "object" && !Array.isArray(value) ? (value as Record<string, unknown>) : null;
+}
+
+function connectionOf(value: unknown): string[] {
+  const record = asRecord(value);
+  const raw = record?.connection_status;
+  if (Array.isArray(raw)) {
+    return raw.map((item) => String(item).toLowerCase());
+  }
+  if (typeof raw === "string") {
+    return [raw.toLowerCase()];
+  }
+  return [];
+}
+
+function isFollowConnection(value: unknown) {
+  return connectionOf(value).includes("following");
+}
+
+function userIdOf(value: unknown) {
+  const id = asRecord(value)?.id;
+  return typeof id === "string" ? id : "";
+}
+
+function usernameOf(value: unknown) {
+  const username = asRecord(value)?.username;
+  return typeof username === "string" ? username.toLowerCase() : "";
+}
+
+function isTargetUser(value: unknown, targetId?: string) {
+  if (targetId && userIdOf(value) === targetId) {
+    return true;
+  }
+  return usernameOf(value) === FOLLOW_HANDLE;
 }
 
 async function recentTweets(userId: string, access: string) {
@@ -108,40 +157,96 @@ async function searchOwn(query: string, access: string) {
   return Boolean(data?.data?.length);
 }
 
-async function isFollowing(userId: string, access: string) {
-  const handle = siteConfig.social.xHandle;
-  const target = await xGet<{ data?: { id?: string; connection_status?: string[] } }>(
-    `/users/by/username/${handle}?user.fields=connection_status`,
-    access,
-  );
-  if (target?.data?.connection_status?.includes("following")) {
-    return true;
-  }
-
-  const targetId = target?.data?.id;
+async function paginateUsers(path: string, access: string, pages: number, match: (user: unknown) => boolean) {
   let page: string | undefined;
-  for (let i = 0; i < 5; i += 1) {
-    const params = new URLSearchParams({ max_results: "100", "user.fields": "username" });
+  let pageSize = "1000";
+  for (let i = 0; i < pages; i += 1) {
+    const params = new URLSearchParams({ max_results: pageSize, "user.fields": "username" });
     if (page) {
       params.set("pagination_token", page);
     }
-    const following = await xGet<{
-      data?: { id?: string; username?: string }[];
-      meta?: { next_token?: string };
-    }>(`/users/${userId}/following?${params.toString()}`, access);
-    if (
-      following?.data?.some(
-        (user) => user.id === targetId || user.username?.toLowerCase() === handle.toLowerCase(),
-      )
-    ) {
+    const result = await xFetch(`https://api.twitter.com/2${path}?${params.toString()}`, access);
+    if (result.status === 400 && pageSize === "1000") {
+      pageSize = "100";
+      i -= 1;
+      continue;
+    }
+    const users = result.body?.data;
+    const list = Array.isArray(users) ? users : [];
+    if (list.some(match)) {
       return true;
     }
-    page = following?.meta?.next_token;
-    if (!page) {
+    page = result.body?.meta?.next_token;
+    if (!page || result.status === 429) {
       break;
     }
   }
   return false;
+}
+
+async function isFollowing(userId: string, access: string) {
+  const tweetAuthor = await xFetch(
+    `https://api.twitter.com/2/tweets/${QUEST_TWEET_ID}?expansions=author_id&user.fields=id,username,connection_status`,
+    access,
+  );
+  const fromTweet = tweetAuthor.body?.includes?.users ?? [];
+  if (fromTweet.some((user) => isTargetUser(user) && isFollowConnection(user))) {
+    return true;
+  }
+
+  const byUsername = await xFetch(
+    `https://api.twitter.com/2/users/by/username/${siteConfig.social.xHandle}?user.fields=id,username,connection_status`,
+    access,
+  );
+  const targetUser = asRecord(byUsername.body?.data) ?? asRecord(fromTweet.find((user) => isTargetUser(user)));
+  if (isFollowConnection(targetUser)) {
+    return true;
+  }
+
+  const targetId = userIdOf(targetUser) || fromTweet.map(userIdOf).find(Boolean);
+  if (targetId && targetId === userId) {
+    return true;
+  }
+
+  if (targetId) {
+    const byId = await xFetch(
+      `https://api.twitter.com/2/users/${targetId}?user.fields=id,username,connection_status`,
+      access,
+    );
+    if (isFollowConnection(byId.body?.data)) {
+      return true;
+    }
+
+    const batch = await xFetch(
+      `https://api.twitter.com/2/users?ids=${encodeURIComponent(targetId)}&user.fields=id,username,connection_status`,
+      access,
+    );
+    const batchUsers = Array.isArray(batch.body?.data) ? batch.body.data : [];
+    if (batchUsers.some(isFollowConnection)) {
+      return true;
+    }
+
+    const rel = await xFetch(`https://api.twitter.com/2/users/${userId}/following/${targetId}`, access);
+    if (rel.status === 200 && (userIdOf(rel.body?.data) === targetId || isFollowConnection(rel.body?.data))) {
+      return true;
+    }
+
+    const friendships = await xFetch(
+      `https://api.twitter.com/1.1/friendships/show.json?source_id=${encodeURIComponent(userId)}&target_id=${encodeURIComponent(targetId)}`,
+      access,
+    );
+    if (friendships.body?.relationship?.source?.following) {
+      return true;
+    }
+
+    if (
+      await paginateUsers(`/users/${targetId}/followers`, access, 8, (user) => userIdOf(user) === userId)
+    ) {
+      return true;
+    }
+  }
+
+  return paginateUsers(`/users/${userId}/following`, access, 20, (user) => isTargetUser(user, targetId));
 }
 
 export async function verifyQuest(id: QuestId) {
