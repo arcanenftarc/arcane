@@ -125,6 +125,9 @@ export async function upsertApplicant(update: { username: string; quest?: QuestI
     current.push(current.length === 0 ? username : current.length < 4 ? "no" : "");
   }
   current[0] = username;
+  if (hasSubmittedWallet({ wallet: current[4] }) && (update.quest || update.wallet !== undefined)) {
+    return true;
+  }
   if (update.quest) {
     current[questColumn[update.quest]] = "yes";
   }
@@ -185,4 +188,10 @@ export function questsComplete(row: { task01: string; task02: string; task03: st
     return false;
   }
   return [row.task01, row.task02, row.task03].every((value) => (value || "").toLowerCase() === "yes");
+}
+
+const WALLET_PATTERN = /^0x[a-fA-F0-9]{40}$/;
+
+export function hasSubmittedWallet(row: { wallet?: string } | null | undefined) {
+  return WALLET_PATTERN.test((row?.wallet || "").trim());
 }

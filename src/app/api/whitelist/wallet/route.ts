@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSession } from "@/lib/auth/session";
-import { applicantFromSession, questsComplete, upsertApplicant } from "@/lib/sheets";
+import { applicantFromSession, hasSubmittedWallet, questsComplete, upsertApplicant } from "@/lib/sheets";
 
 const walletPattern = /^0x[a-fA-F0-9]{40}$/;
 
@@ -17,6 +17,7 @@ export async function GET() {
     comment: (row?.task02 || "").toLowerCase() === "yes",
     retweet: (row?.task03 || "").toLowerCase() === "yes",
     complete: questsComplete(row),
+    applied: hasSubmittedWallet(row),
   });
 }
 
@@ -26,6 +27,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false }, { status: 401 });
   }
   const row = await applicantFromSession();
+  if (hasSubmittedWallet(row)) {
+    return NextResponse.json({ ok: false, error: "applied" }, { status: 409 });
+  }
   if (!questsComplete(row)) {
     return NextResponse.json({ ok: false, error: "quests" }, { status: 403 });
   }

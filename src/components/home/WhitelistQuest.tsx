@@ -38,6 +38,7 @@ export function WhitelistQuest() {
   const [walletStatus, setWalletStatus] = useState<"idle" | "saving" | "ok" | "bad" | "locked">("idle");
 
   const allDone = loggedIn && siteConfig.whitelistSteps.every((step) => done.includes(step.id));
+  const applied = loggedIn && /^0x[a-fA-F0-9]{40}$/.test(saved);
 
   useEffect(() => {
     setDone(readDone());
@@ -123,6 +124,17 @@ export function WhitelistQuest() {
 
   return (
     <>
+      {applied ? (
+        <div className={styles.applied} data-aura>
+          <p className={styles.appliedKicker}>Whitelist</p>
+          <p className={styles.appliedTitle}>Applied for whitelist</p>
+          <p className={styles.appliedCopy}>Follow X for more updates.</p>
+          <a className={styles.appliedLink} href={siteConfig.social.x} target="_blank" rel="noreferrer">
+            Follow @{siteConfig.social.xHandle}
+          </a>
+        </div>
+      ) : (
+        <>
       <ol className={styles.list}>
         {siteConfig.whitelistSteps.map((step) => {
           const verified = loggedIn && done.includes(step.id);
@@ -209,6 +221,8 @@ export function WhitelistQuest() {
         {walletStatus === "bad" ? <p className={styles.walletNote}>Enter a valid 0x address.</p> : null}
         {walletStatus === "ok" ? <p className={styles.walletOk}>Address recorded for whitelist.</p> : null}
       </form>
+        </>
+      )}
       {popup ? (
         <div className={styles.backdrop} role="presentation" onClick={() => setPopup(false)}>
           <div
