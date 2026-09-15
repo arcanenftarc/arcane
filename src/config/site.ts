@@ -177,7 +177,7 @@ export const siteConfig = {
       n: "03",
       title: "Quote",
       body: "Quote the Arcane post on X.",
-      href: `https://x.com/intent/tweet?url=${encodeURIComponent("https://x.com/arcanenft_arc/status/2099800722984653232")}`,
+      href: "https://x.com/intent/post?quote_tweet_id=2099800722984653232",
       action: "Quote",
     },
   ],

@@ -88,14 +88,6 @@ async function xFetch(url: string, access: string): Promise<{ status: number; bo
   return result;
 }
 
-async function xGet<T>(path: string, access: string) {
-  const result = await xFetch(`https://api.twitter.com/2${path}`, access);
-  if (result.status < 200 || result.status >= 300) {
-    return null;
-  }
-  return result.body as T;
-}
-
 function asRecord(value: unknown): Record<string, unknown> | null {
   return value && typeof value === "object" && !Array.isArray(value) ? (value as Record<string, unknown>) : null;
 }
@@ -133,28 +125,227 @@ function isTargetUser(value: unknown, targetId?: string) {
   return usernameOf(value) === FOLLOW_HANDLE;
 }
 
-async function recentTweets(userId: string, access: string) {
-  const data = await xGet<{
-    data?: { text?: string; referenced_tweets?: { type: string; id: string }[] }[];
-  }>(`/users/${userId}/tweets?max_results=100&tweet.fields=text,referenced_tweets`, access);
-  return data?.data ?? [];
+const TWEET_FIELDS = "author_id,text,referenced_tweets,conversation_id,entities,in_reply_to_user_id";
+
+function tweetList(body: XBody | null) {
+  const data = body?.data;
+  if (Array.isArray(data)) {
+    return data.map(asRecord).filter((tweet): tweet is Record<string, unknown> => Boolean(tweet));
+  }
+  const one = asRecord(data);
+  return one ? [one] : [];
 }
 
-function citesTweet(
-  tweets: { referenced_tweets?: { type: string; id: string }[] }[],
-  type: "replied_to" | "quoted",
+function referenced(tweet: Record<string, unknown>) {
+  const raw = tweet.referenced_tweets;
+  if (!Array.isArray(raw)) {
+    return [] as { type: string; id: string }[];
+  }
+  return raw
+    .map((item) => asRecord(item))
+    .filter((item): item is Record<string, unknown> => Boolean(item))
+    .map((item) => ({ type: String(item.type ?? ""), id: String(item.id ?? "") }));
+}
+
+function citesTweet(tweet: Record<string, unknown>, type: "replied_to" | "quoted") {
+  return referenced(tweet).some((ref) => ref.type === type && ref.id === QUEST_TWEET_ID);
+}
+
+function tweetTextBlob(tweet: Record<string, unknown>) {
+  const entities = asRecord(tweet.entities);
+  const urls = Array.isArray(entities?.urls) ? entities.urls : [];
+  const fromUrls = urls
+    .map((item) => asRecord(item))
+    .filter((item): item is Record<string, unknown> => Boolean(item))
+    .flatMap((item) => [item.expanded_url, item.unwound_url, item.display_url, item.url]);
+  return [tweet.text, ...fromUrls].map((value) => String(value ?? "")).join(" ");
+}
+
+function mentionsQuestPost(tweet: Record<string, unknown>) {
+  return tweetTextBlob(tweet).includes(`/status/${QUEST_TWEET_ID}`);
+}
+
+function isOwn(tweet: Record<string, unknown>, userId: string) {
+  const author = String(tweet.author_id ?? "");
+  return !author || author === userId;
+}
+
+function isCommentOnQuest(tweet: Record<string, unknown>, userId: string, conversationId: string) {
+  if (!isOwn(tweet, userId) || String(tweet.id ?? "") === QUEST_TWEET_ID) {
+    return false;
+  }
+  if (citesTweet(tweet, "replied_to")) {
+    return true;
+  }
+  const conversation = String(tweet.conversation_id ?? "");
+  const replied = referenced(tweet).some((ref) => ref.type === "replied_to");
+  return replied && (conversation === QUEST_TWEET_ID || conversation === conversationId);
+}
+
+function isQuoteOfQuest(tweet: Record<string, unknown>, userId: string) {
+  if (!isOwn(tweet, userId) || String(tweet.id ?? "") === QUEST_TWEET_ID) {
+    return false;
+  }
+  if (citesTweet(tweet, "quoted")) {
+    return true;
+  }
+  return mentionsQuestPost(tweet) && !citesTweet(tweet, "replied_to");
+}
+
+async function paginateTweets(
+  path: string,
+  access: string,
+  pages: number,
+  extra: Record<string, string> = {},
 ) {
-  return tweets.some((tweet) =>
-    tweet.referenced_tweets?.some((ref) => ref.type === type && ref.id === QUEST_TWEET_ID),
-  );
+  const found: Record<string, unknown>[] = [];
+  let page: string | undefined;
+  let pageSize = "100";
+  for (let i = 0; i < pages; i += 1) {
+    const params = new URLSearchParams({
+      "tweet.fields": TWEET_FIELDS,
+      ...extra,
+      max_results: pageSize,
+    });
+    if (page) {
+      params.set("pagination_token", page);
+    }
+    const result = await xFetch(`https://api.twitter.com/2${path}?${params.toString()}`, access);
+    if (result.status === 400 && pageSize === "100") {
+      pageSize = "10";
+      i -= 1;
+      continue;
+    }
+    found.push(...tweetList(result.body));
+    page = result.body?.meta?.next_token;
+    if (!page || result.status === 429 || result.status >= 400) {
+      break;
+    }
+  }
+  return found;
 }
 
 async function searchOwn(query: string, access: string) {
-  const data = await xGet<{ data?: { id?: string }[] }>(
-    `/tweets/search/recent?query=${encodeURIComponent(query)}&max_results=10`,
+  const params = new URLSearchParams({
+    query,
+    max_results: "100",
+    "tweet.fields": TWEET_FIELDS,
+  });
+  const result = await xFetch(`https://api.twitter.com/2/tweets/search/recent?${params.toString()}`, access);
+  if (result.status === 400 && query.length > 0) {
+    params.set("max_results", "10");
+    const retry = await xFetch(`https://api.twitter.com/2/tweets/search/recent?${params.toString()}`, access);
+    return tweetList(retry.body);
+  }
+  return tweetList(result.body);
+}
+
+async function userTweets(userId: string, access: string) {
+  return paginateTweets(`/users/${userId}/tweets`, access, 10, { expansions: "referenced_tweets.id,author_id" });
+}
+
+async function questConversationId(access: string) {
+  const result = await xFetch(
+    `https://api.twitter.com/2/tweets/${QUEST_TWEET_ID}?tweet.fields=conversation_id,author_id`,
     access,
   );
-  return Boolean(data?.data?.length);
+  const conversation = asRecord(result.body?.data)?.conversation_id;
+  return typeof conversation === "string" && conversation ? conversation : QUEST_TWEET_ID;
+}
+
+async function searchDidAction(access: string, match: (tweet: Record<string, unknown>) => boolean, queries: string[]) {
+  for (const query of queries) {
+    const tweets = await searchOwn(query, access);
+    if (tweets.some(match)) {
+      return true;
+    }
+    const scoped =
+      query.includes(`in_reply_to_tweet_id:${QUEST_TWEET_ID}`) ||
+      query.includes(`quoted_tweet_id:${QUEST_TWEET_ID}`) ||
+      query.includes(`conversation_id:`) ||
+      query.includes(`/status/${QUEST_TWEET_ID}`) ||
+      query.includes(`url:${QUEST_TWEET_ID}`);
+    if (scoped && tweets.length > 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
+async function didComment(userId: string, username: string, access: string) {
+  const handle = username.replace(/^@/, "");
+  const [conversationId, tweets] = await Promise.all([questConversationId(access), userTweets(userId, access)]);
+  const match = (tweet: Record<string, unknown>) => isCommentOnQuest(tweet, userId, conversationId);
+  if (tweets.some(match)) {
+    return true;
+  }
+
+  return searchDidAction(access, match, [
+    `in_reply_to_tweet_id:${QUEST_TWEET_ID} from:${userId}`,
+    `in_reply_to_tweet_id:${QUEST_TWEET_ID} from:${handle}`,
+    `conversation_id:${conversationId} from:${userId} is:reply`,
+    `conversation_id:${QUEST_TWEET_ID} from:${userId} is:reply`,
+    `conversation_id:${conversationId} from:${handle} is:reply`,
+    `to:${FOLLOW_HANDLE} conversation_id:${conversationId} from:${handle}`,
+  ]);
+}
+
+async function quotedByUser(userId: string, access: string) {
+  let page: string | undefined;
+  let pageSize = "100";
+  for (let i = 0; i < 8; i += 1) {
+    const params = new URLSearchParams({
+      max_results: pageSize,
+      "tweet.fields": TWEET_FIELDS,
+      expansions: "author_id",
+    });
+    if (page) {
+      params.set("pagination_token", page);
+    }
+    const result = await xFetch(
+      `https://api.twitter.com/2/tweets/${QUEST_TWEET_ID}/quote_tweets?${params.toString()}`,
+      access,
+    );
+    if (result.status === 400 && pageSize === "100") {
+      pageSize = "10";
+      i -= 1;
+      continue;
+    }
+    const tweets = tweetList(result.body);
+    const authors = result.body?.includes?.users ?? [];
+    if (tweets.some((tweet) => String(tweet.author_id ?? "") === userId)) {
+      return true;
+    }
+    if (authors.some((user) => userIdOf(user) === userId)) {
+      return true;
+    }
+    page = result.body?.meta?.next_token;
+    if (!page || result.status === 429 || result.status >= 400) {
+      break;
+    }
+  }
+  return false;
+}
+
+async function didQuote(userId: string, username: string, access: string) {
+  const handle = username.replace(/^@/, "");
+  const match = (tweet: Record<string, unknown>) => isQuoteOfQuest(tweet, userId);
+  const [quoted, tweets] = await Promise.all([quotedByUser(userId, access), userTweets(userId, access)]);
+  if (quoted) {
+    return true;
+  }
+  if (tweets.some(match)) {
+    return true;
+  }
+
+  return searchDidAction(access, match, [
+    `quoted_tweet_id:${QUEST_TWEET_ID} from:${userId}`,
+    `quoted_tweet_id:${QUEST_TWEET_ID} from:${handle}`,
+    `url:${QUEST_TWEET_ID} from:${userId} is:quote`,
+    `url:${QUEST_TWEET_ID} from:${handle}`,
+    `url:"x.com/${FOLLOW_HANDLE}/status/${QUEST_TWEET_ID}" from:${handle}`,
+    `url:"twitter.com/${FOLLOW_HANDLE}/status/${QUEST_TWEET_ID}" from:${handle}`,
+  ]);
 }
 
 async function paginateUsers(path: string, access: string, pages: number, match: (user: unknown) => boolean) {
@@ -259,19 +450,11 @@ export async function verifyQuest(id: QuestId) {
   if (id === "follow") {
     return isFollowing(session.id, access);
   }
-
-  const tweets = await recentTweets(session.id, access);
   if (id === "comment") {
-    if (citesTweet(tweets, "replied_to")) {
-      return true;
-    }
-    return searchOwn(`conversation_id:${QUEST_TWEET_ID} from:${session.username}`, access);
+    return didComment(session.id, session.username, access);
   }
   if (id === "retweet") {
-    if (citesTweet(tweets, "quoted")) {
-      return true;
-    }
-    return searchOwn(`quoted_tweet_id:${QUEST_TWEET_ID} from:${session.username}`, access);
+    return didQuote(session.id, session.username, access);
   }
   return false;
 }
